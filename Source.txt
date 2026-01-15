@@ -1,0 +1,7 @@
+All Plagin Use For This Project
+
+// Bootstrap Icon
+npm install bootstrap-icons
+
+//Remix Icon
+npm install remixicon

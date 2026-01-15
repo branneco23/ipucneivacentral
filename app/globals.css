@@ -1,26 +1,301 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Golos+Text:wght@400..900&display=swap");
+
 @import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "remixicon/fonts/remixicon.css";
+
+/* ================= VARIABLES ================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --prim: #00338d;
+  --text: #1c1c1d;
+  --body: #f6f6f6;
+  --white: #fff;
+  --black: #000;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --CalSans: "Cal Sans", sans-serif;
+  --GolosText: "Golos Text", sans-serif;
+  --Audiowide: "Audiowide", sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --transition-regular: 0.35s cubic-bezier(.4,0,.2,1);
+  --transition-slow: 0.6s;
+
+  --navbar-height: 96px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--body);
+  overflow-x: hidden; /* evita scroll lateral */
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  height: calc(100vh - var(--navbar-height)); /* CLAVE */
+  padding-top: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero p {
+  text-wrap: balance;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 2.5%;
+  border-radius: 40px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.85),
+      rgba(0,0,0,.45),
+      rgba(0,0,0,.15)
+    ),
+    url("/Hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.6);
+}
+
+.hero-span {
+  background: var(--prim);
+  color: white;
+  letter-spacing: 2px;
+  font-size: .75rem;
+}
+
+.hero-content {
+  animation: floating 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floating {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ================= PARTNERS ================= */
+
+.partner-swiper {
+  padding: 20px 0 40px;
+}
+
+.partner-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TARJETA SVG */
+.partner-card {
+  height: 120px;
+  min-width: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.96),
+    rgba(240,240,240,.96)
+  );
+  border-radius: 18px;
+  padding: 20px 26px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.08),
+    inset 0 0 0 1px rgba(255,255,255,.6);
+
+  transition: var(--transition-regular);
+}
+
+/* SVG */
+.partner-img {
+  max-height: 120px;
+  width: auto;
+  object-fit: contain;
+  filter: none;
+  opacity: 1;
+  transition: var(--transition-regular);
+}
+
+/* Hover */
+.partner-card:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 16px 40px rgba(0,51,141,.25);
+}
+
+.partner-card:hover .partner-img {
+  transform: scale(1.08);
+}
+
+/* ================= ABOUT ================= */
+
+.about {
+  background-image: url("/img/About-bg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.title {
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(131,131,131,0.3);
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  top: -20px; /* FIX REAL */
+  left: 10%;
+  width: 1px;
+  height: 250px;
+  background-color: rgba(131,131,131,0.3);
+}
+
+.title-span {
+  position: relative;
+}
+
+.title-span::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 9%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: var(--prim);
+}
+
+/* ================= PARALLAX ================= */
+
+.Paralex-wrap {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.Paralex-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: -1;
+}
+
+.Paralex-content {
+  height: 100vh;
+}
+
+/* ================= SERVICES ================= */
+
+.service {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.service::after {
+  content: "IPUC NEIVA";
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
+  font-size: clamp(5rem, 15vw, 12rem); /* Tamaño responsivo */
+  line-height: 0.8;
+  font-weight: 800;
+  font-family: var(--Audiowide);
+  opacity: 0.07;
+  color: var(--prim);
+
+  z-index: -2;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.service:before{
+  content: '';
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  bottom: 0;
+  right: -5%;
+  height: 500px;
+  width: 700px;
+  z-index: -1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.service-img {
+  transform: scale(0);
+  opacity: 0;
+  transition: var(--transition-slow);
+}
+
+.service-card {
+  position: relative;
+  z-index: 10;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.service-content h2,
+.service-content p {
+  position: relative;
+  z-index: 11;
+}
+
+.service-card:hover .service-img {
+  transform: scale(0.9);
+  opacity: 1;
+}
+
+.service-card:hover i {
+  transform: rotate(45deg);
+  background-color: var(--prim);
+  color: var(--white);
+  padding: 6px 10px;
+  border-radius: 50%;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .hero h1 {
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .text-outline {
+    -webkit-text-stroke: .5px rgba(255,255,255,.5);
+  }
+
+  .partner-card {
+    height: 100px;
+    padding: 16px 20px;
+  }
 }
