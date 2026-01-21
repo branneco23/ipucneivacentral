@@ -166,8 +166,8 @@ body {
   position: absolute;
   top: -20px; /* FIX REAL */
   left: 10%;
-  width: 1px;
-  height: 250px;
+  width: 5px;
+  height: 80px;
   background-color: rgba(131,131,131,0.3);
 }
 
@@ -185,6 +185,61 @@ body {
   height: 8px;
   border-radius: 100%;
   background-color: var(--prim);
+}
+
+/* --- CONTENEDOR DE LA LÍNEA DEL TIEMPO --- */
+.qualification__container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.qualification__tabs {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.qualification__button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+/* --- LÓGICA DE LA LÍNEA (ZIG-ZAG) --- */
+.qualification__data {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    column-gap: 1.5rem;
+    min-height: 80px;
+}
+
+.qualification__rounder {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: #00338d; /* Color primario IPUC */
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.qualification__line {
+    display: block;
+    width: 2px;
+    height: 100%;
+    background-color: var(--prim);
+    opacity: 0.3;
+    transform: translate(6px, -7px);
+}
+
+/* Evitar que la última línea sobresalga */
+.qualification__data:last-child .qualification__line {
+    display: none;
+}
+
+.qualification__title {
+    font-family: var(--CalSans); /* Asegúrate que tu fuente esté en globals.css */
 }
 
 /* ================= PARALLAX ================= */
@@ -216,38 +271,50 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  /* Reducimos el padding vertical para que no se vea tan separado */
+  padding-top: 4rem; 
+  padding-bottom: 8rem;
 }
 
+/* MARCA DE AGUA VERTICAL - IPUC NEIVA CENTRAL */
 .service::after {
-  content: "IPUC NEIVA";
+  content: "IPUC NEIVA CENTRAL";
   position: absolute;
-  bottom: 5%;
-  left: 10%;
-  font-size: clamp(5rem, 15vw, 12rem); /* Tamaño responsivo */
-  line-height: 0.8;
-  font-weight: 800;
+  top: 50%;
+  left: -5%; /* Lo pegamos al borde izquierdo */
+  transform: translateY(-50%) rotate(-90deg); /* Rotación vertical */
+  
+  font-size: clamp(4rem, 12vw, 10rem); 
+  line-height: 1;
+  font-weight: 900;
   font-family: var(--Audiowide);
-  opacity: 0.07;
+  opacity: 0.05; /* Un poco más sutil para que no tape el texto */
   color: var(--prim);
 
   z-index: -2;
   pointer-events: none;
   white-space: nowrap;
+  letter-spacing: 10px;
 }
 
-.service:before{
-  content: '';
+/* OPCIONAL: Si quieres otra en el lado derecho para balancear */
+.service::before {
+  content: ""; /* Puedes dejarlo vacío o poner otro texto */
   position: absolute;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  bottom: 0;
   right: -5%;
-  height: 500px;
-  width: 700px;
+  bottom: 0;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.2;
   pointer-events: none;
+}
+
+/* AJUSTE PARA ELIMINAR ESPACIOS MUERTOS ENTRE SECCIONES */
+.title {
+  padding-top: 1rem !important; /* Reducimos el pt-8 original */
+}
+
+.title::before {
+  height: 150px; /* Reducido de 250px para acortar la línea visual */
 }
 
 .service-img {
@@ -282,6 +349,175 @@ body {
   border-radius: 50%;
 }
 
+.expertise-main-slider {
+  /* En lugar de absolute, usamos un margen negativo para subirlo */
+  margin-top: -100px; /* Ajusta este valor para subirlo más o menos */
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  height: 350px; /* Altura en móvil */
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+  border: 5px solid #fff; /* Borde blanco para resaltar contra el azul */
+}
+
+/* Pricing Plans*/
+.pricing-wrap {
+  background-image: url(../public/img/pricing-banner.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-wrap:after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #00000096 10%, #00000000);
+  z-index: -1;
+}
+
+/* Testimonial */
+.testimonial-image{
+  height: 90vh;
+  background-image: url('../public/img/testimonial-img.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+}
+
+.testimonial-image::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* --- ANIMACIONES Y REFINAMIENTO --- */
+
+@keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 4s ease-in-out infinite;
+}
+
+/* Custom Swiper Pagination para que sea azul IPUC */
+.testimonial-swiper .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #ccc;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.testimonial-swiper .swiper-pagination-bullet-active {
+    width: 30px;
+    border-radius: 6px;
+    background: var(--prim) !important;
+}
+
+/* Efecto de máscara para el mapa en Desktop */
+@media (min-width: 1024px) {
+    .map-container {
+        clip-path: circle(150% at 0% 50%); /* Opcional: para formas creativas */
+    }
+}
+
+/* Contraste del mapa */
+iframe {
+    filter: grayscale(1) contrast(1.1) brightness(0.9);
+}
+
+.group:hover iframe {
+    filter: grayscale(0) contrast(1) brightness(1);
+}
+
+/* ================= REUTILIZABLES (COMPONENTES) ================= */
+
+.btn-primary {
+  background-color: var(--prim);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 20px 40px rgba(0, 51, 141, 0.3);
+  transition: transform var(--transition-regular), background-color var(--transition-regular);
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  background-color: #00266b;
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid rgba(131, 131, 131, 0.4);
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--GolosText);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: #4b5563;
+}
+
+.heading-primary {
+  font-family: var(--CalSans);
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  line-height: 1.1;
+  color: var(--text);
+  margin-top: 1rem;
+}
+
+/* ================= AJUSTES DE MAPA Y TESTIMONIOS ================= */
+
+.map-iframe {
+  filter: grayscale(100%);
+  transition: filter 0.7s ease;
+}
+
+.map-container:hover .map-iframe {
+  filter: grayscale(0%);
+}
+
+.testimonial-text {
+  font-family: var(--GolosText);
+  text-wrap: balance;
+}
+
+/* Corrección de la marca de agua para que no interfiera */
+.service::after {
+  /* ... tu código existente ... */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Transición suave para las imágenes de testimonios */
+.testimonial-card footer img {
+  transition: transform 0.5s ease;
+}
+
+.testimonial-card:hover footer img {
+  transform: scale(1.1);
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
@@ -296,6 +532,35 @@ body {
 
   .partner-card {
     height: 100px;
-    padding: 16px 20px;
+    padding: 16px 10px;
+  }
+}
+
+/* Expertise */
+
+@media (min-width: 1024px) {
+  .expertise-main-slider {
+    height: 500px; /* Altura en Desktop */
+    margin-top: -150px; /* Sube más en pantallas grandes */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.hero-content img{
+  animation: Anim-scale 4s forwards linear;
+  border-radius: 20px;
+}
+
+@keyframes Anim-scale {
+  0%{
+    transform: scale(0);
+  }
+  50%{
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1);
   }
 }

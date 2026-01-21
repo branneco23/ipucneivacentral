@@ -1,11 +1,15 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+
+// Estilos de Swiper
 import "swiper/css";
 
+// Importación optimizada de Assets
 import partner1 from "@/public/img/partner1.svg";
 import partner2 from "@/public/img/partner2.svg";
 import partner3 from "@/public/img/partner3.svg";
@@ -16,95 +20,93 @@ import partner7 from "@/public/img/partner7.svg";
 import partner8 from "@/public/img/partner8.svg";
 import partner9 from "@/public/img/partner9.svg";
 
-import Image from "next/image";
-
-const Partners = [
-  partner1,
-  partner2,
-  partner3,
-  partner4,
-  partner5,
-  partner6,
-  partner7,
-  partner8,
-  partner9,
+const PARTNERS_LOGOS = [
+  partner1, partner2, partner3, partner4, partner5, 
+  partner6, partner7, partner8, partner9
 ];
 
 export default function Hero() {
   return (
     <>
-      <div className="hero">
-        <div className="hero-hg-elm"></div>
-        <div className="hero-hg-elm2"></div>
+      <section className="hero relative min-h-screen flex items-center overflow-hidden">
+        {/* Elementos decorativos de fondo (HG Elms) */}
+        <div className="hero-hg-elm absolute inset-0 pointer-events-none" aria-hidden="true" />
+        <div className="hero-hg-elm2 absolute inset-0 pointer-events-none" aria-hidden="true" />
 
-        <div className="w-full px-[8%] lg:px-[12%] py-10 z-10">
-          <div className="hero-content max-w-4xl">
-            <span className="hero-span GolosText font-black px-4 py-2 rounded-md inline-block mb-6">
+        <div className="container-fluid w-full px-[8%] lg:px-[12%] py-10 z-10">
+          <header className="hero-content max-w-5xl">
+            <span className="hero-span inline-block mb-6 px-4 py-2 rounded-md bg-[#00338d] text-white font-black text-sm tracking-widest uppercase">
               IPUC Neiva Central
             </span>
 
-            <h1 className="text-2xl lg:text-9xl CalSans leading-[0.9] text-white">
+            <h1 className="CalSans text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-white mb-8">
               ENCUÉNTRATE <br />
               <span className="text-outline">CON </span> <br />
               <span className="text-blue-500">JESUCRISTO...</span>
             </h1>
 
-            <p className="text-white/90 text-2xl lg:text-4xl GolosText font-medium leading-relaxed w-full md:w-[70%] drop-shadow-md">
-              "No temas, porque yo te{" "}
-              <span className="text-blue-400">redimí</span>; te puse nombre, mío
-              eres tú."
-              <br />
-              <span className="text-lg lg:text-xl font-bold opacity-70">
+            <blockquote className="mb-10 space-y-4">
+              <p className="text-white/90 text-xl md:text-3xl lg:text-4xl GolosText font-medium leading-relaxed max-w-3xl drop-shadow-lg">
+                &ldquo;No temas, porque yo te{" "}
+                <span className="text-blue-400">redimí</span>; te puse nombre, mío
+                eres tú.&rdquo;
+              </p>
+              <footer className="text-lg lg:text-xl font-bold text-white/70 italic">
                 — Isaías 43:1
-              </span>
-            </p>
+              </footer>
+            </blockquote>
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-6 mt-12">
               <Link
                 href="https://www.biblegateway.com/passage/?search=Isa%C3%ADas%2043%3A1&version=RVR1960"
                 target="_blank"
-                className="bg-blue-700 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-black text-lg transition-all transform hover:scale-105 shadow-xl flex items-center gap-3 w-fit"
+                rel="noopener noreferrer"
+                className="group bg-blue-700 hover:bg-blue-600 text-white px-10 py-5 rounded-full font-black text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center gap-3 w-fit"
               >
-                <i className="ri-book-open-line text-2xl"></i>
+                <i className="ri-book-open-line text-2xl group-hover:rotate-12 transition-transform"></i>
                 Leer en RV1960
               </Link>
             </div>
-          </div>
+          </header>
         </div>
-      </div>
+      </section>
 
-      {/* PARTNERS */}
-      <div className="px-[10%] lg:px-[14%] pb-12">
+      {/* SECCIÓN DE LOGOS (PARTNERS) */}
+      <section className="px-[10%] lg:px-[14%] py-16 bg-white" aria-label="Nuestras alianzas">
         <Swiper
-          spaceBetween={30}
-          loop
-          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          spaceBetween={40}
+          loop={true}
+          autoplay={{ 
+            delay: 2500, 
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true 
+          }}
           modules={[Autoplay]}
           breakpoints={{
-            1200: { slidesPerView: 5 },
-            991: { slidesPerView: 4 },
-            575: { slidesPerView: 2 },
             0: { slidesPerView: 2 },
+            575: { slidesPerView: 3 },
+            991: { slidesPerView: 4 },
+            1200: { slidesPerView: 5 },
           }}
           className="partner-swiper"
         >
-          {Partners.map((img, index) => (
-            <SwiperSlide key={index}>
-              <div className="partner-item">
-                <div className="partner-card">
+          {PARTNERS_LOGOS.map((logo, index) => (
+            <SwiperSlide key={`partner-${index}`}>
+              <div className="partner-item flex justify-center items-center">
+                <div className="partner-card bg-gray-50 p-6 rounded-2xl hover:bg-white transition-colors duration-300">
                   <Image
-                    src={img}
-                    alt="Partner logo"
-                    width={660}
-                    height={660}
-                    className="partner-img"
+                    src={logo}
+                    alt={`Logo institucional ${index + 1}`}
+                    width={180}
+                    height={80}
+                    className="partner-img grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 object-contain"
                   />
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </section>
     </>
   );
 }

@@ -1,0 +1,32 @@
+{
+  "testimonios": [
+    {
+      "id": "1",
+      "desc": "Un sitio donde se alaba y se adora al Dios altísimo.",
+      "image": "/img/team-1.jpg",
+      "name": "Rigoberto Hernández",
+      "role": "Hermano"
+    },
+    {
+      "id": "2",
+      "desc": "Me encantó porque allí se predica sana doctrina y la comunidad es muy amable y el lugar es acogedor.",
+      "image": "/img/team-2.jpg",
+      "name": "Beatriz Herrera Lizcano",
+      "role": "Hermana"
+    },
+    {
+      "id": "3",
+      "desc": "Muy buen lugar para visitar en familia.",
+      "image": "/img/team-2.jpg",
+      "name": "Yhonfrey Cerón Álvarez",
+      "role": "Amigo"
+    },
+    {
+      "id": "4",
+      "desc": "Un lugar único donde se va a adorar al rey Jesucristo.",
+      "image": "/img/team-2.jpg",
+      "name": "Elisabeth Sarria",
+      "role": "Hermana"
+    }
+  ]
+}
