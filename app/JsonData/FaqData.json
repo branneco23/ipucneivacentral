@@ -1,7 +1,34 @@
-[
+{
+  "faqs": [
     {
-        id: "01",
-        question: "What interior design services do you offer?",
-        answer: "Our interior design services cover everything"
+      "id": "01",
+      "question": "¿Quién es Dios?",
+      "answer": "Creemos que hay un solo Dios vivo, eterno, infinito en poder, santo en naturaleza y atributos; que posee una divinidad absoluta e indivisible. Él es el Creador de todas las cosas. (Deuteronomio 6:4; 1 Corintios 8:6)."
+    },
+    {
+      "id": "02",
+      "question": "¿Es Jesús el mismo Dios del Antiguo Testamento?",
+      "answer": "Sí. Jesús es el Dios eterno manifestado en carne. Él es el Padre en la creación, el Hijo en la redención y el Espíritu Santo derramado en nuestros corazones. (1 Timoteo 3:16; Juan 10:30)."
+    },
+    {
+      "id": "03",
+      "question": "¿Cómo puedo ser salvo?",
+      "answer": "La salvación se obtiene a través del nuevo nacimiento: arrepentimiento, bautismo en agua por inmersión en el nombre de Jesucristo para perdón de los pecados y el bautismo del Espíritu Santo. (Hechos 2:38)."
+    },
+    {
+      "id": "04",
+      "question": "¿Por qué bautizan en el nombre de Jesús?",
+      "answer": "Porque el Nombre del Padre, del Hijo y del Espíritu Santo es Jesús. Los apóstoles siempre bautizaron invocando este nombre, cumpliendo así la gran comisión. (Hechos 4:12)."
+    },
+    {
+      "id": "05",
+      "question": "¿Qué significa vivir en santidad?",
+      "answer": "La santidad es un mandato divino que afecta nuestro interior y nuestra conducta externa. Es vivir apartados para Dios en toda nuestra manera de vivir. (Hebreos 12:14; 1 Pedro 1:15)."
+    },
+    {
+      "id": "06",
+      "question": "¿Creen en el bautismo del Espíritu Santo hoy?",
+      "answer": "Sí, creemos que la promesa es para todos los creyentes hoy, tal como ocurrió en Pentecostés, siendo el hablar en lenguas la señal inicial dada por Dios. (Hechos 2:39)."
     }
-]
+  ]
+}

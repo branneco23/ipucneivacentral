@@ -541,7 +541,7 @@ iframe {
 @media (min-width: 1024px) {
   .expertise-main-slider {
     height: 500px; /* Altura en Desktop */
-    margin-top: -150px; /* Sube más en pantallas grandes */
+    margin-top: -100px; /* Sube más en pantallas grandes */
     width: 90%;
     margin-left: auto;
     margin-right: auto;
