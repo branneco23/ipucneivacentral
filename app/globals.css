@@ -518,6 +518,14 @@ iframe {
   transform: scale(1.1);
 }
 
+/* Banner */
+.banner {
+  background-image: url('../public/img/banner.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {

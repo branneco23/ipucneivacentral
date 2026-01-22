@@ -6,6 +6,8 @@ import Expertise from "./Expertise/page";
 import PrincingPlans from "./PricingPlans/page";
 import Testimonial from "./Testimonial/page"
 import Faqs from "./Faq/page"
+import Banner from "./Banner/page"
+import Blog from "./Blogs/page"
 
 export default function index() {
   return (
@@ -18,6 +20,8 @@ export default function index() {
         <Expertise/>
         <Testimonial/>
         <Faqs/>
+        <Banner/>
+        <Blog/>
     </>
   )
 }
