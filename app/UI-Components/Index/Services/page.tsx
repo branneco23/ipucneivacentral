@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import doctrinaData from "../../../JsonData/DoctrinaData.json";
+// Importación limpia (sin .ts y usando solo el alias necesario)
+import { DOCTRINA_DATA as doctrinaData } from "../../../JsonData/DoctrinaData";
 
 interface DoctrinaItem {
   id: string;
@@ -10,10 +11,7 @@ interface DoctrinaItem {
 }
 
 export default function Doctrina() {
-  // ID abierto o null
   const [openId, setOpenId] = useState<string | null>(null);
-
-  // Evita problemas de hidratación
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -28,6 +26,23 @@ export default function Doctrina() {
 
   return (
     <section className="px-[8%] lg:px-[12%] pt-16 pb-20 relative bg-[#f6f6f6] overflow-hidden">
+      {/* Estilos inyectados solo para este contenido doctrinal */}
+      <style jsx global>{`
+        .doctrina-html-content ul {
+          list-style-type: disc !important;
+          margin-left: 1.5rem !important;
+          margin-top: 1rem !important;
+          margin-bottom: 1rem !important;
+        }
+        .doctrina-html-content li {
+          margin-bottom: 0.5rem !important;
+        }
+        .doctrina-html-content b {
+          font-weight: 700 !important;
+          color: #111827; /* Un gris casi negro para resaltar citas */
+        }
+      `}</style>
+
       {/* ---------- ENCABEZADO ---------- */}
       <header className="flex flex-col lg:flex-row gap-10 mb-16 relative z-10">
         <div className="w-full lg:w-1/3 pt-2">
@@ -39,9 +54,7 @@ export default function Doctrina() {
         <div className="w-full lg:w-2/3">
           <h2 className="CalSans text-4xl md:text-6xl mb-6 leading-tight text-gray-900">
             Nosotros Predicamos Lo Que <br />
-            <span className="text-[#00338d]">
-              La Palabra de Jesucristo
-            </span>{" "}
+            <span className="text-[#00338d]">La Palabra de Jesucristo</span>{" "}
             Nos Enseña
           </h2>
         </div>
@@ -63,7 +76,7 @@ export default function Doctrina() {
               <button
                 type="button"
                 onClick={() => toggleAccordion(item.id)}
-                className="w-full py-10 px-4 flex justify-between items-center text-left"
+                className="w-full py-10 px-4 flex justify-between items-center text-left focus:outline-none"
               >
                 <div className="flex items-center gap-6">
                   <span
@@ -94,7 +107,7 @@ export default function Doctrina() {
                 </span>
               </button>
 
-              {/* CONTENIDO (NO SE CORTA) */}
+              {/* CONTENIDO ANIMADO */}
               <div
                 className={`grid transition-all duration-500 ease-in-out ${
                   isOpen
@@ -104,7 +117,7 @@ export default function Doctrina() {
               >
                 <div className="overflow-hidden px-4 lg:pl-36 lg:pr-[15%]">
                   <div
-                    className="GolosText text-gray-600 leading-[1.8] text-lg whitespace-pre-line"
+                    className="doctrina-html-content GolosText text-gray-600 leading-[1.8] text-lg whitespace-pre-line"
                     dangerouslySetInnerHTML={{ __html: item.content }}
                   />
                 </div>
@@ -121,10 +134,7 @@ export default function Doctrina() {
             <i className="ri-book-read-line text-lg"></i>
             <p>
               Contenido basado en los{" "}
-              <span className="font-bold text-gray-500">
-                Artículos de Fe
-              </span>{" "}
-              de la Iglesia Pentecostal Unida de Colombia.
+              <span className="font-bold text-gray-500">Artículos de Fe</span> de la Iglesia Pentecostal Unida de Colombia.
             </p>
           </div>
 

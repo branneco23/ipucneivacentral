@@ -7,13 +7,13 @@ const PHILOSOPHY_DATA = [
   {
     id: "mision",
     title: "Misión",
-    desc: "Predicar el evangelio de nuestro Señor Jesucristo, estableciendo iglesias y formando discípulos que glorifiquen a Dios en toda su manera de vivir.",
+    desc: "Cumplir el mandamiento del Señor Jesucristo de predicar las verdades del Evangelio a todas las persona. familias, niños, jóvenes y ancianos que El Señor Jesucristo nos permita llegar.",
     icon: "ri- direction-line",
   },
   {
     id: "vision",
     title: "Visión",
-    desc: "Ser una iglesia unida, en constante crecimiento espiritual y numérico, impactando a la sociedad con el poder transformador de la Palabra.",
+    desc: "Convertirnos en una sede de la IPUC en Neiva Huila donde fomentamos el crecimiento espiritual. Incentivar la visión de todos sus asistentes para cumplir la gran comisión, propendiendo la unidad de la fe, para crecimiento de todos en la sana doctrina, generando, ambientes principios en el desarrollo del ser humano en todas las áreas de su vida.",
     icon: "ri-eye-line",
   },
 ];

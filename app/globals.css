@@ -25,13 +25,41 @@
 
 body {
   background-color: var(--body);
-  overflow-x: hidden; /* evita scroll lateral */
+  overflow-x: hidden;
+}
+
+/* ================= SECTION-BG (CENTRADO TOTAL) ================= */
+
+.section-bg {
+  background-image: url("/img/banner.jpg"); 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  
+  /* Centrado Vertical y Horizontal */
+  min-height: 400px; /* Altura del banner */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center;     /* Centra horizontalmente */
+  text-align: center;      /* Centra el texto por si acaso */
+  
+  isolation: isolate;
+}
+
+.section-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* Capa oscura para legibilidad */
+  z-index: -1;
 }
 
 /* ================= HERO ================= */
 
 .hero {
-  height: calc(100vh - var(--navbar-height)); /* CLAVE */
+  height: calc(100vh - var(--navbar-height)); 
   padding-top: var(--navbar-height);
   display: flex;
   align-items: center;
@@ -95,14 +123,12 @@ body {
   align-items: center;
 }
 
-/* TARJETA SVG */
 .partner-card {
   height: 120px;
   min-width: 230px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: linear-gradient(
     180deg,
     rgba(255,255,255,.96),
@@ -110,15 +136,12 @@ body {
   );
   border-radius: 18px;
   padding: 20px 26px;
-
   box-shadow:
     0 8px 20px rgba(0,0,0,.08),
     inset 0 0 0 1px rgba(255,255,255,.6);
-
   transition: var(--transition-regular);
 }
 
-/* SVG */
 .partner-img {
   max-height: 120px;
   width: auto;
@@ -128,7 +151,6 @@ body {
   transition: var(--transition-regular);
 }
 
-/* Hover */
 .partner-card:hover {
   transform: translateY(-6px) scale(1.04);
   box-shadow: 0 16px 40px rgba(0,51,141,.25);
@@ -164,7 +186,7 @@ body {
 .title::before {
   content: '';
   position: absolute;
-  top: -20px; /* FIX REAL */
+  top: -20px; 
   left: 10%;
   width: 5px;
   height: 80px;
@@ -187,7 +209,6 @@ body {
   background-color: var(--prim);
 }
 
-/* --- CONTENEDOR DE LA LÍNEA DEL TIEMPO --- */
 .qualification__container {
     max-width: 800px;
     margin: 0 auto;
@@ -207,7 +228,6 @@ body {
     outline: none;
 }
 
-/* --- LÓGICA DE LA LÍNEA (ZIG-ZAG) --- */
 .qualification__data {
     display: grid;
     grid-template-columns: 1fr max-content 1fr;
@@ -219,7 +239,7 @@ body {
     display: inline-block;
     width: 14px;
     height: 14px;
-    background-color: #00338d; /* Color primario IPUC */
+    background-color: #00338d; 
     border-radius: 50%;
     z-index: 2;
 }
@@ -233,13 +253,12 @@ body {
     transform: translate(6px, -7px);
 }
 
-/* Evitar que la última línea sobresalga */
 .qualification__data:last-child .qualification__line {
     display: none;
 }
 
 .qualification__title {
-    font-family: var(--CalSans); /* Asegúrate que tu fuente esté en globals.css */
+    font-family: var(--CalSans); 
 }
 
 /* ================= PARALLAX ================= */
@@ -271,50 +290,27 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* Reducimos el padding vertical para que no se vea tan separado */
   padding-top: 4rem; 
   padding-bottom: 8rem;
 }
 
-/* MARCA DE AGUA VERTICAL - IPUC NEIVA CENTRAL */
 .service::after {
   content: "IPUC NEIVA CENTRAL";
   position: absolute;
   top: 50%;
-  left: -5%; /* Lo pegamos al borde izquierdo */
-  transform: translateY(-50%) rotate(-90deg); /* Rotación vertical */
-  
+  left: -5%; 
+  transform: translateY(-50%) rotate(-90deg);
   font-size: clamp(4rem, 12vw, 10rem); 
   line-height: 1;
   font-weight: 900;
   font-family: var(--Audiowide);
-  opacity: 0.05; /* Un poco más sutil para que no tape el texto */
+  opacity: 0.05; 
   color: var(--prim);
-
   z-index: -2;
   pointer-events: none;
   white-space: nowrap;
   letter-spacing: 10px;
-}
-
-/* OPCIONAL: Si quieres otra en el lado derecho para balancear */
-.service::before {
-  content: ""; /* Puedes dejarlo vacío o poner otro texto */
-  position: absolute;
-  right: -5%;
-  bottom: 0;
-  z-index: -1;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-/* AJUSTE PARA ELIMINAR ESPACIOS MUERTOS ENTRE SECCIONES */
-.title {
-  padding-top: 1rem !important; /* Reducimos el pt-8 original */
-}
-
-.title::before {
-  height: 150px; /* Reducido de 250px para acortar la línea visual */
+  user-select: none;
 }
 
 .service-img {
@@ -330,41 +326,26 @@ body {
   transition: all 0.3s ease;
 }
 
-.service-content h2,
-.service-content p {
-  position: relative;
-  z-index: 11;
-}
-
 .service-card:hover .service-img {
   transform: scale(0.9);
   opacity: 1;
 }
 
-.service-card:hover i {
-  transform: rotate(45deg);
-  background-color: var(--prim);
-  color: var(--white);
-  padding: 6px 10px;
-  border-radius: 50%;
-}
-
 .expertise-main-slider {
-  /* En lugar de absolute, usamos un margen negativo para subirlo */
-  margin-top: -100px; /* Ajusta este valor para subirlo más o menos */
+  margin-top: -100px;
   position: relative;
   z-index: 30;
   width: 100%;
-  height: 350px; /* Altura en móvil */
+  height: 350px;
   border-radius: 40px;
   overflow: hidden;
   box-shadow: 0 40px 80px rgba(0,0,0,0.3);
-  border: 5px solid #fff; /* Borde blanco para resaltar contra el azul */
+  border: 5px solid #fff;
 }
 
 /* Pricing Plans*/
 .pricing-wrap {
-  background-image: url(../public/img/pricing-banner.jpg);
+  background-image: url("/img/pricing-banner.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -386,7 +367,7 @@ body {
 /* Testimonial */
 .testimonial-image{
   height: 90vh;
-  background-image: url('../public/img/testimonial-img.jpg');
+  background-image: url('/img/testimonial-img.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -403,49 +384,7 @@ body {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* --- ANIMACIONES Y REFINAMIENTO --- */
-
-@keyframes bounce-slow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.animate-bounce-slow {
-    animation: bounce-slow 4s ease-in-out infinite;
-}
-
-/* Custom Swiper Pagination para que sea azul IPUC */
-.testimonial-swiper .swiper-pagination-bullet {
-    width: 12px;
-    height: 12px;
-    background: #ccc;
-    opacity: 1;
-    transition: all 0.3s ease;
-}
-
-.testimonial-swiper .swiper-pagination-bullet-active {
-    width: 30px;
-    border-radius: 6px;
-    background: var(--prim) !important;
-}
-
-/* Efecto de máscara para el mapa en Desktop */
-@media (min-width: 1024px) {
-    .map-container {
-        clip-path: circle(150% at 0% 50%); /* Opcional: para formas creativas */
-    }
-}
-
-/* Contraste del mapa */
-iframe {
-    filter: grayscale(1) contrast(1.1) brightness(0.9);
-}
-
-.group:hover iframe {
-    filter: grayscale(0) contrast(1) brightness(1);
-}
-
-/* ================= REUTILIZABLES (COMPONENTES) ================= */
+/* ================= REUTILIZABLES ================= */
 
 .btn-primary {
   background-color: var(--prim);
@@ -458,11 +397,6 @@ iframe {
   gap: 0.75rem;
   box-shadow: 0 20px 40px rgba(0, 51, 141, 0.3);
   transition: transform var(--transition-regular), background-color var(--transition-regular);
-}
-
-.btn-primary:hover {
-  transform: scale(1.05);
-  background-color: #00266b;
 }
 
 .badge {
@@ -486,44 +420,61 @@ iframe {
   margin-top: 1rem;
 }
 
-/* ================= AJUSTES DE MAPA Y TESTIMONIOS ================= */
-
-.map-iframe {
-  filter: grayscale(100%);
-  transition: filter 0.7s ease;
-}
-
-.map-container:hover .map-iframe {
-  filter: grayscale(0%);
-}
-
-.testimonial-text {
-  font-family: var(--GolosText);
-  text-wrap: balance;
-}
-
-/* Corrección de la marca de agua para que no interfiera */
-.service::after {
-  /* ... tu código existente ... */
-  user-select: none;
-  pointer-events: none;
-}
-
-/* Transición suave para las imágenes de testimonios */
-.testimonial-card footer img {
-  transition: transform 0.5s ease;
-}
-
-.testimonial-card:hover footer img {
-  transform: scale(1.1);
-}
-
 /* Banner */
 .banner {
-  background-image: url('../public/img/banner.jpg');
+  background-image: url('/img/banner.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+
+/* Newsletter */
+.newsletter:after {
+  content: '';
+  position: absolute;
+  background-image: url("/img/newsletter-bg.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.newsletter:before {
+  content: '';
+  position: absolute;
+  background-image: url("/img/newsletter-bg.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  transform: rotateY(180deg);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/*============= FOOTER ==============*/
+.footer{
+  background-image: url("/img/footer-bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: 5;
+}
+
+.footer:after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000d0;
+  z-index: -1;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -533,23 +484,15 @@ iframe {
     line-height: 1;
     letter-spacing: -2px;
   }
-
-  .text-outline {
-    -webkit-text-stroke: .5px rgba(255,255,255,.5);
-  }
-
-  .partner-card {
-    height: 100px;
-    padding: 16px 10px;
+  .newsletter:before{
+    display: none;
   }
 }
 
-/* Expertise */
-
 @media (min-width: 1024px) {
   .expertise-main-slider {
-    height: 500px; /* Altura en Desktop */
-    margin-top: -100px; /* Sube más en pantallas grandes */
+    height: 500px;
+    margin-top: -100px;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -562,13 +505,7 @@ iframe {
 }
 
 @keyframes Anim-scale {
-  0%{
-    transform: scale(0);
-  }
-  50%{
-    transform: scale(1);
-  }
-  100%{
-    transform: scale(1);
-  }
+  0%{ transform: scale(0); }
+  50%{ transform: scale(1); }
+  100%{ transform: scale(1); }
 }

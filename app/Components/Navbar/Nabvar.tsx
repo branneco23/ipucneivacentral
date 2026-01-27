@@ -22,36 +22,12 @@ const navLinks: NavLink[] = [
     href: "/UI-Components/Projects",
     dropdown: [
       { label: "Directiva Local", href: "/UI-Components/Projects" },
-      {
-        label: "Jóvenes",
-        href: "/UI-Components/Projects",
-        subMenu: [
-          { label: "Jóvenes", href: "/UI-Components/Projects/jovenes" },
-          { label: "Adolescentes", href: "/UI-Components/Projects/adolescentes" },
-          { label: "Preadolescentes", href: "/UI-Components/Projects/preadolescentes" },
-        ],
-      },
+      { label: "Jóvenes", href: "/UI-Components/Projects" },
       { label: "Directiva de Damas (Dorcas)", href: "/UI-Components/Projects" },
-      { label: "Directiva de Escuela Dominical", href: "/UI-Components/Projects" },
-      {
-        label: "Directiva de Misiones y Evangelismo",
-        href: "/UI-Components/Projects",
-        subMenu: [
-          { label: "BIS", href: "/UI-Components/Projects/bis" },
-          { label: "Misiones especiales", href: "/UI-Components/Projects/especiales" },
-          { label: "Misiones hospitalarias", href: "/UI-Components/Projects/hospitalarias" },
-          { label: "Misiones extranjeras", href: "/UI-Components/Projects/extranjeras" },
-        ],
-      },
+      { label: "Directiva de Escuela Dominical", href: "/UI-Components/Projects"},
+      { label: "Directiva de Misiones y Evangelismo", href: "/UI-Components/Projects"},
       { label: "Directiva de Alabanza", href: "/UI-Components/Projects" },
-      {
-        label: "Directiva de Comunicaciones",
-        href: "/UI-Components/Projects",
-        subMenu: [
-          { label: "Transmisión y proyección", href: "/UI-Components/Projects/transmision" },
-          { label: "Sonido", href: "/UI-Components/Projects/sonido" },
-        ],
-      },
+      { label: "Directiva de Comunicaciones", href: "/UI-Components/Projects"},
       { label: "Directiva de Obra Social", href: "/UI-Components/Projects" },
       { label: "Directiva de Ujieres", href: "/UI-Components/Projects" },
       { label: "Directiva de Intercesión", href: "/UI-Components/Projects" },

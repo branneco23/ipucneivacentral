@@ -6,6 +6,7 @@ import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "remixicon/fonts/remixicon.css"
 import Nabvar from "./Components/Navbar/Nabvar";
+import Footer from "./Components/Footer/Footer";
 
 const audiowide = Audiowide ({
   weight: "400",
@@ -42,6 +43,7 @@ export default function RootLayout({
       >
         <Nabvar/>
         {children}
+        <Footer/>
       </body>
     </html>
   );

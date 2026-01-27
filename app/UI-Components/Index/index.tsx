@@ -8,6 +8,7 @@ import Testimonial from "./Testimonial/page"
 import Faqs from "./Faq/page"
 import Banner from "./Banner/page"
 import Blog from "./Blogs/page"
+import Newsletter from "./Newsletter/page";
 
 export default function index() {
   return (
@@ -22,6 +23,7 @@ export default function index() {
         <Faqs/>
         <Banner/>
         <Blog/>
+        <Newsletter/>
     </>
   )
 }

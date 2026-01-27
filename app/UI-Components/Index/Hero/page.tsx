@@ -39,7 +39,7 @@ export default function Hero() {
               IPUC Neiva Central
             </span>
 
-            <h1 className="CalSans text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-white mb-8">
+            <h1 className="CalSans text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-white mb-7">
               ENCUÉNTRATE <br />
               <span className="text-outline">CON </span> <br />
               <span className="text-blue-500">JESUCRISTO...</span>

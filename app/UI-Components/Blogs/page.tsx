@@ -1,7 +1,9 @@
-export default function Blog() {
+import React from 'react'
+
+function page() {
   return (
-    <div className="px-[8%] lg:px-[12%] py-30 pb-20">
-      Blogs
-    </div>
+    <div>page</div>
   )
 }
+
+export default page

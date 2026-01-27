@@ -1,33 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
+// Importación de datos y estilos
+import { EXPERTISE_DATA, SLIDE_IMAGES } from "@/app/JsonData/ExpertiseData";
 import "swiper/css";
-
-import expertise2 from "@/public/img/expertise2.jpg";
-import expertise3 from "@/public/img/expertise3.jpg";
-import expertise4 from "@/public/img/expertise4.jpg";
-import expertiseSlide1 from "@/public/img/banner-slide-1.jpg";
-import expertiseSlide2 from "@/public/img/banner-slide-2.jpg";
-
-interface ExpertiseItem {
-  id: string;
-  title: string;
-  desc: string;
-  image: StaticImageData;
-}
-
-const EXPERTISE_DATA: ExpertiseItem[] = [
-  { id: "1", title: "Culto Oración y Enseñanza", desc: "Jueves, 15 de Enero 2026.", image: expertise2 },
-  { id: "2", title: "Culto de Escuela Dominical", desc: "Sábado, 17 de Enero 2026.", image: expertise3 },
-  { id: "3", title: "Culto de Escuela Dominical", desc: "Domingo, 18 de Enero 2026 ", image: expertise4 },
-  { id: "4", title: "Culto de Ujieres", desc: "Martes, 20 de Enero 2026.", image: expertise4 },
-];
-
-const SLIDE_IMAGES = [expertiseSlide1, expertiseSlide2];
 
 export default function Expertise() {
   const [isMounted, setIsMounted] = useState(false);
@@ -49,10 +29,7 @@ export default function Expertise() {
           <div className="w-full lg:w-2/3">
             <h2 className="CalSans text-4xl md:text-7xl text-white leading-tight">
               Construyendo el lugar perfecto <br />
-              <span className="text-white/40">
-                donde tu alma encuentra
-              </span>{" "}
-              su verdadera paz
+              <span className="text-white/40">donde tu alma encuentra</span> su verdadera paz
             </h2>
           </div>
         </header>
@@ -63,9 +40,7 @@ export default function Expertise() {
               key={item.id}
               className="group transition-all duration-500"
               style={{
-                transform: isMounted
-                  ? `translateY(calc(40px * ${idx}))`
-                  : "none",
+                transform: isMounted ? `translateY(calc(40px * ${idx}))` : "none",
               }}
             >
               <div className="relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl">
@@ -78,9 +53,7 @@ export default function Expertise() {
               </div>
 
               <div className="mt-8">
-                <h3 className="text-2xl CalSans text-white mb-3">
-                  {item.title}
-                </h3>
+                <h3 className="text-2xl CalSans text-white mb-3">{item.title}</h3>
                 <hr className="border-white/10 mb-4" />
                 <p className="text-gray-300 text-sm">{item.desc}</p>
               </div>
