@@ -261,28 +261,109 @@ body {
     font-family: var(--CalSans); 
 }
 
-/* ================= PARALLAX ================= */
+/* ================= STACK PARALLAX ================= */
 
-.Paralex-wrap {
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.paralex-stack {
   position: relative;
-  z-index: 1;
-  will-change: transform, opacity;
 }
 
-.Paralex-wrap::after {
-  content: '';
+.paralex-card {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paralex-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.65);
-  z-index: -1;
+  background: rgba(0, 0, 0, 0.55);
 }
 
-.Paralex-content {
-  height: 100vh;
+.paralex-content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1400px;
+  height: 85vh;
+  padding: 4rem;
+  border-radius: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
 }
+
+.paralex-content header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.paralex-tag {
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 0.5rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.paralex-number {
+  font-size: 6rem;
+  font-weight: 900;
+  opacity: 0.25;
+}
+
+.paralex-content footer h2 {
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.paralex-content footer p {
+  font-size: 1.25rem;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.paralex-btn {
+  margin-top: 2rem;
+  background: #00338d;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* ================= MODAL ================= */
+
+.paralex-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.paralex-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 1.5rem;
+}
+
 
 /* ================= SERVICES ================= */
 

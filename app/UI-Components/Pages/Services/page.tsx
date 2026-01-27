@@ -1,17 +1,15 @@
 "use client";
 import React, { useState, useMemo, useEffect } from 'react';
 import Accordion from "@/app/Components/Accordion/Accordion";
+import DevocionalBanner from "@/app/Components/DevocionalesBanner/DevocionalesBanner";
 import { CULTOS_ACORDEON, EVENTOS_ANUALES_2026 } from "@/app/JsonData/EventsData";
 
 export default function MainLanding() {
-  // 1. Calculamos el inicio de la semana actual al cargar
-  // Inicializamos con una fecha nula para evitar errores de hidratación (SSR)
   const [fechaReferencia, setFechaReferencia] = useState<Date | null>(null);
 
   useEffect(() => {
     const hoy = new Date();
     const inicioSemana = new Date(hoy);
-    // Ajustamos para que empiece en el domingo de la semana actual
     inicioSemana.setDate(hoy.getDate() - hoy.getDay());
     setFechaReferencia(inicioSemana);
   }, []);
@@ -32,10 +30,6 @@ export default function MainLanding() {
     setFechaReferencia(nuevaFecha);
   };
 
-  const formatearMes = (date: Date) => 
-    date.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }).toUpperCase();
-
-  // Función para saber si una fecha es HOY
   const esHoy = (date: Date) => {
     const hoy = new Date();
     return date.getDate() === hoy.getDate() &&
@@ -43,92 +37,124 @@ export default function MainLanding() {
            date.getFullYear() === hoy.getFullYear();
   };
 
-  if (!fechaReferencia) return null; // Evita parpadeos mientras carga la fecha
+  if (!fechaReferencia) return null;
 
   return (
-    <main className="relative bg-white pt-[calc(var(--navbar-height)+2rem)]">
-      <section className="px-[8%] py-16 grid lg:grid-cols-12 gap-16 items-start">
-        <div className="lg:col-span-5">
-          <h1 className="heading-primary mb-8">IPUC Neiva Central</h1>
-          <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-            <p className="text-sm text-blue-800 font-bold">Agenda de Actividades 2026</p>
+    // Agregamos overflow-x-hidden al contenedor padre para asegurar que nada se escape
+    <main className="relative bg-[#F8FAFC] pt-[calc(var(--navbar-height)+1rem)] md:pt-[calc(var(--navbar-height)+2rem)] overflow-x-hidden">
+      
+      {/* Hero Section - Padding responsivo para evitar el push lateral */}
+      <section className="px-5 sm:px-10 md:px-[8%] py-10 md:py-16 grid lg:grid-cols-12 gap-10 md:gap-16 items-center max-w-screen-2xl mx-auto">
+        <div className="lg:col-span-5 text-center lg:text-left">
+          <h1 className="text-4xl md:text-6xl font-black text-[#00338d] mb-4 md:mb-6 uppercase tracking-tighter italic leading-tight">
+            IPUC <br className="hidden md:block"/> Neiva Central
+          </h1>
+          <div className="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg shadow-blue-200">
+            <p className="text-xs font-bold tracking-widest uppercase">Agenda 2026</p>
           </div>
         </div>
-        <div className="lg:col-span-7 space-y-4">
+        <div className="lg:col-span-7 space-y-3 md:space-y-4 w-full">
           {CULTOS_ACORDEON.map((culto) => (
             <Accordion key={culto.id} titulo={culto.titulo} contenido={culto.contenido} />
           ))}
         </div>
       </section>
 
-      <section className="px-[8%] py-10 bg-gray-50">
+      <div className="px-4 sm:px-10 md:px-[8%] max-w-screen-2xl mx-auto">
+        <DevocionalBanner />
+      </div>
+
+      {/* CALENDARIO SEMANAL */}
+      <section className="px-4 sm:px-10 md:px-[8%] py-12 max-w-screen-2xl mx-auto">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="heading-primary text-3xl">{formatearMes(diasDeLaSemana[0])}</h2>
-            <div className="flex gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-200">
-              <button onClick={() => cambiarSemana(-1)} className="p-3 hover:bg-gray-100 rounded-xl transition-colors font-bold text-gray-600">Anterior</button>
-              <button onClick={() => cambiarSemana(1)} className="p-3 hover:bg-gray-100 rounded-xl transition-colors font-bold text-gray-600">Siguiente</button>
+          
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-800 uppercase tracking-tight">
+              {diasDeLaSemana[0].toLocaleDateString('es-ES', { month: 'long' })}
+              <span className="text-blue-600 ml-2">2026</span>
+            </h2>
+            <div className="flex w-full md:w-auto p-1.5 bg-white rounded-2xl shadow-xl border border-slate-100">
+              <button onClick={() => cambiarSemana(-1)} className="flex-1 md:flex-none px-6 py-3 hover:bg-slate-50 rounded-xl font-bold text-slate-500 transition-all text-sm uppercase">
+                Anterior
+              </button>
+              <button onClick={() => cambiarSemana(1)} className="flex-1 md:flex-none px-6 py-3 bg-[#00338d] text-white rounded-xl font-bold transition-all text-sm uppercase">
+                Siguiente
+              </button>
             </div>
           </div>
 
-          <div className="overflow-x-auto border border-gray-200 rounded-[2.5rem] bg-white shadow-xl">
-            <div className="min-w-[900px]">
-              {/* Cabecera Días */}
-              <div className="grid grid-cols-7 border-b border-gray-100 bg-gray-50/50">
-                {diasDeLaSemana.map((dia, idx) => {
-                  const checkHoy = esHoy(dia);
-                  return (
-                    <div key={idx} className={`p-6 text-center border-r border-gray-100 last:border-0 ${checkHoy ? 'bg-gray-100/50' : ''}`}>
-                      <p className={`text-[10px] font-black uppercase ${checkHoy ? 'text-[#00338d]' : 'text-gray-400'}`}>
-                        {dia.toLocaleDateString('es-ES', { weekday: 'short' })}
-                      </p>
-                      <p className={`text-3xl CalSans mt-2 inline-flex items-center justify-center w-12 h-12 rounded-full transition-colors ${
-                        checkHoy ? 'bg-[#00338d] text-white' : 'text-gray-800'
-                      }`}>
-                        {dia.getDate()}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Cuerpo de Eventos */}
-              <div className="grid grid-cols-7 min-h-[400px]">
-                {diasDeLaSemana.map((dia, idx) => {
-                  const anio = dia.getFullYear();
-                  const mes = String(dia.getMonth() + 1).padStart(2, '0');
-                  const diaNum = String(dia.getDate()).padStart(2, '0');
-                  const fechaStr = `${anio}-${mes}-${diaNum}`;
-                  const checkHoy = esHoy(dia);
-
-                  const eventosDelDia = EVENTOS_ANUALES_2026.filter(e => {
-                    if (e.fechaFin) {
-                      return fechaStr >= e.fecha && fechaStr <= e.fechaFin;
-                    }
-                    return e.fecha === fechaStr;
-                  });
-
-                  return (
-                    <div key={idx} className={`p-4 border-r border-gray-50 last:border-0 transition-colors ${
-                      checkHoy ? 'bg-gray-50' : 'hover:bg-gray-50/30'
-                    }`}>
-                      <div className="space-y-3">
-                        {eventosDelDia.map((evento) => (
-                          <div 
-                            key={evento.id}
-                            className="p-3 rounded-xl text-white shadow-sm hover:scale-[1.02] transition-transform cursor-default"
-                            style={{ backgroundColor: evento.color || '#2563eb' }}
-                          >
-                            <p className="text-[9px] font-bold opacity-90 uppercase tracking-tighter">
-                              {evento.inicio} - {evento.fin}
-                            </p>
-                            <p className="text-[11px] font-bold leading-tight mt-1">{evento.titulo}</p>
-                          </div>
-                        ))}
+          {/* CONTENEDOR MAESTRO DEL CALENDARIO */}
+          <div className="bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+            
+            {/* Scroll horizontal solo activo en escritorio si es necesario, 
+                pero en móvil se comporta como bloque gracias a 'md:overflow-visible' */}
+            <div className="overflow-x-auto md:overflow-x-visible">
+              
+              {/* Ajustamos el min-width para que solo afecte a tablets/desktop */}
+              <div className="min-w-full md:min-w-[900px]">
+                
+                {/* Cabecera Días (Desktop) */}
+                <div className="hidden md:grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
+                  {diasDeLaSemana.map((dia, idx) => {
+                    const checkHoy = esHoy(dia);
+                    return (
+                      <div key={idx} className={`p-6 text-center border-r border-slate-100 last:border-0 ${checkHoy ? 'bg-blue-50/50' : ''}`}>
+                        <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${checkHoy ? 'text-blue-600' : 'text-slate-400'}`}>
+                          {dia.toLocaleDateString('es-ES', { weekday: 'short' })}
+                        </p>
+                        <p className={`text-3xl font-black inline-flex items-center justify-center w-12 h-12 rounded-xl ${
+                          checkHoy ? 'bg-[#00338d] text-white shadow-lg' : 'text-slate-800'
+                        }`}>
+                          {dia.getDate()}
+                        </p>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
+
+                {/* Cuerpo de Eventos: Stack vertical en móvil, Grid en Desktop */}
+                <div className="grid grid-cols-1 md:grid-cols-7">
+                  {diasDeLaSemana.map((dia, idx) => {
+                    const fechaStr = dia.toISOString().split('T')[0];
+                    const checkHoy = esHoy(dia);
+                    const eventosDelDia = EVENTOS_ANUALES_2026.filter(e => {
+                      if (e.fechaFin) return fechaStr >= e.fecha && fechaStr <= e.fechaFin;
+                      return e.fecha === fechaStr;
+                    });
+
+                    return (
+                      <div key={idx} className={`p-4 md:p-6 border-b md:border-b-0 md:border-r border-slate-100 last:border-0 ${
+                        checkHoy ? 'bg-blue-50/20' : ''
+                      }`}>
+                        {/* Indicador de día para móvil */}
+                        <div className="flex md:hidden items-center justify-between mb-4">
+                          <span className={`font-black uppercase text-sm tracking-widest ${checkHoy ? 'text-blue-600' : 'text-slate-400'}`}>
+                            {dia.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric' })}
+                          </span>
+                          {checkHoy && <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>}
+                        </div>
+
+                        <div className="space-y-3">
+                          {eventosDelDia.map((evento) => (
+                            <div key={evento.id} 
+                                 className="p-4 rounded-2xl text-white shadow-sm border border-black/5"
+                                 style={{ backgroundColor: evento.color || '#00338d' }}>
+                              <p className="text-[9px] font-black opacity-80 uppercase mb-1">
+                                {evento.inicio} - {evento.fin}
+                              </p>
+                              <p className="text-[12px] font-bold leading-tight uppercase italic">
+                                {evento.titulo}
+                              </p>
+                            </div>
+                          ))}
+                          {eventosDelDia.length === 0 && (
+                            <div className="hidden md:block py-10 opacity-0 italic">Sin eventos</div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
