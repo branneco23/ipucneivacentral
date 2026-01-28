@@ -9,19 +9,17 @@ interface ParalexItem {
   tag: string;
   number: string;
   title: React.ReactNode;
-  location: string;
+  hours: string;
   year: string;
   bg: string;
 }
 
 const PARALEX_DATA: ParalexItem[] = [
-  { id: 1, tag: "Próximos Eventos", number: "01", title: <>Convención Nacional <br /> de Jóvenes</>, location: "Movistar Arena, Bogotá", year: "2026", bg: "/img/Paralex1.jpg" },
-  { id: 2, tag: "Anuncios Local", number: "02", title: <>Escuela Dominical <br /> Especial</>, location: "Sede Central, Neiva", year: "2026", bg: "/img/Paralex2.jpg" },
-  { id: 3, tag: "Misiones", number: "03", title: <>Impacto Evangelístico <br /> Huila</>, location: "Zonas Rurales", year: "2026", bg: "/img/Paralex3.jpg" },
-  { id: 4, tag: "Misiones", number: "03", title: <>Impacto Evangelístico <br /> Huila</>, location: "Zonas Rurales", year: "2026", bg: "/img/Paralex3.jpg" },
-  { id: 5, tag: "Misiones", number: "03", title: <>Impacto Evangelístico <br /> Huila</>, location: "Zonas Rurales", year: "2026", bg: "/img/Paralex3.jpg" },
-  { id: 6, tag: "Misiones", number: "03", title: <>Impacto Evangelístico <br /> Huila</>, location: "Zonas Rurales", year: "2026", bg: "/img/Paralex3.jpg" },
-  { id: 7, tag: "Misiones", number: "03", title: <>Impacto Evangelístico <br /> Huila</>, location: "Zonas Rurales", year: "2026", bg: "/img/Paralex3.jpg" },
+  { id: 1, tag: "Próximos Eventos", number: "01", title: <>Devocional <br /> un clamor por nuestros hijos</>, hours: "04:30AM", year: "2026", bg: "/img/Paralex-1.jpg" },
+  { id: 2, tag: "Anuncios Local", number: "02", title: <>Campaña <br /> Evangelistica</>, hours: "06:30AM", year: "2026", bg: "/img/Paralex-2.jpg" },
+  { id: 3, tag: "Comite de Protemplo", number: "03", title: <>Culto de <br />Protemplo</>, hours: "19:00PM", year: "2026", bg: "/img/Paralex-3.jpg" },
+  { id: 4, tag: "Comite de Obra Social", number: "04", title: <>Culto dirigido por <br />Obra Social</>, hours: "19:00PM", year: "2026", bg: "/img/Paralex-4.jpg" },
+  { id: 5, tag: "Comite de Misiones", number: "05", title: <>Día <br />Misionero</>, hours: "09:30AM", year: "2026", bg: "/img/Paralex-5.jpg" },
 ];
 
 export default function AnunciosSlider() {
@@ -97,7 +95,7 @@ export default function AnunciosSlider() {
                 <div>
                   <h3 className="text-white text-3xl md:text-4xl font-bold mb-4 leading-tight">{item.title}</h3>
                   <div className="flex items-center gap-2 text-white/70">
-                    <span className="text-sm">📍 {item.location}</span>
+                    <span className="text-sm">📍 {item.hours}</span>
                   </div>
                 </div>
               </div>
@@ -141,7 +139,7 @@ export default function AnunciosSlider() {
                   {selectedItem.title}
                 </h2>
                 <div className="space-y-4 text-white/60">
-                  <p>📍 {selectedItem.location}</p>
+                  <p>📍 {selectedItem.hours}</p>
                   <p>📅 {selectedItem.year}</p>
                   <p className="mt-4 text-sm leading-relaxed">
                     Únete a nosotros en este evento especial. Haz clic abajo para recibir más información o registrar tu asistencia.
