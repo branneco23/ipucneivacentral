@@ -16,10 +16,10 @@ export interface ExpertiseItem {
 }
 
 export const EXPERTISE_DATA: ExpertiseItem[] = [
-  { id: "1", title: "Culto de Ujieres", desc: "Martes, 20 de Enero 2026.", image: expertise3 },
-  { id: "2", title: "Culto Dirigido Somos Rayos de Luz Al Mundo", desc: "Juevés, 22 de Enero 2026", image: expertise4 },
-  { id: "3", title: "Culto de Protemplo", desc: "Sabado, 24 de Enero 2026.", image: expertise4 },
-  { id: "4", title: "Culto de Escuela Dominical", desc: "Domingo, 25 de Enero 2026.", image: expertise2 },
+  { id: "1", title: "Culto Dirigido Somos Rayos de Luz Al Mundo", desc: "Juevés, 22 de Enero 2026", image: expertise4 },
+  { id: "2", title: "Culto de Protemplo", desc: "Sabado, 24 de Enero 2026.", image: expertise4 },
+  { id: "3", title: "Culto de Escuela Dominical", desc: "Domingo, 25 de Enero 2026.", image: expertise2 },
+  { id: "4", title: "Culto de Obra Social", desc: "Martes, 27 de Enero 2026.", image: expertise2 },
 ];
 
 export const SLIDE_IMAGES = [expertiseSlide1, expertiseSlide2];
