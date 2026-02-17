@@ -7,6 +7,7 @@ export interface ParalexItem {
   number: string;
   title: React.ReactNode; // Permite strings o etiquetas <br />
   location: string;
+  hours: string;
   year: string;           // Nombre más descriptivo que 'hours'
   bg: string;
 }
@@ -21,8 +22,9 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     number: "01",
     title: "Un Clamor por Nuestros Hijos",
     location: "Vía Plataforma Meet",
+    hours: "04:30",
     year: "2026",
-    bg: `${IMG_PATH}/Paralex-1.jpg`,
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060544/Paralex-1_kktfg8.jpg`,
   },
   {
     id: 2,
@@ -30,8 +32,9 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     number: "02",
     title: "Gran Impacto Evangelístico",
     location: "Diferentes Sectores",
+    hours: "18:30",
     year: "2026",
-    bg: `${IMG_PATH}/Paralex-2.jpg`,
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060546/Paralex-2_vhpjbj.png`,
   },
   {
     id: 3,
@@ -39,8 +42,9 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     number: "03",
     title: "Culto Dirigido por Protemplo",
     location: "Sede Central de Neiva",
+    hours: "19:00",
     year: "2026",
-    bg: `${IMG_PATH}/Paralex-3.jpg`,
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060547/Paralex-3_tkkcnx.png`,
   },
   {
     id: 4,
@@ -48,16 +52,18 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     number: "04",
     title: "Culto Dirigido por Obra Social",
     location: "Sede Central de Neiva",
+    hours: "19:00",
     year: "2026",
-    bg: `${IMG_PATH}/Paralex-4.jpg`,
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060546/Paralex-4_llcpey.jpg`,
   },
   {
     id: 5,
     tag: "Misiones",
-    number: "05", // Corregido de 04 a 05
+    number: "05",
     title: "Día Misionero",
     location: "Sede Central de Neiva",
+    hours: "09:30",
     year: "2026",
-    bg: `${IMG_PATH}/Paralex-5.jpg`,
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060545/Paralex-5_jawrse.jpg`,
   },
 ];

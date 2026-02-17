@@ -31,7 +31,7 @@ body {
 /* ================= SECTION-BG (CENTRADO TOTAL) ================= */
 
 .section-bg {
-  background-image: url("/img/banner.jpg"); 
+  background-image: url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060570/banner_u31gdk.png"); 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -83,7 +83,7 @@ body {
       rgba(0,0,0,.45),
       rgba(0,0,0,.15)
     ),
-    url("/Hero-bg.png");
+    url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg");
   background-size: cover;
   background-position: center;
   z-index: -1;
@@ -426,7 +426,7 @@ body {
 
 /* Pricing Plans*/
 .pricing-wrap {
-  background-image: url("/img/pricing-banner.jpg");
+  background-image: url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060546/pricing-banner_kyk0i6.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -503,7 +503,7 @@ body {
 
 /* Banner */
 .banner {
-  background-image: url('/img/banner.jpg');
+  background-image: url('https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060570/banner_u31gdk.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -513,7 +513,7 @@ body {
 .newsletter:after {
   content: '';
   position: absolute;
-  background-image: url("/img/newsletter-bg.png");
+  background-image: url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060547/newsletter-bg_iuxtuo.png");
   background-repeat: no-repeat;
   background-position: right center;
   bottom: 0;
@@ -526,7 +526,7 @@ body {
 .newsletter:before {
   content: '';
   position: absolute;
-  background-image: url("/img/newsletter-bg.png");
+  background-image: url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060547/newsletter-bg_iuxtuo.png");
   background-repeat: no-repeat;
   background-position: right center;
   transform: rotateY(180deg);
@@ -539,7 +539,7 @@ body {
 
 /*============= FOOTER ==============*/
 .footer{
-  background-image: url("/img/footer-bg.jpg");
+  background-image: url("https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060546/footer-bg_wxy7dk.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

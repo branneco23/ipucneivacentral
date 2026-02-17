@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   output: 'export', // <--- Añade esto
   images: {
     unoptimized: true, // Requerido para exportación estática
+    remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com"}
+    ]
   },
 };
 

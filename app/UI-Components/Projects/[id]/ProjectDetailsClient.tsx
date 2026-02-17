@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ComitesData } from '@/app/JsonData/InfoComitesData';
@@ -9,127 +10,183 @@ interface ProjectDetailsProps {
 }
 
 export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
-  // 1. Acceso a datos con validación
   const data = ComitesData[id];
+  // Estado para controlar el video en el Modal
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-  // 2. Estado de error (No encontrado) con mejor semántica
   if (!data) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white p-6" role="alert">
-        <h1 className="text-4xl md:text-5xl font-black mb-4 text-center">¡Comité no encontrado!</h1>
-        <p className="mb-10 opacity-60 text-center max-w-md">
-          Lo sentimos, no hemos podido encontrar información configurada para el comité: <span className="text-blue-400 font-mono">{id}</span>
-        </p>
-        <Link 
-          href="/" 
-          className="bg-blue-600 px-10 py-4 rounded-full hover:bg-blue-500 transition-all shadow-[0_10px_30px_rgba(37,99,235,0.3)] font-bold"
-        >
-          Volver al Inicio
-        </Link>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 text-white p-6">
+        <h1 className="text-4xl font-black mb-4">¡Comité no encontrado!</h1>
+        <Link href="/comites" className="bg-blue-600 px-10 py-4 rounded-full font-bold">Volver</Link>
       </div>
     );
   }
 
+  const tieneVideos = data.youtubeIds && data.youtubeIds.length > 0;
+  const videoPrincipal = tieneVideos ? data.youtubeIds![0] : null;
+  const videosSecundarios = tieneVideos ? data.youtubeIds!.slice(1) : [];
+
   return (
-    <main className="bg-white min-h-screen selection:bg-blue-100">
-      {/* 3. Banner Principal Optimizado */}
-      <section className="relative h-[50vh] min-h-[400px] bg-blue-950 flex items-center justify-center overflow-hidden">
-        {data.fotoGrupal && (
-          <Image 
-            src={data.fotoGrupal} 
-            alt={`Banner de ${data.nombre}`}
-            fill
-            priority
-            className="absolute inset-0 object-cover opacity-40 select-none"
+    <main className="bg-white min-h-screen selection:bg-blue-100 pt-[90px] lg:pt-[120px]">
+
+      {/* MODAL / POPUP DE VIDEO */}
+      {selectedVideo && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+          {/* Fondo oscuro con desenfoque */}
+          <div
+            className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm"
+            onClick={() => setSelectedVideo(null)}
           />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 to-blue-950/80" />
-        
-        <div className="relative z-10 text-center px-6 max-w-4xl">
-          <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter drop-shadow-2xl">
-            {data.nombre}
-          </h1>
-          <div className="mt-8 bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
-             <p className="text-blue-100 italic text-xl md:text-2xl leading-relaxed">
-              &ldquo;{data.versiculo}&rdquo;
-             </p>
+
+          {/* Contenedor del Video */}
+          <div className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+            {/* Botón cerrar */}
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-red-600 text-white rounded-full transition-colors flex items-center justify-center"
+            >
+              <i className="ri-close-line text-2xl"></i>
+            </button>
+
+            <iframe
+              width="100%" height="100%"
+              src={`https://www.youtube.com/embed/${selectedVideo.split('&')[0]}?autoplay=1`}
+              frameBorder="0"
+              allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
+            ></iframe>
           </div>
+        </div>
+      )}
+
+      {/* BANNER PRINCIPAL */}
+      <section className="relative h-[40vh] min-h-[350px] bg-blue-950 flex items-center justify-center overflow-hidden">
+        {data.fotoGrupal && (
+          <Image src={data.fotoGrupal} alt={data.nombre} fill priority className="absolute inset-0 object-cover opacity-30" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 to-blue-950/90" />
+        <div className="relative z-10 text-center px-6">
+          <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-4">{data.nombre}</h1>
+          <p className="text-blue-100 italic text-lg max-w-2xl mx-auto">&ldquo;{data.versiculo}&rdquo;</p>
         </div>
       </section>
 
-      <div className="container mx-auto px-6 lg:px-[8%] py-20">
-        {/* 4. Misión y Visión con grid responsivo */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 mb-28">
-          <article className="bg-slate-50 p-10 rounded-[3rem] border-b-[12px] border-blue-600 shadow-sm hover:shadow-xl transition-shadow duration-500">
-            <h2 className="text-2xl font-black text-slate-800 uppercase mb-5 italic flex items-center gap-3">
-              <span className="w-8 h-1 bg-blue-600 rounded-full" /> Nuestra Misión
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed font-medium">{data.mision}</p>
-          </article>
-          
-          <article className="bg-slate-50 p-10 rounded-[3rem] border-b-[12px] border-orange-500 shadow-sm hover:shadow-xl transition-shadow duration-500">
-            <h2 className="text-2xl font-black text-slate-800 uppercase mb-5 italic flex items-center gap-3">
-              <span className="w-8 h-1 bg-orange-500 rounded-full" /> Nuestra Visión
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed font-medium">{data.vision}</p>
-          </article>
-        </div>
+      <div className="container mx-auto px-6 lg:px-[10%] py-20">
 
-        {/* 5. Directiva con Image Optimization */}
-        <section aria-label="Directiva">
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 text-center uppercase mb-16 italic tracking-tight">
-            Directiva Actual
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-32">
-            {data.integrantes.map((persona) => (
-              <div key={persona.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-50 group hover:-translate-y-2 transition-all duration-500">
-                <div className="h-80 relative overflow-hidden">
-                  <Image 
-                    src={persona.foto} 
-                    alt={persona.nombre}
-                    fill
-                    className="object-cover group-hover:scale-110 transition duration-700"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute top-6 left-6 bg-blue-600 text-white text-xs px-4 py-1.5 rounded-full font-black uppercase shadow-lg z-10">
-                     {persona.cargo}
+        {/* SECCIÓN DE VIDEOS */}
+        {tieneVideos && (
+          <section className="mb-28">
+            <h2 className="text-3xl font-black text-slate-900 uppercase mb-12 flex items-center gap-4">
+              <i className="ri-video-line text-red-600"></i> Transmisiones y Media
+            </h2>
+
+            <div className="grid grid-cols-1 gap-8">
+              {/* 1. VIDEO PRINCIPAL */}
+              <div className="w-full">
+                <p className="text-xs font-black text-red-600 mb-3 tracking-widest uppercase">● Video Principal / En Vivo</p>
+                <VideoThumbnail
+                  videoId={videoPrincipal!}
+                  isMain={true}
+                  onClick={() => setSelectedVideo(videoPrincipal)}
+                />
+              </div>
+
+              {/* 2. VIDEOS SECUNDARIOS */}
+              {videosSecundarios.length > 0 && (
+                <div className="mt-8">
+                  <p className="text-xs font-black text-slate-400 mb-6 tracking-widest uppercase italic">Contenido Anterior</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {videosSecundarios.map((vId, index) => (
+                      <VideoThumbnail
+                        key={index}
+                        videoId={vId}
+                        isMain={false}
+                        onClick={() => setSelectedVideo(vId)}
+                      />
+                    ))}
                   </div>
                 </div>
-                <div className="p-8 text-center bg-white">
-                  <h3 className="text-2xl font-bold text-slate-800 tracking-tight">{persona.nombre}</h3>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* MISIÓN Y VISIÓN */}
+        <div className="grid md:grid-cols-2 gap-8 mb-28">
+          <div className="bg-slate-50 p-10 rounded-[2.5rem] border-b-[10px] border-blue-600">
+            <h3 className="font-black uppercase mb-4 text-slate-800">Misión</h3>
+            <p className="text-slate-600 leading-relaxed">{data.mision}</p>
+          </div>
+          <div className="bg-slate-50 p-10 rounded-[2.5rem] border-b-[10px] border-orange-500">
+            <h3 className="font-black uppercase mb-4 text-slate-800">Visión</h3>
+            <p className="text-slate-600 leading-relaxed">{data.vision}</p>
+          </div>
+        </div>
+
+        {/* DIRECTIVA */}
+        {/* DIRECTIVA */}
+        <section className="mb-32">
+          <h2 className="text-4xl font-black text-center uppercase mb-16 italic">Directiva Actual</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {data.integrantes.map((persona) => (
+              <div key={persona.id} className="group bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all relative h-[450px]">
+
+                {/* Contenedor de la Imagen */}
+                <div className="absolute inset-0 w-full h-full bg-slate-50">
+                  <Image
+                    src={persona.foto}
+                    alt={persona.nombre}
+                    fill
+                    className="object-contain p-2" // "object-contain" evita que la persona se corte
+                  />
                 </div>
+
+                {/* Capa de Gradiente para legibilidad (Opcional pero recomendado) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                {/* Contenedor de Texto superpuesto al frente */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+                  <p className="text-[10px] font-black text-blue-400 uppercase mb-1 drop-shadow-md">
+                    {persona.cargo}
+                  </p>
+                  <h4 className="text-xl font-bold text-white drop-shadow-lg">
+                    {persona.nombre}
+                  </h4>
+                </div>
+
               </div>
             ))}
           </div>
         </section>
-
-        {/* 6. Galería de Eventos Condicional */}
-        {data.eventos && data.eventos.length > 0 && (
-          <section className="pt-10 border-t border-slate-100">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 text-center uppercase mb-16 italic tracking-tight">
-              Galería de Eventos
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {data.eventos.map((ev) => (
-                <div key={ev.id} className="aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative group">
-                  <Image 
-                    src={ev.imagen} 
-                    alt={ev.titulo} 
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-10">
-                    <p className="text-white font-black text-2xl uppercase tracking-tighter transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      {ev.titulo}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
       </div>
     </main>
+  );
+}
+
+// COMPONENTE DE MINIATURA (Refactorizado)
+function VideoThumbnail({ videoId, isMain, onClick }: { videoId: string, isMain: boolean, onClick: () => void }) {
+  const cleanId = videoId.split('&')[0];
+
+  return (
+    <div
+      onClick={onClick}
+      className={`relative aspect-video w-full rounded-[2rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer group shadow-lg border border-slate-100 bg-slate-200`}
+    >
+      <img
+        src={`https://img.youtube.com/vi/${cleanId}/maxresdefault.jpg`}
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        alt="Thumbnail"
+        onError={(e) => {
+          // Fallback si la imagen maxres no existe
+          e.currentTarget.src = `https://img.youtube.com/vi/${cleanId}/mqdefault.jpg`;
+        }}
+      />
+      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all flex items-center justify-center">
+        <div className={`${isMain ? 'w-20 h-20' : 'w-14 h-14'} bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform`}>
+          <i className={`ri-play-fill text-white ${isMain ? 'text-5xl' : 'text-3xl'}`}></i>
+        </div>
+      </div>
+    </div>
   );
 }

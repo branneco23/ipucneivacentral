@@ -3,28 +3,28 @@
     {
       "id": "1",
       "desc": "Un sitio donde se alaba y se adora al Dios altísimo.",
-      "image": "/img/team-1.jpg",
+      "image": "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771003157/ChatGPT_Image_13_feb_2026_12_18_56_wcjl4j.png",
       "name": "Rigoberto Hernández",
       "role": "Hermano"
     },
     {
       "id": "2",
       "desc": "Me encantó porque allí se predica sana doctrina y la comunidad es muy amable y el lugar es acogedor.",
-      "image": "/img/team-2.jpg",
+      "image": "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771003281/ChatGPT_Image_13_feb_2026_12_20_44_jqslp4.png",
       "name": "Beatriz Herrera Lizcano",
       "role": "Hermana"
     },
     {
       "id": "3",
       "desc": "Muy buen lugar para visitar en familia.",
-      "image": "/img/team-2.jpg",
+      "image": "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771002935/ChatGPT_Image_13_feb_2026_12_15_03_hjcwqs.png",
       "name": "Yhonfrey Cerón Álvarez",
       "role": "Amigo"
     },
     {
       "id": "4",
       "desc": "Un lugar único donde se va a adorar al rey Jesucristo.",
-      "image": "/img/team-2.jpg",
+      "image": "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771003047/ChatGPT_Image_13_feb_2026_12_17_02_ft3ysj.png",
       "name": "Elisabeth Sarria",
       "role": "Hermana"
     }

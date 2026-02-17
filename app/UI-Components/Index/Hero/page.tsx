@@ -9,7 +9,7 @@ import { Autoplay } from "swiper/modules";
 // Estilos de Swiper
 import "swiper/css";
 
-// Importación de assets - Mapeo para mayor escalabilidad
+// Importación de assets
 const PARTNERS = Array.from({ length: 9 }, (_, i) => ({
   id: i + 1,
   src: `/img/partner${i + 1}.svg`,
@@ -62,19 +62,20 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* SECCIÓN DE LOGOS (PARTNERS) */}
-      <section className="px-[8%] lg:px-[12%] py-20 bg-[#fcfcfc] border-y border-gray-100" aria-label="Nuestras alianzas">
+      {/* SECCIÓN DE LOGOS (PARTNERS) CON ICONOS MÁS GRANDES */}
+      <section className="px-[8%] lg:px-[12%] py-24 bg-[#fcfcfc] border-y border-gray-100" aria-label="Nuestras alianzas">
         <Swiper
-          spaceBetween={30}
+          spaceBetween={40} // Más espacio entre logos
           loop={true}
+          centeredSlides={true}
           autoplay={{ 
-            delay: 3000, 
+            delay: 2500, 
             disableOnInteraction: false,
             pauseOnMouseEnter: true 
           }}
           modules={[Autoplay]}
           breakpoints={{
-            0: { slidesPerView: 2, spaceBetween: 20 },
+            0: { slidesPerView: 2 },
             640: { slidesPerView: 3 },
             1024: { slidesPerView: 4 },
             1280: { slidesPerView: 5 },
@@ -83,14 +84,15 @@ export default function Hero() {
         >
           {PARTNERS.map((partner) => (
             <SwiperSlide key={partner.id}>
-              <div className="flex justify-center items-center py-4">
-                <div className="bg-white border border-gray-50 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 group">
+              <div className="flex justify-center items-center py-6">
+                {/* Contenedor más grande y con mejor padding */}
+                <div className="bg-white border border-gray-100 w-full max-w-[220px] aspect-[3/2] flex items-center justify-center rounded-[2rem] shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-500 group">
                   <Image
                     src={partner.src}
                     alt={partner.alt}
-                    width={160}
-                    height={60}
-                    className="grayscale group-hover:grayscale-0 transition-all duration-500 opacity-50 group-hover:opacity-100 object-contain h-12 w-auto"
+                    width={200} // Aumentado
+                    height={100} // Aumentado
+                    className="grayscale group-hover:grayscale-0 transition-all duration-700 opacity-40 group-hover:opacity-100 object-contain w-[75%] h-auto transform group-hover:scale-110"
                   />
                 </div>
               </div>

@@ -6,7 +6,9 @@ import Image, { StaticImageData } from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 // --- DATOS Y TIPOS ---
-import { HISTORY_DATA, PastorHistory, HitoHistory } from "@/app/JsonData/HistoryData";
+// Corregido: Se elimina la importación individual de 'pastores' e 'hitos' 
+// ya que están dentro de HISTORY_DATA
+import { HISTORY_DATA } from "@/app/JsonData/HistoryData";
 import AboutImg1 from "@/public/img/AboutImg1.jpg";
 import AboutImg2 from "@/public/img/AboutImg2.jpg";
 import AboutImg3 from "@/public/img/AboutImg3.jpg";
@@ -26,7 +28,7 @@ const GALLERY_IMAGES = [
 const STATS_DATA = [
   { start: 1956, end: 2026, suffix: "", title: "Años de trayectoria", desc: "Trayectoria del evangelio a los hogares durante décadas." },
   { start: 0, end: 70, suffix: "+", title: "Años predicando", desc: "Trabajando activamente en la formación espiritual." },
-  { start: 0, end: 200, endVal: 200, suffix: "+", title: "Hermanos asistentes", desc: "Hermanos que se congregan en la sede Central." },
+  { start: 0, end: 200, suffix: "+", title: "Hermanos asistentes", desc: "Hermanos que se congregan en la sede Central." },
   { start: 0, end: 50, suffix: "+", title: "Amigos asistentes", desc: "Amigos que asisten a los servicios." },
 ];
 
@@ -38,7 +40,7 @@ const fadeUp = {
 
 export default function About() {
   const [activeTab, setActiveTab] = useState<HistoryTab>("PASTORES");
-  const [selectedImg, setSelectedImg] = useState<{src: StaticImageData, alt: string} | null>(null);
+  const [selectedImg, setSelectedImg] = useState<{ src: StaticImageData, alt: string } | null>(null);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -47,7 +49,7 @@ export default function About() {
   }, []);
 
   // Handlers memorizados
-  const openImage = useCallback((img: {src: StaticImageData, alt: string}) => setSelectedImg(img), []);
+  const openImage = useCallback((img: { src: StaticImageData, alt: string }) => setSelectedImg(img), []);
   const closeImage = useCallback(() => setSelectedImg(null), []);
 
   if (!isMounted) return null;
@@ -70,8 +72,8 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {GALLERY_IMAGES.map((img, idx) => (
-            <motion.figure 
-              key={idx} 
+            <motion.figure
+              key={idx}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -80,9 +82,9 @@ export default function About() {
               className={`relative transition-transform duration-500 cursor-zoom-in hover:-translate-y-3 
                 ${idx === 1 ? 'lg:pt-10' : idx === 2 ? 'lg:pt-20' : ''}`}
             >
-              <Image 
-                src={img.src} 
-                alt={img.alt} 
+              <Image
+                src={img.src}
+                alt={img.alt}
                 placeholder="blur"
                 className="rounded-3xl shadow-2xl aspect-[4/5] object-cover"
                 priority={img.priority}
@@ -125,9 +127,9 @@ export default function About() {
           />
 
           <div className="absolute inset-0 flex items-center justify-center">
-             <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 group-hover:bg-[#00338d] transition-all duration-300">
-                <i className="ri-play-fill text-white text-4xl ml-1"></i>
-             </div>
+            <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 group-hover:bg-[#00338d] transition-all duration-300">
+              <i className="ri-play-fill text-white text-4xl ml-1"></i>
+            </div>
           </div>
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
@@ -150,17 +152,17 @@ export default function About() {
           </header>
 
           <nav className="flex justify-center gap-8 mb-20" aria-label="Navegación de historia">
-            <TabButton 
-              active={activeTab === "PASTORES"} 
-              onClick={() => setActiveTab("PASTORES")} 
-              icon="ri-user-follow-line" 
-              label="Pastores" 
+            <TabButton
+              active={activeTab === "PASTORES"}
+              onClick={() => setActiveTab("PASTORES")}
+              icon="ri-user-follow-line"
+              label="Pastores"
             />
-            <TabButton 
-              active={activeTab === "HITOS"} 
-              onClick={() => setActiveTab("HITOS")} 
-              icon="ri-map-pin-time-line" 
-              label="Hitos" 
+            <TabButton
+              active={activeTab === "HITOS"}
+              onClick={() => setActiveTab("HITOS")}
+              icon="ri-map-pin-time-line"
+              label="Hitos"
             />
           </nav>
 
@@ -175,11 +177,18 @@ export default function About() {
               >
                 {activeTab === "PASTORES"
                   ? HISTORY_DATA.pastores.map((p, idx) => (
-                      <TimelineCard key={p.id} title={p.nombre} sub={p.detalle} date={p.periodo} isLeft={idx % 2 === 0} />
-                    ))
+                    <TimelineCard key={p.id} title={p.nombre} sub={p.detalle} date={p.periodo} isLeft={idx % 2 === 0} />
+                  ))
                   : HISTORY_DATA.hitos.map((h, idx) => (
-                      <TimelineCard key={h.id} title={h.evento} sub={h.ubicación} date={h.fecha} isLeft={idx % 2 === 0} />
-                    ))}
+                    // Cambia la línea 183 a esto:
+                    <TimelineCard
+                      key={h.id}
+                      title={h.evento}
+                      sub={h.ubicacion ?? ""} // Si es undefined, usa un string vacío
+                      date={h.fecha}
+                      isLeft={idx % 2 === 0}
+                    />
+                  ))}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -210,8 +219,8 @@ function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-5xl aspect-video bg-black rounded-[2rem] overflow-hidden shadow-2xl"
       >
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 text-white hover:bg-[#00338d] transition-colors"
           aria-label="Cerrar video"
         >
@@ -223,7 +232,7 @@ function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
   );
 }
 
-function ImageModal({ img, onClose }: { img: {src: StaticImageData, alt: string}, onClose: () => void }) {
+function ImageModal({ img, onClose }: { img: { src: StaticImageData, alt: string }, onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -235,8 +244,8 @@ function ImageModal({ img, onClose }: { img: {src: StaticImageData, alt: string}
         onClick={(e) => e.stopPropagation()}
         className="relative max-w-5xl w-full flex flex-col items-center"
       >
-        <button 
-          onClick={onClose} 
+        <button
+          onClick={onClose}
           className="absolute -top-14 right-0 text-white text-4xl hover:text-[#00338d] transition-colors"
           aria-label="Cerrar imagen"
         >
@@ -261,22 +270,23 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
   );
 }
 
-function TimelineCard({ title, sub, date, isLeft }: { title: string; sub: string; date: string; isLeft: boolean }) {
+// Busca la función TimelineCard (aprox. línea 273) y añade el signo '?'
+function TimelineCard({ title, sub, date, isLeft }: { title: string; sub?: string; date: string; isLeft: boolean }) {
   return (
     <div className="grid grid-cols-[1fr_max-content_1fr] gap-4 md:gap-10">
       {isLeft ? <TimelineContent title={title} sub={sub} date={date} align="right" /> : <div />}
-      
+
       <div className="flex flex-col items-center">
         <div className="w-4 h-4 bg-[#00338d] rounded-full ring-4 ring-blue-50"></div>
         <div className="w-[2px] h-full bg-gradient-to-b from-[#00338d] to-transparent opacity-20"></div>
       </div>
 
-      {!isLeft ? <TimelineContent title={title} sub={sub} date={date} align="left" /> : <div />}
     </div>
   );
 }
 
-function TimelineContent({ title, sub, date, align }: { title: string; sub: string; date: string; align: "left" | "right" }) {
+// Cambia la línea 288 a esto:
+function TimelineContent({ title, sub, date, align }: { title: string; sub?: string; date: string; align: "left" | "right" }) {
   return (
     <div className={`pb-12 ${align === "right" ? "text-right" : "text-left"}`}>
       <h3 className="text-xl font-bold text-gray-900">{title}</h3>

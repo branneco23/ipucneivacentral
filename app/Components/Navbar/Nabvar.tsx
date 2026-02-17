@@ -5,14 +5,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /* =====================
-   TIPOS
+    TIPOS
 ===================== */
 type SubMenu = { label: string; href: string };
 type DropdownItem = { label: string; href: string; subMenu?: SubMenu[] };
 type NavLink = { label: string; href: string; dropdown?: DropdownItem[] };
 
 /* =====================
-   LINKS (SIN QUITAR NADA)
+    LINKS (SIN QUITAR NADA)
 ===================== */
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
@@ -30,7 +30,7 @@ const navLinks: NavLink[] = [
       { label: "Directiva de Comunicaciones", href: "/UI-Components/Projects/comunicaciones" },
       { label: "Directiva de Obra Social", href: "/UI-Components/Projects/obra-social" },
       { label: "Directiva de Ujieres", href: "/UI-Components/Projects/ujieres" },
-      { label: "Directiva de Intercesión", href: "/UI-Components/Projects/intercecion" },
+      { label: "Directiva de Intercesión", href: "/UI-Components/Projects/intercesion" },
       { label: "Directiva de Protemplo", href: "/UI-Components/Projects/protemplo" },
       { label: "Directiva de Familia", href: "/UI-Components/Projects/familia" },
     ],
@@ -45,13 +45,13 @@ const navLinks: NavLink[] = [
 ];
 
 /* =====================
-   COMPONENTE
+    COMPONENTE
 ===================== */
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // estados separados (clave del arreglo)
+  // estados separados
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
@@ -71,31 +71,46 @@ export default function Navbar() {
     setOpenSubmenu(prev => (prev === label ? null : label));
   };
 
-  /* =====================
-     RENDER
-  ===================== */
   return (
     <>
       <nav
         className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
-          isScrolled ? "bg-blue-800 py-2 shadow-lg" : "bg-blue-700 py-3"
+          isScrolled
+            ? "bg-gradient-to-br from-blue-800 via-blue-900 to-slate-900 py-2 shadow-lg"
+            : "bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 py-3"
         }`}
       >
         <div className="flex items-center justify-between px-[4%] lg:px-[6%]">
-          {/* LOGO */}
+          {/* LOGO SECTION CORREGIDA */}
           <Link href="/" className="flex items-center gap-3 z-[110]">
-            <Image
-              src="/img/logo.png"
-              alt="Logo IPUC"
-              width={300}
-              height={300}
-              className="w-14 h-14 lg:w-24 lg:h-24"
-            />
+            <div
+              className="
+                rounded-2xl p-2
+                bg-gradient-to-b
+                from-slate-50
+                via-white
+                to-slate-200
+                border border-white/70
+                shadow-[inset_0_2px_6px_rgba(0,0,0,0.15),0_6px_14px_rgba(0,0,0,0.25)]
+                transition-all duration-300 ease-out
+                hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.12),0_10px_20px_rgba(0,0,0,0.35)]
+                hover:-translate-y-[1px]
+              "
+            >
+              <Image
+                src="/img/logo.png"
+                alt="Logo IPUC"
+                width={350}
+                height={350}
+                className="w-14 h-14 lg:w-24 lg:h-24"
+                priority
+              />
+            </div>
             <div className="leading-tight">
-              <h1 className="text-2xl lg:text-5xl font-extrabold text-white">
+              <h1 className="text-2xl lg:text-4xl font-extrabold text-white">
                 IPUC
               </h1>
-              <span className="text-blue-200 text-sm lg:text-xl font-bold uppercase">
+              <span className="text-blue-200 text-sm lg:text-lg font-bold uppercase block">
                 Neiva Central
               </span>
             </div>
@@ -111,7 +126,7 @@ export default function Navbar() {
 
           {/* DESKTOP MENU */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <div key={link.label} className="relative group">
                 <Link
                   href={link.href}
@@ -124,7 +139,7 @@ export default function Navbar() {
                 {link.dropdown && (
                   <div className="absolute left-0 top-full pt-4 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all">
                     <div className="bg-white rounded-xl shadow-2xl min-w-[320px] py-3">
-                      {link.dropdown.map(item => (
+                      {link.dropdown.map((item) => (
                         <div key={item.label} className="relative group/sub">
                           <Link
                             href={item.href}
@@ -137,7 +152,7 @@ export default function Navbar() {
                           {item.subMenu && (
                             <div className="absolute left-full top-0 pl-2 opacity-0 invisible group-hover/sub:visible group-hover/sub:opacity-100 transition-all">
                               <div className="bg-white rounded-xl shadow-2xl min-w-[260px] py-3">
-                                {item.subMenu.map(sub => (
+                                {item.subMenu.map((sub) => (
                                   <Link
                                     key={sub.label}
                                     href={sub.href}
@@ -167,21 +182,17 @@ export default function Navbar() {
         </div>
 
         {/* MOBILE OVERLAY */}
-        <div
-          className={`fixed inset-0 bg-slate-900/60 lg:hidden transition ${
-            isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
-          onClick={() => setIsMenuOpen(false)}
+        <div 
+          className={`fixed inset-0 bg-slate-900/60 lg:hidden transition ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+          onClick={()=>setIsMenuOpen(false)}
         />
 
         {/* MOBILE SIDEBAR */}
         <div
-          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className="p-8 pt-28 flex flex-col gap-6">
-            {navLinks.map(link => (
+          <div className="p-8 pt-28 flex flex-col gap-6 overflow-y-auto h-full">
+            {navLinks.map((link) => (
               <div key={link.label} className="border-b pb-3">
                 <div className="flex justify-between items-center">
                   <Link
@@ -207,7 +218,7 @@ export default function Navbar() {
 
                 {link.dropdown && openDropdown === link.label && (
                   <div className="pl-4 mt-4 flex flex-col gap-3">
-                    {link.dropdown.map(item => (
+                    {link.dropdown.map((item) => (
                       <div key={item.label}>
                         <div className="flex justify-between items-center">
                           <Link
@@ -233,7 +244,7 @@ export default function Navbar() {
 
                         {item.subMenu && openSubmenu === item.label && (
                           <div className="pl-4 mt-2 border-l flex flex-col gap-2">
-                            {item.subMenu.map(sub => (
+                            {item.subMenu.map((sub) => (
                               <Link
                                 key={sub.label}
                                 href={sub.href}
