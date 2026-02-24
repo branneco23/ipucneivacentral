@@ -8,8 +8,12 @@ export default function MainLanding() {
   const [fechaReferencia, setFechaReferencia] = useState<Date | null>(null);
 
   useEffect(() => {
-    const hoy = new Date();
+    // CORRECCIÓN DE FECHA: Crear hoy sin horas para evitar saltos de día en producción
+    const ahora = new Date();
+    const hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+    
     const inicioSemana = new Date(hoy);
+    // Ajuste para que la semana empiece en Domingo
     inicioSemana.setDate(hoy.getDate() - hoy.getDay());
     setFechaReferencia(inicioSemana);
   }, []);
@@ -37,13 +41,20 @@ export default function MainLanding() {
            date.getFullYear() === hoy.getFullYear();
   };
 
+  // Función para formatear fecha local a string YYYY-MM-DD sin usar UTC
+  const formatFechaLocal = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   if (!fechaReferencia) return null;
 
   return (
-    // Agregamos overflow-x-hidden al contenedor padre para asegurar que nada se escape
     <main className="relative bg-[#F8FAFC] pt-[calc(var(--navbar-height)+1rem)] md:pt-[calc(var(--navbar-height)+2rem)] overflow-x-hidden">
       
-      {/* Hero Section - Padding responsivo para evitar el push lateral */}
+      {/* Hero Section */}
       <section className="px-5 sm:px-10 md:px-[8%] py-10 md:py-16 grid lg:grid-cols-12 gap-10 md:gap-16 items-center max-w-screen-2xl mx-auto">
         <div className="lg:col-span-5 text-center lg:text-left">
           <h1 className="text-4xl md:text-6xl font-black text-[#00338d] mb-4 md:mb-6 uppercase tracking-tighter italic leading-tight">
@@ -60,6 +71,7 @@ export default function MainLanding() {
         </div>
       </section>
 
+      {/* SECCIÓN DE DEVOCIONALES RESTAURADA */}
       <div className="px-4 sm:px-10 md:px-[8%] max-w-screen-2xl mx-auto">
         <DevocionalBanner />
       </div>
@@ -83,17 +95,11 @@ export default function MainLanding() {
             </div>
           </div>
 
-          {/* CONTENEDOR MAESTRO DEL CALENDARIO */}
           <div className="bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
-            
-            {/* Scroll horizontal solo activo en escritorio si es necesario, 
-                pero en móvil se comporta como bloque gracias a 'md:overflow-visible' */}
             <div className="overflow-x-auto md:overflow-x-visible">
-              
-              {/* Ajustamos el min-width para que solo afecte a tablets/desktop */}
               <div className="min-w-full md:min-w-[900px]">
                 
-                {/* Cabecera Días (Desktop) */}
+                {/* Cabecera Días */}
                 <div className="hidden md:grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                   {diasDeLaSemana.map((dia, idx) => {
                     const checkHoy = esHoy(dia);
@@ -112,10 +118,10 @@ export default function MainLanding() {
                   })}
                 </div>
 
-                {/* Cuerpo de Eventos: Stack vertical en móvil, Grid en Desktop */}
+                {/* Cuerpo de Eventos */}
                 <div className="grid grid-cols-1 md:grid-cols-7">
                   {diasDeLaSemana.map((dia, idx) => {
-                    const fechaStr = dia.toISOString().split('T')[0];
+                    const fechaStr = formatFechaLocal(dia);
                     const checkHoy = esHoy(dia);
                     const eventosDelDia = EVENTOS_ANUALES_2026.filter(e => {
                       if (e.fechaFin) return fechaStr >= e.fecha && fechaStr <= e.fechaFin;
@@ -123,10 +129,7 @@ export default function MainLanding() {
                     });
 
                     return (
-                      <div key={idx} className={`p-4 md:p-6 border-b md:border-b-0 md:border-r border-slate-100 last:border-0 ${
-                        checkHoy ? 'bg-blue-50/20' : ''
-                      }`}>
-                        {/* Indicador de día para móvil */}
+                      <div key={idx} className={`p-4 md:p-6 border-b md:border-b-0 md:border-r border-slate-100 last:border-0 ${checkHoy ? 'bg-blue-50/20' : ''}`}>
                         <div className="flex md:hidden items-center justify-between mb-4">
                           <span className={`font-black uppercase text-sm tracking-widest ${checkHoy ? 'text-blue-600' : 'text-slate-400'}`}>
                             {dia.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric' })}

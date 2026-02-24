@@ -5,14 +5,27 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 /* =====================
-    TIPOS
+    TIPOS (Interfaces)
 ===================== */
-type SubMenu = { label: string; href: string };
-type DropdownItem = { label: string; href: string; subMenu?: SubMenu[] };
-type NavLink = { label: string; href: string; dropdown?: DropdownItem[] };
+interface SubMenu {
+  label: string;
+  href: string;
+}
+
+interface DropdownItem {
+  label: string;
+  href: string;
+  subMenu?: SubMenu[];
+}
+
+interface NavLink {
+  label: string;
+  href: string;
+  dropdown?: DropdownItem[];
+}
 
 /* =====================
-    LINKS (SIN QUITAR NADA)
+    CONFIGURACIÓN DE LINKS
 ===================== */
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
@@ -40,22 +53,23 @@ const navLinks: NavLink[] = [
     href: "/UI-Components/Blogs",
     dropdown: [{ label: "Blog", href: "/UI-Components/Blogs" }],
   },
-  { label: "Transmisiones", href: "/" },
-  { label: "Peticiones", href: "/" },
+  // RUTA CORREGIDA PARA TU NUEVA PÁGINA:
+  { label: "Transmisiones", href: "/transmision" },
+  { label: "Peticiones", href: "/peticiones" },
 ];
 
 /* =====================
-    COMPONENTE
+    COMPONENTE NAVBAR
 ===================== */
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // estados separados
+  // Estados para controlar qué menús están abiertos en móvil
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-  /* Scroll */
+  /* Efecto de Scroll para cambiar el fondo */
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -81,22 +95,9 @@ export default function Navbar() {
         }`}
       >
         <div className="flex items-center justify-between px-[4%] lg:px-[6%]">
-          {/* LOGO SECTION CORREGIDA */}
+          {/* SECCIÓN LOGO */}
           <Link href="/" className="flex items-center gap-3 z-[110]">
-            <div
-              className="
-                rounded-2xl p-2
-                bg-gradient-to-b
-                from-slate-50
-                via-white
-                to-slate-200
-                border border-white/70
-                shadow-[inset_0_2px_6px_rgba(0,0,0,0.15),0_6px_14px_rgba(0,0,0,0.25)]
-                transition-all duration-300 ease-out
-                hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.12),0_10px_20px_rgba(0,0,0,0.35)]
-                hover:-translate-y-[1px]
-              "
-            >
+            <div className="rounded-2xl p-2 bg-gradient-to-b from-slate-50 via-white to-slate-200 border border-white/70 shadow-[inset_0_2px_6px_rgba(0,0,0,0.15),0_6px_14px_rgba(0,0,0,0.25)] transition-all duration-300 ease-out hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.12),0_10px_20px_rgba(0,0,0,0.35)] hover:-translate-y-[1px]">
               <Image
                 src="/img/logo.png"
                 alt="Logo IPUC"
@@ -107,50 +108,51 @@ export default function Navbar() {
               />
             </div>
             <div className="leading-tight">
-              <h1 className="text-2xl lg:text-4xl font-extrabold text-white">
-                IPUC
-              </h1>
+              <h1 className="text-2xl lg:text-4xl font-extrabold text-white">IPUC</h1>
               <span className="text-blue-200 text-sm lg:text-lg font-bold uppercase block">
                 Neiva Central
               </span>
             </div>
           </Link>
 
-          {/* HAMBURGER */}
+          {/* BOTÓN HAMBURGUESA (Móvil) */}
           <button
             className="lg:hidden text-white text-4xl z-[110]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Abrir menú"
           >
             <i className={isMenuOpen ? "ri-close-line" : "ri-menu-3-line"}></i>
           </button>
 
-          {/* DESKTOP MENU */}
+          {/* MENÚ DESKTOP */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <div key={link.label} className="relative group">
                 <Link
                   href={link.href}
-                  className="flex items-center gap-1 text-xl font-semibold text-white hover:text-blue-200"
+                  className="flex items-center gap-1 text-xl font-semibold text-white hover:text-blue-200 transition-colors"
                 >
                   {link.label}
                   {link.dropdown && <i className="ri-arrow-down-s-line text-sm"></i>}
                 </Link>
 
+                {/* Dropdown Desktop */}
                 {link.dropdown && (
-                  <div className="absolute left-0 top-full pt-4 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all">
+                  <div className="absolute left-0 top-full pt-4 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300">
                     <div className="bg-white rounded-xl shadow-2xl min-w-[320px] py-3">
                       {link.dropdown.map((item) => (
                         <div key={item.label} className="relative group/sub">
                           <Link
                             href={item.href}
-                            className="flex justify-between px-5 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium"
+                            className="flex justify-between px-5 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors"
                           >
                             {item.label}
                             {item.subMenu && <i className="ri-arrow-right-s-line"></i>}
                           </Link>
 
+                          {/* Submenu Desktop */}
                           {item.subMenu && (
-                            <div className="absolute left-full top-0 pl-2 opacity-0 invisible group-hover/sub:visible group-hover/sub:opacity-100 transition-all">
+                            <div className="absolute left-full top-0 pl-2 opacity-0 invisible group-hover/sub:visible group-hover/sub:opacity-100 transition-all duration-300">
                               <div className="bg-white rounded-xl shadow-2xl min-w-[260px] py-3">
                                 {item.subMenu.map((sub) => (
                                   <Link
@@ -172,24 +174,29 @@ export default function Navbar() {
               </div>
             ))}
 
+            {/* Botón WhatsApp */}
             <Link
               href="/contacto"
-              className="bg-white text-blue-700 px-8 py-3 rounded-full font-black text-xl shadow-xl hover:scale-105 transition"
+              className="bg-white text-blue-700 px-8 py-3 rounded-full font-black text-xl shadow-xl hover:scale-105 transition active:scale-95"
             >
               <i className="ri-whatsapp-line mr-2"></i> Contáctenos
             </Link>
           </div>
         </div>
 
-        {/* MOBILE OVERLAY */}
-        <div 
-          className={`fixed inset-0 bg-slate-900/60 lg:hidden transition ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
-          onClick={()=>setIsMenuOpen(false)}
-        />
+        {/* MÓVIL: FONDO OSCURECIDO (Overlay) */}
+        {isMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-slate-900/60 lg:hidden transition-opacity"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
 
-        {/* MOBILE SIDEBAR */}
+        {/* MÓVIL: SIDEBAR */}
         <div
-          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
           <div className="p-8 pt-28 flex flex-col gap-6 overflow-y-auto h-full">
             {navLinks.map((link) => (
@@ -204,51 +211,41 @@ export default function Navbar() {
                   </Link>
 
                   {link.dropdown && (
-                    <button onClick={() => toggleDropdown(link.label)}>
-                      <i
-                        className={
-                          openDropdown === link.label
-                            ? "ri-subtract-line"
-                            : "ri-add-line"
-                        }
-                      ></i>
+                    <button onClick={() => toggleDropdown(link.label)} className="p-2">
+                      <i className={openDropdown === link.label ? "ri-subtract-line" : "ri-add-line"}></i>
                     </button>
                   )}
                 </div>
 
+                {/* Dropdown Móvil */}
                 {link.dropdown && openDropdown === link.label && (
-                  <div className="pl-4 mt-4 flex flex-col gap-3">
+                  <div className="pl-4 mt-4 flex flex-col gap-3 animate-fadeIn">
                     {link.dropdown.map((item) => (
                       <div key={item.label}>
                         <div className="flex justify-between items-center">
                           <Link
                             href={item.href}
-                            className="text-slate-600"
+                            className="text-slate-600 font-medium"
                             onClick={() => !item.subMenu && setIsMenuOpen(false)}
                           >
                             {item.label}
                           </Link>
 
                           {item.subMenu && (
-                            <button onClick={() => toggleSubmenu(item.label)}>
-                              <i
-                                className={
-                                  openSubmenu === item.label
-                                    ? "ri-arrow-up-s-line"
-                                    : "ri-arrow-down-s-line"
-                                }
-                              ></i>
+                            <button onClick={() => toggleSubmenu(item.label)} className="p-2">
+                              <i className={openSubmenu === item.label ? "ri-arrow-up-s-line" : "ri-arrow-down-s-line"}></i>
                             </button>
                           )}
                         </div>
 
+                        {/* Submenu Móvil */}
                         {item.subMenu && openSubmenu === item.label && (
-                          <div className="pl-4 mt-2 border-l flex flex-col gap-2">
+                          <div className="pl-4 mt-2 border-l-2 border-blue-100 flex flex-col gap-2">
                             {item.subMenu.map((sub) => (
                               <Link
                                 key={sub.label}
                                 href={sub.href}
-                                className="text-slate-500"
+                                className="text-slate-500 py-1"
                                 onClick={() => setIsMenuOpen(false)}
                               >
                                 {sub.label}
@@ -265,7 +262,7 @@ export default function Navbar() {
 
             <Link
               href="/contacto"
-              className="mt-6 bg-blue-700 text-white py-5 rounded-2xl text-center font-black text-xl"
+              className="mt-6 bg-blue-700 text-white py-5 rounded-2xl text-center font-black text-xl shadow-lg active:bg-blue-800"
               onClick={() => setIsMenuOpen(false)}
             >
               <i className="ri-whatsapp-line mr-2"></i> Contáctenos

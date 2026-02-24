@@ -65,41 +65,8 @@ Texto Clave: "Porque raíz de todos los males es el amor al dinero, el cual codi
 
 Texto Clave: "Porque tú dices: Yo soy rico, y me he enriquecido, y de ninguna cosa tengo necesidad; y no sabes que tú eres un cuitado, miserable, pobre, ciego y desnudo" (Apocalipsis 3:17).`
   },
-
   {
     id: "doc-2",
-    title: "¿Qué significa la Unicidad de Dios?",
-    desc: "Un análisis profundo sobre el pilar fundamental de nuestra doctrina bíblica basado en las sagradas escrituras.",
-    image: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060594/AboutImg1_vp5jga.jpg",
-    tag: "Doctrina",
-    postby: "Comité de Educación",
-    date: "20 de Enero, 2026"
-  },
-
-  {
-    id: "doc-3",
-    title: "Viviendo en santidad hoy",
-    desc: "Cómo mantener un testimonio íntegro en un mundo lleno de distracciones y desafíos modernos.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
-    postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
-  },
-
-  {
-    id: "doc-4",
-    title: "La importancia de la oración en familia",
-    desc: "Descubre cómo fortalecer los lazos espirituales en tu hogar a través de la oración diaria y el estudio de la palabra.",
-    image: `${BLOG_IMG_PATH}/AboutImg1.jpg`,
-    videoUrl: "https://www.youtube.com/watch?v=9GSBUxXKp2Q",
-    tag: "Estudio Bíblico",
-    postby: "Pastor Reinaldo Gualdrón",
-    date: "25 de Enero, 2026"
-  },
-
-  {
-    id: "doc-5",
     title: "La Obra del Espíritu Santo - Parte III",
     desc: `Amados hermanos, la Palabra de Dios nos revela una verdad contundente en Efesios 2:1: “Y él os dio vida a vosotros, cuando estabais muertos en vuestros delitos y pecados.” El apóstol Pablo no está hablando de muerte física, sino de una condición espiritual. Se puede tener pulso, respirar, trabajar y aun practicar religión, pero estar espiritualmente muerto delante de Dios. Esa es la condición natural del hombre sin la intervención divina. No es que el hombre esté enfermo espiritualmente; está muerto. Y un muerto no puede levantarse por sí mismo.
 
@@ -130,9 +97,65 @@ Porque donde el Espíritu del Señor está, allí hay vida. Y donde hay vida, ha
     postby: "Ipuc Sede Central",
     date: "15 de Febrero, 2026"
   },
+  {
+    id: "doc-3",
+    title: "Reino de Dios I",
+    desc: `
+El Reino de Dios constituye uno de los temas centrales de la revelación bíblica y uno de los fundamentos doctrinales más importantes de la fe cristiana. A lo largo de la historia, este concepto ha sido malinterpretado por muchos, quienes lo han reducido a una idea política, territorial o exclusivamente futura. Sin embargo, las Escrituras presentan el Reino de Dios como una realidad espiritual, histórica y profética que se desarrolla progresivamente en el plan soberano de Dios.
 
+En Mateo 21:33-46, Jesús presenta la parábola de los labradores malvados para explicar la naturaleza del Reino y la responsabilidad de quienes lo administran. En la historia, un propietario planta un viñedo, lo arrienda a unos labradores y, cuando envía a sus siervos para recibir el fruto, estos son maltratados y asesinados. Finalmente, envía a su hijo, pero también lo matan. Entonces el dueño decide quitarles el viñedo y entregarlo a otros. La interpretación es clara: el propietario representa a Dios; el viñedo simboliza su Reino y su propósito; los labradores representan a Israel, particularmente a sus líderes religiosos; los siervos son los profetas; y el hijo es Jesucristo. Al rechazar al Hijo, los labradores pierden la administración del viñedo. Jesús declara que el Reino sería quitado y dado a un pueblo que produzca los frutos esperados, revelando así una transición en la administración del propósito divino.
+
+En los evangelios encontramos las expresiones “Reino de los Cielos” y “Reino de Dios”. Aunque algunos han intentado diferenciarlas, en esencia se refieren a la misma realidad. Mateo, al escribir principalmente a judíos, utiliza con mayor frecuencia la expresión “Reino de los Cielos”, en consonancia con la reverencia judía que evitaba pronunciar directamente el nombre de Dios. Marcos, Lucas y Juan, dirigidos a un público más amplio y gentil, emplean “Reino de Dios”. No obstante, ambas expresiones describen el gobierno soberano de Dios manifestado en la historia y en el corazón humano.
+
+El Reino de Dios comienza de manera espiritual e interior. No es, en primer lugar, una estructura geográfica ni un sistema político, sino el gobierno de Dios en la vida del creyente. Cuando una persona se somete al señorío de Cristo y permite que Dios transforme su corazón, el Reino se hace presente en ella. Jesús enseñó que el Reino está “entre vosotros”, indicando que su manifestación inicia en la dimensión espiritual antes de su consumación visible y universal.
+
+Históricamente, Dios confió la revelación de su Reino al pueblo de Israel. Desde el llamado de Abraham, el propósito divino fue formar un pueblo a través del cual se manifestara su gloria y su unicidad. Israel fue escogido para ser luz a las naciones y testimonio del único Dios verdadero. Sin embargo, a pesar de haber recibido la ley, los profetas y finalmente al Hijo, muchos no produjeron el fruto esperado. El rechazo de Cristo marcó un momento decisivo en la historia redentora.
+
+No obstante, el propósito de Dios no fue frustrado. El Reino fue confiado a un nuevo pueblo: la Iglesia. La Iglesia no reemplaza el plan de Dios, sino que participa en su desarrollo como instrumento para proclamar el evangelio y producir frutos de justicia. Ahora la responsabilidad recae sobre quienes han recibido la gracia de Cristo. La Iglesia está llamada a anunciar la salvación, vivir en santidad y manifestar el carácter del Reino en medio del mundo.
+
+El Reino también posee una dimensión futura y escatológica. La Escritura enseña que habrá un cumplimiento pleno del gobierno de Dios. Antes de esa manifestación definitiva, el evangelio será predicado a todas las naciones. Llegará el momento en que la plenitud de los gentiles se complete, y entonces ocurrirán eventos proféticos que culminarán con la instauración visible del Reino. Esta perspectiva no debe producir especulación, sino preparación. La esperanza de la Iglesia es vivir vigilante y fiel, aguardando el cumplimiento de las promesas divinas.
+
+En el tiempo presente, el Espíritu Santo desempeña un papel fundamental en la expansión del Reino. Él convence de pecado, guía a la verdad y fortalece a los creyentes para perseverar. Vivimos en el tiempo de la gracia, en el que el llamado al arrepentimiento está abierto. Rechazar a Cristo implica rechazar el gobierno de Dios y despreciar el sacrificio redentor, lo cual conlleva consecuencias eternas.
+
+En conclusión, el Reino de Dios no es una ideología humana ni una organización meramente terrenal. Es el gobierno soberano de Dios que se manifiesta en el corazón transformado, se desarrolla en la misión de la Iglesia y culminará en una consumación gloriosa. Es una realidad presente para quienes se someten a Cristo y una esperanza futura para toda la creación. Comprender el Reino implica no solo estudiarlo, sino vivir bajo su autoridad, produciendo el fruto que glorifica al Rey.
+`,
+    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1771603734/videoplayback-0pnhromy_3dm93lap_giellh.mp4",
+    tag: "Doctrina",
+    postby: "Ipuc Sede Central",
+    date: "19 de Febrero, 2026"
+  },
+  {
+    id: "doc-4",
+    title: "¿Qué significa la Unicidad de Dios?",
+    desc: "Un análisis profundo sobre el pilar fundamental de nuestra doctrina bíblica basado en las sagradas escrituras.",
+    image: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060594/AboutImg1_vp5jga.jpg",
+    tag: "Doctrina",
+    postby: "Comité de Educación",
+    date: "20 de Enero, 2026"
+  },
+  {
+    id: "doc-5",
+    title: "Viviendo en santidad hoy",
+    desc: "Cómo mantener un testimonio íntegro en un mundo lleno de distracciones y desafíos modernos.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
   {
     id: "doc-6",
+    title: "La importancia de la oración en familia",
+    desc: "Descubre cómo fortalecer los lazos espirituales en tu hogar a través de la oración diaria y el estudio de la palabra.",
+    image: `${BLOG_IMG_PATH}/AboutImg1.jpg`,
+    videoUrl: "https://www.youtube.com/watch?v=9GSBUxXKp2Q",
+    tag: "Estudio Bíblico",
+    postby: "Pastor Reinaldo Gualdrón",
+    date: "25 de Enero, 2026"
+  },
+  {
+    id: "doc-7",
     title: "Juventud con Propósito",
     desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
@@ -140,7 +163,27 @@ Porque donde el Espíritu del Señor está, allí hay vida. Y donde hay vida, ha
     tag: "Vida Cristiana",
     postby: "Liderazgo Local",
     date: "15 de Enero, 2026"
-  }
+  },
+  {
+    id: "doc-8",
+    title: "Juventud con Propósito",
+    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
+  {
+    id: "doc-9",
+    title: "Juventud con Propósito",
+    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
 
   // (El resto de entradas 1–14 quedan exactamente como las enviaste,
   // no las alteré ni resumí; tu estructura ya está correcta.)

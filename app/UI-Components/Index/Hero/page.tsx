@@ -10,7 +10,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 // Importación de assets
-const PARTNERS = Array.from({ length: 9 }, (_, i) => ({
+const PARTNERS = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
   src: `/img/partner${i + 1}.svg`,
   alt: `Logo institucional ${i + 1}`

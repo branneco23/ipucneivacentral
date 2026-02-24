@@ -23,9 +23,10 @@ export default function AnunciosSlider() {
     setMounted(true);
   }, []);
 
-  // CORRECCIÓN AQUÍ: Pasamos por unknown para evitar el error de solapamiento de tipos
+  // Conversión de datos segura
   const data = useMemo(() => (PARALEX_DATA as unknown) as AnuncioItem[], []);
 
+  // Buscamos el item seleccionado de forma segura
   const selectedItem = useMemo(() =>
     data.find(item => item.id === selectedId),
     [selectedId, data]);
@@ -45,7 +46,8 @@ export default function AnunciosSlider() {
 
   return (
     <section className="relative py-20 overflow-hidden group bg-gradient-to-br from-[#0f172a] via-[#020617] to-black">
-
+      
+      {/* DECORACIÓN DE FONDO */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl" />
         <div className="absolute top-1/3 -right-32 w-[400px] h-[400px] bg-indigo-600/20 rounded-full blur-3xl" />
@@ -76,7 +78,7 @@ export default function AnunciosSlider() {
         </div>
       </div>
 
-      {/* SLIDER CONTAINER */}
+      {/* SLIDER DE TARJETAS */}
       <div className="relative">
         <div
           ref={sliderRef}
@@ -115,10 +117,11 @@ export default function AnunciosSlider() {
         </div>
       </div>
 
-      {/* POPUP DETALLE */}
+      {/* MODAL DE DETALLE (POPUP) */}
       <AnimatePresence>
         {selectedId && selectedItem && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-10">
+            {/* Fondo oscuro con cierre al hacer click */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -129,18 +132,26 @@ export default function AnunciosSlider() {
 
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="relative w-full max-w-5xl bg-neutral-900 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl z-10"
+              className="relative w-full max-w-6xl bg-neutral-900 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl z-10 max-h-[95vh] flex flex-col"
             >
-              <div className="flex flex-col md:flex-row max-h-[90vh] overflow-y-auto md:overflow-hidden">
-                <div
-                  className="w-full md:w-1/2 h-72 md:h-auto bg-cover bg-center"
-                  style={{ backgroundImage: `url(${selectedItem.bg})` }}
-                />
+              {/* Contenedor Flex/Grid adaptable */}
+              <div className="flex flex-col md:grid md:grid-cols-10 overflow-y-auto md:overflow-hidden h-full">
 
-                <div className="p-8 md:p-14 flex flex-col justify-center flex-1 relative">
+                {/* COLUMNA DE IMAGEN (60% de ancho) */}
+                {/* min-h-[300px] asegura que en móvil se vea, md:h-full hace que se adapte al texto */}
+                <div className="w-full md:col-span-6 min-h-[300px] md:h-full relative bg-neutral-800">
+                   <img 
+                    src={selectedItem.bg} 
+                    alt={selectedItem.title}
+                    className="w-full h-full object-contain md:object-cover"
+                   />
+                </div>
+
+                {/* COLUMNA DE CONTENIDO (40% de ancho) */}
+                <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center md:col-span-4 relative bg-neutral-900">
                   <button
                     onClick={() => setSelectedId(null)}
-                    className="absolute top-6 right-6 text-white hover:text-blue-500 transition-colors"
+                    className="absolute top-6 right-6 text-white hover:text-blue-500 transition-colors z-20"
                   >
                     <i className="ri-close-circle-line text-4xl"></i>
                   </button>
@@ -149,11 +160,11 @@ export default function AnunciosSlider() {
                     {selectedItem.tag}
                   </span>
 
-                  <h2 className="text-white text-3xl md:text-5xl font-black mb-6 leading-tight">
+                  <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-black mb-6 leading-tight">
                     {selectedItem.title}
                   </h2>
 
-                  <div className="space-y-5 text-white/70">
+                  <div className="space-y-6 text-white/70">
                     <div className="flex flex-wrap gap-4">
                       <p className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg text-sm">
                         <span className="text-blue-400 font-bold">HORA:</span> {selectedItem.hours}
@@ -162,12 +173,12 @@ export default function AnunciosSlider() {
                         <span className="text-blue-400 font-bold">GESTIÓN:</span> {selectedItem.year}
                       </p>
                     </div>
-                    <p className="text-base md:text-lg leading-relaxed border-l-2 border-blue-600 pl-4 italic">
+                    <p className="text-sm md:text-base lg:text-lg leading-relaxed border-l-2 border-blue-600 pl-4 italic">
                       "Acompáñanos en este tiempo especial. Estamos preparando lo mejor para que tu experiencia en la casa del Señor sea inolvidable."
                     </p>
                   </div>
 
-                  <button className="mt-10 bg-blue-700 hover:bg-blue-600 text-white font-black py-5 px-10 rounded-2xl transition-all shadow-lg active:scale-95">
+                  <button className="mt-10 bg-blue-700 hover:bg-blue-600 text-white font-black py-4 lg:py-5 px-10 rounded-2xl transition-all shadow-lg active:scale-95">
                     AGENDAR EVENTO
                   </button>
                 </div>
