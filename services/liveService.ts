@@ -6,21 +6,21 @@ import { ref, get, set, push, serverTimestamp, increment, update } from "firebas
  * Registra un usuario con un nombre único y sin espacios.
  */
 export const registerLiveUser = async (rawName: string): Promise<string> => {
-  // 1. Limpieza de nombre (todo pegado y minúsculas para la clave)
+  // Limpieza de nombre: minúsculas para la validación y sin espacios para mostrar
   const cleanName = rawName.trim().replace(/\s+/g, '').toLowerCase();
-  const displayName = rawName.trim().replace(/\s+/g, ''); // Sin espacios pero respeta mayúsculas
+  const displayName = rawName.trim().replace(/\s+/g, ''); 
 
   if (cleanName.length < 3) throw new Error("El nombre debe tener al menos 3 caracteres.");
 
   try {
-    // 2. Autenticación anónima si no existe sesión
+    // Autenticación anónima
     if (!auth.currentUser) {
       await signInAnonymously(auth);
     }
 
     const uid = auth.currentUser!.uid;
 
-    // 3. Verificación de nombre único
+    // Verificación de nombre único en la base de datos
     const nameRef = ref(db, `occupied_names/${cleanName}`);
     const snapshot = await get(nameRef);
 
@@ -28,7 +28,7 @@ export const registerLiveUser = async (rawName: string): Promise<string> => {
       throw new Error("Este nombre ya está en uso por otro usuario.");
     }
 
-    // 4. Actualización Atómica: Guardamos nombre ocupado y perfil de usuario a la vez
+    // Actualización atómica de perfil y nombre ocupado
     const updates: Record<string, any> = {};
     updates[`occupied_names/${cleanName}`] = uid;
     updates[`users/${uid}`] = { 
@@ -38,44 +38,75 @@ export const registerLiveUser = async (rawName: string): Promise<string> => {
     };
 
     await update(ref(db), updates);
+    
+    // Guardamos en localStorage para usarlo en chat y reacciones
+    localStorage.setItem('live_user', displayName);
+    
     return displayName;
 
   } catch (error: any) {
-    console.error("Error en LiveService:", error.message);
+    console.error("Error en LiveService (Register):", error.message);
     throw error;
   }
 };
 
 /**
- * Envía una reacción y actualiza el contador global.
+ * Envía una reacción vinculada al ID de la transmisión actual.
+ * Al cambiar el liveId, las reacciones se "reinician" visualmente.
  */
-export const sendReaction = async (emojiType: string) => {
-  
+export const sendReaction = async (emojiType: string, liveId: string) => {
   const user = auth.currentUser;
-  if (!user) return;
+  // Si no hay liveId o usuario, no hacemos nada para evitar llenar basura en la DB
+  if (!user || !liveId || liveId.trim() === "") return;
 
-  //Guardamos en live_events/reactions/ID_DEL_USUARIO
-  //Eso grantiza que un usuario solo tenga una reacción activa
-  await set(ref(db, `live_events/reactions/${user.uid}`), {
-    type: type,
-    username: localStorage.getItem('live_user') || 'Anónimo',
-    ts: Date.now()
-  });
+  try {
+    const uid = user.uid;
+    const username = localStorage.getItem('live_user') || 'Anónimo';
+    
+    // Generamos un ID único para este evento de reacción dentro del nodo del video actual
+    const reactionEventRef = push(ref(db, `live_events/${liveId}/reactions`));
+    const reactionId = reactionEventRef.key;
 
-  if (!auth.currentUser) return;
+    const updates: Record<string, any> = {};
 
-  const uid = auth.currentUser.uid;
-  const reactionId = push(ref(db, 'live_events/reactions')).key;
+    // 1. Incrementa el contador de estadísticas específico de ESTE video
+    updates[`stats/${liveId}/reactions/${emojiType}`] = increment(1);
 
-  const updates: Record<string, any> = {};
-  // Incrementa el contador total de ese emoji
-  updates[`stats/reactions/${emojiType}`] = increment(1);
-  // Crea el evento para la animación en tiempo real
-  updates[`live_events/reactions/${reactionId}`] = {
-    type: emojiType,
-    ts: serverTimestamp(),
-    userId: uid
-  };
+    // 2. Crea el evento de animación específico para ESTE video
+    updates[`live_events/${liveId}/reactions/${reactionId}`] = {
+      type: emojiType,
+      username: username,
+      ts: serverTimestamp(),
+      userId: uid
+    };
 
-  return update(ref(db), updates);
+    return await update(ref(db), updates);
+  } catch (error: any) {
+    console.error("Error al enviar reacción:", error.message);
+  }
+};
+
+/**
+ * Envía un mensaje al chat vinculado al ID de la transmisión actual.
+ * Esto garantiza que cada video tenga su propio historial de chat.
+ */
+export const sendChatMessage = async (message: string, liveId: string) => {
+  const user = auth.currentUser;
+  if (!user || !liveId || liveId.trim() === "") return;
+
+  try {
+    const username = localStorage.getItem('live_user') || 'Anónimo';
+    
+    // El chat se guarda bajo la ruta del liveId actual
+    const chatRef = push(ref(db, `live_events/${liveId}/chat`));
+    
+    await set(chatRef, {
+      text: message,
+      username: username,
+      userId: user.uid,
+      ts: serverTimestamp()
+    });
+  } catch (error: any) {
+    console.error("Error al enviar mensaje de chat:", error.message);
+  }
 };

@@ -43,7 +43,7 @@ export default function BlogPage() {
             {/* 1 GRANDE A LA IZQUIERDA (Primer elemento del grupo) */}
             <article className="w-full lg:w-1/2">
               {group[0] && (
-                <Link href={`/UI-Components/Blogs/${group[0].id}`} className="group block">
+                <Link href={`Blogs/${group[0].id}`} className="group block">
                   <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl">
                     <Image
                       src={group[0].image}
@@ -72,7 +72,7 @@ export default function BlogPage() {
             <aside className="w-full lg:w-1/2 flex flex-col gap-8">
               {group.slice(1, 4).map((blog: BlogPost) => (
                 <article key={blog.id}>
-                  <Link href={`/UI-Components/Blogs/${blog.id}`} className="group flex flex-col md:flex-row gap-5">
+                  <Link href={`Blogs/${blog.id}`} className="group flex flex-col md:flex-row gap-5">
                     <div className="w-full md:w-1/3 relative aspect-video md:aspect-square rounded-2xl overflow-hidden shadow-md flex-shrink-0">
                       <Image
                         src={blog.image}

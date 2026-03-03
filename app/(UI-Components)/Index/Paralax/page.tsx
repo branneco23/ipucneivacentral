@@ -46,7 +46,7 @@ export default function AnunciosSlider() {
 
   return (
     <section className="relative py-20 overflow-hidden group bg-gradient-to-br from-[#0f172a] via-[#020617] to-black">
-      
+
       {/* DECORACIÓN DE FONDO */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl" />
@@ -120,8 +120,9 @@ export default function AnunciosSlider() {
       {/* MODAL DE DETALLE (POPUP) */}
       <AnimatePresence>
         {selectedId && selectedItem && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-10">
-            {/* Fondo oscuro con cierre al hacer click */}
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+
+            {/* FONDO OSCURO */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -130,58 +131,51 @@ export default function AnunciosSlider() {
               className="absolute inset-0 bg-black/90 backdrop-blur-md"
             />
 
+            {/* CONTENEDOR QUE SE ADAPTA A LA IMAGEN */}
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="relative w-full max-w-6xl bg-neutral-900 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl z-10 max-h-[95vh] flex flex-col"
+              className="relative z-10 inline-block"
             >
-              {/* Contenedor Flex/Grid adaptable */}
-              <div className="flex flex-col md:grid md:grid-cols-10 overflow-y-auto md:overflow-hidden h-full">
+              {/* IMAGEN DEFINE EL TAMAÑO */}
+              <img
+                src={selectedItem.bg}
+                alt={selectedItem.title}
+                className="max-h-[90vh] max-w-[95vw] object-contain rounded-[2rem] shadow-2xl"
+              />
 
-                {/* COLUMNA DE IMAGEN (60% de ancho) */}
-                {/* min-h-[300px] asegura que en móvil se vea, md:h-full hace que se adapte al texto */}
-                <div className="w-full md:col-span-6 min-h-[300px] md:h-full relative bg-neutral-800">
-                   <img 
-                    src={selectedItem.bg} 
-                    alt={selectedItem.title}
-                    className="w-full h-full object-contain md:object-cover"
-                   />
+              {/* CONTENIDO SUPERPUESTO */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent rounded-[2rem]" />
+
+              <div className="absolute bottom-0 left-0 p-8 md:p-12 text-white w-full">
+
+                <button
+                  onClick={() => setSelectedId(null)}
+                  className="absolute top-6 right-6 text-white hover:text-blue-500 transition-colors"
+                >
+                  <i className="ri-close-circle-line text-4xl"></i>
+                </button>
+
+                <span className="text-blue-500 font-bold text-xs uppercase tracking-[0.2em]">
+                  {selectedItem.tag}
+                </span>
+
+                <h2 className="text-3xl md:text-5xl font-black mt-3 mb-4">
+                  {selectedItem.title}
+                </h2>
+
+                <div className="flex flex-wrap gap-4 text-sm mb-4">
+                  <p className="bg-white/10 px-4 py-2 rounded-lg">
+                    <span className="text-blue-400 font-bold">HORA:</span> {selectedItem.hours}
+                  </p>
+                  <p className="bg-white/10 px-4 py-2 rounded-lg">
+                    <span className="text-blue-400 font-bold">GESTIÓN:</span> {selectedItem.year}
+                  </p>
                 </div>
 
-                {/* COLUMNA DE CONTENIDO (40% de ancho) */}
-                <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center md:col-span-4 relative bg-neutral-900">
-                  <button
-                    onClick={() => setSelectedId(null)}
-                    className="absolute top-6 right-6 text-white hover:text-blue-500 transition-colors z-20"
-                  >
-                    <i className="ri-close-circle-line text-4xl"></i>
-                  </button>
+                <button className="mt-4 bg-blue-700 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl transition-all active:scale-95">
+                  AGENDAR EVENTO
+                </button>
 
-                  <span className="text-blue-500 font-bold text-xs uppercase tracking-[0.2em] mb-4">
-                    {selectedItem.tag}
-                  </span>
-
-                  <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-black mb-6 leading-tight">
-                    {selectedItem.title}
-                  </h2>
-
-                  <div className="space-y-6 text-white/70">
-                    <div className="flex flex-wrap gap-4">
-                      <p className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg text-sm">
-                        <span className="text-blue-400 font-bold">HORA:</span> {selectedItem.hours}
-                      </p>
-                      <p className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-lg text-sm">
-                        <span className="text-blue-400 font-bold">GESTIÓN:</span> {selectedItem.year}
-                      </p>
-                    </div>
-                    <p className="text-sm md:text-base lg:text-lg leading-relaxed border-l-2 border-blue-600 pl-4 italic">
-                      "Acompáñanos en este tiempo especial. Estamos preparando lo mejor para que tu experiencia en la casa del Señor sea inolvidable."
-                    </p>
-                  </div>
-
-                  <button className="mt-10 bg-blue-700 hover:bg-blue-600 text-white font-black py-4 lg:py-5 px-10 rounded-2xl transition-all shadow-lg active:scale-95">
-                    AGENDAR EVENTO
-                  </button>
-                </div>
               </div>
             </motion.div>
           </div>

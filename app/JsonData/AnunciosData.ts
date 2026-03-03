@@ -47,4 +47,14 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     year: "2026",
     bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1771936479/WhatsApp_Image_2026-02-23_at_8.29.28_AM_geenkq.jpg`,
   },
+  {
+    id: 4,
+    tag: "Protemplo",
+    number: "04",
+    title: "Culto Dirigido Por Protempllo",
+    location: "En Nuestro Templo",
+    hours: "07:00pm",
+    year: "2026",
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1772562920/ChatGPT_Image_3_mar_2026_13_34_29_bqy7rp.png`,
+  },
 ];

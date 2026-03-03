@@ -99,6 +99,31 @@ Porque donde el Espíritu del Señor está, allí hay vida. Y donde hay vida, ha
   },
   {
     id: "doc-3",
+    title: "La Obra del Espíritu Santo - Parte IV",
+    desc: `La tesis central sostiene que la vida en el Espíritu no es una mejora moral del hombre, sino un cambio de régimen legal. El ser humano, por naturaleza, opera bajo la "ley del pecado y de la muerte", una fuerza que domina la voluntad y hace que lo indebido parezca normal o inevitable. La intervención de Dios, a través del sacrificio de Cristo en "condición semejante a la del hombre pecador", rompe esa estructura legal. El Espíritu Santo no entra a la fuerza, sino que se establece como una nueva ley interna que otorga libertad. Esta libertad se manifiesta en la capacidad de decir "no" al pecado, no por un esfuerzo humano agotador, sino por una nueva naturaleza que encuentra deleite en la santidad.
+
+El Respeto a la Voluntad y la Progresión de la Gracia
+Un argumento crucial del texto es la no violencia de la voluntad humana por parte de Dios. El Espíritu Santo se describe como un caballero que avanza tanto como el creyente se lo permita. La profundidad de la obra de Dios es directamente proporcional a la "sed" del individuo. Esto implica que la madurez cristiana no es automática; requiere una rendición diaria. Si el creyente se conforma, la obra se estanca; si anhela más, el Espíritu se derrama "sin medida". Esta dinámica convierte la vida cristiana en una búsqueda activa de la "perfección" que Dios prometió completar hasta el día de Jesucristo.
+
+La Identidad Filial como Antídoto a la Inseguridad
+El argumento se extiende a la psicología del creyente a través de la adopción. El Espíritu Santo actúa como un testigo que convence al espíritu humano de su nueva posición: ya no es una criatura distante, sino un hijo con derechos de herencia. Esta "consciencia de hijo" es lo que permite que el lenguaje del creyente cambie, permitiéndole llamar a Dios "Papá" (Abba). Esta identidad es la que marca la diferencia entre leer la Biblia como un libro de ética o vivirla como una promesa personal; para quien tiene el Espíritu, la Palabra tiene "sabor" y produce una satisfacción que el mundo no puede imitar.
+
+La Esperanza Escatológica y la Seguridad del Propósito
+Finalmente, la argumentación alcanza su punto máximo en la seguridad frente a la adversidad. El Espíritu Santo es la garantía de que nada en el presente (estrés), en el pasado (depresión) o en el futuro (ansiedad) puede descarrilar el plan de Dios.
+
+En lo físico: El Espíritu es el "aceite" que impregna incluso los restos mortales, asegurando que, al sonar la trompeta, esa partícula sea reclamada para la resurrección.
+
+En lo circunstancial: La convicción de que "todas las cosas ayudan a bien" no es un optimismo ingenuo, sino una certeza teológica. Incluso la muerte de un Lázaro o una pérdida económica se reinterpretan como escenarios para que la gloria de Dios se manifieste.
+
+A la luz de esta enseñanza, la obra del Espíritu Santo según este estudio es totalizadora: libera la conciencia de la culpa, capacita la voluntad contra el vicio, asegura la identidad frente a la orfandad espiritual y garantiza la victoria final sobre la muerte, estableciendo que el único motor válido para el cristiano es la presencia misma de Dios en su interior.`,
+    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1772560552/videoplayback-icl7tofy_eiyLODmY_1_ofukcf.mp4",
+    tag: "Doctrina",
+    postby: "Ipuc Sede Central",
+    date: "1 de Marzo, 2026"
+  },
+  {
+    id: "doc-4",
     title: "Reino de Dios I",
     desc: `
 El Reino de Dios constituye uno de los temas centrales de la revelación bíblica y uno de los fundamentos doctrinales más importantes de la fe cristiana. A lo largo de la historia, este concepto ha sido malinterpretado por muchos, quienes lo han reducido a una idea política, territorial o exclusivamente futura. Sin embargo, las Escrituras presentan el Reino de Dios como una realidad espiritual, histórica y profética que se desarrolla progresivamente en el plan soberano de Dios.
@@ -126,7 +151,7 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "19 de Febrero, 2026"
   },
   {
-    id: "doc-4",
+    id: "doc-5",
     title: "¿Qué significa la Unicidad de Dios?",
     desc: "Un análisis profundo sobre el pilar fundamental de nuestra doctrina bíblica basado en las sagradas escrituras.",
     image: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060594/AboutImg1_vp5jga.jpg",
@@ -135,7 +160,7 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "20 de Enero, 2026"
   },
   {
-    id: "doc-5",
+    id: "doc-6",
     title: "Viviendo en santidad hoy",
     desc: "Cómo mantener un testimonio íntegro en un mundo lleno de distracciones y desafíos modernos.",
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
@@ -145,7 +170,7 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "15 de Enero, 2026"
   },
   {
-    id: "doc-6",
+    id: "doc-7",
     title: "La importancia de la oración en familia",
     desc: "Descubre cómo fortalecer los lazos espirituales en tu hogar a través de la oración diaria y el estudio de la palabra.",
     image: `${BLOG_IMG_PATH}/AboutImg1.jpg`,
@@ -153,16 +178,6 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     tag: "Estudio Bíblico",
     postby: "Pastor Reinaldo Gualdrón",
     date: "25 de Enero, 2026"
-  },
-  {
-    id: "doc-7",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
-    postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
   },
   {
     id: "doc-8",
@@ -176,6 +191,16 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
   },
   {
     id: "doc-9",
+    title: "Juventud con Propósito",
+    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
+  {
+    id: "doc-10",
     title: "Juventud con Propósito",
     desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,

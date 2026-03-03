@@ -29,33 +29,29 @@ interface NavLink {
 ===================== */
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
-  { label: "Servicios", href: "/UI-Components/Pages/Services" },
+  { label: "Servicios", href: "/Pages/Services" },
   {
     label: "Comites",
-    href: "/UI-Components/Projects",
+    href: "/Comites",
     dropdown: [
-      { label: "Directiva Local", href: "/UI-Components/Projects/directiva-local" },
-      { label: "Jóvenes", href: "/UI-Components/Projects/jovenes" },
-      { label: "Directiva de Damas (Dorcas)", href: "/UI-Components/Projects/damas-dorcas" },
-      { label: "Directiva de Escuela Dominical", href: "/UI-Components/Projects/escuela-dominical" },
-      { label: "Directiva de Misiones y Evangelismo", href: "/UI-Components/Projects/misiones" },
-      { label: "Directiva de Alabanza", href: "/UI-Components/Projects/alabanza" },
-      { label: "Directiva de Comunicaciones", href: "/UI-Components/Projects/comunicaciones" },
-      { label: "Directiva de Obra Social", href: "/UI-Components/Projects/obra-social" },
-      { label: "Directiva de Ujieres", href: "/UI-Components/Projects/ujieres" },
-      { label: "Directiva de Intercesión", href: "/UI-Components/Projects/intercesion" },
-      { label: "Directiva de Protemplo", href: "/UI-Components/Projects/protemplo" },
-      { label: "Directiva de Familia", href: "/UI-Components/Projects/familia" },
+      { label: "Directiva Local", href: "/Comites/directiva-local" },
+      { label: "Jóvenes", href: "/Comites/jovenes" },
+      { label: "Directiva de Damas (Dorcas)", href: "/Comites/damas-dorcas" },
+      { label: "Directiva de Escuela Dominical", href: "/Comites/escuela-dominical" },
+      { label: "Directiva de Misiones y Evangelismo", href: "/Comites/misiones" },
+      { label: "Directiva de Alabanza", href: "/Comites/alabanza" },
+      { label: "Directiva de Comunicaciones", href: "/Comites/comunicaciones" },
+      { label: "Directiva de Obra Social", href: "/Comites/obra-social" },
+      { label: "Directiva de Ujieres", href: "/Comites/ujieres" },
+      { label: "Directiva de Intercesión", href: "/Comites/intercesion" },
+      { label: "Directiva de Protemplo", href: "/Comites/protemplo" },
+      { label: "Directiva de Familia", href: "/Comites/familia" },
     ],
   },
-  {
-    label: "Doctrina IPUC",
-    href: "/UI-Components/Blogs",
-    dropdown: [{ label: "Blog", href: "/UI-Components/Blogs" }],
-  },
+  { label: "Doctrina IPUC", href: "/Blogs" },
   // RUTA CORREGIDA PARA TU NUEVA PÁGINA:
   { label: "Transmisiones", href: "/transmision" },
-  { label: "Peticiones", href: "/peticiones" },
+  { label: "Peticiones", href: "/Pages/Peticiones" },
 ];
 
 /* =====================
@@ -88,11 +84,10 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
-          isScrolled
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled
             ? "bg-gradient-to-br from-blue-800 via-blue-900 to-slate-900 py-2 shadow-lg"
             : "bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 py-3"
-        }`}
+          }`}
       >
         <div className="flex items-center justify-between px-[4%] lg:px-[6%]">
           {/* SECCIÓN LOGO */}
@@ -186,7 +181,7 @@ export default function Navbar() {
 
         {/* MÓVIL: FONDO OSCURECIDO (Overlay) */}
         {isMenuOpen && (
-          <div 
+          <div
             className="fixed inset-0 bg-slate-900/60 lg:hidden transition-opacity"
             onClick={() => setIsMenuOpen(false)}
           />
@@ -194,9 +189,8 @@ export default function Navbar() {
 
         {/* MÓVIL: SIDEBAR */}
         <div
-          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[120] transform transition-transform duration-500 lg:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           <div className="p-8 pt-28 flex flex-col gap-6 overflow-y-auto h-full">
             {navLinks.map((link) => (

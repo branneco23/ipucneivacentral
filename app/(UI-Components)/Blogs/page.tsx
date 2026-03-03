@@ -76,7 +76,7 @@ export default function Blog() {
                                 {mainPost && (
                                     <article className="w-full lg:w-1/2">
                                         <Link
-                                            href={`/UI-Components/Blogs/${mainPost.id}`}
+                                            href={`/Blogs/${mainPost.id}`}
                                             className="group block"
                                         >
                                             <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl bg-gray-100">
@@ -126,7 +126,7 @@ export default function Blog() {
                                     {secondaryPost.map((blog: BlogPost) => (
                                         <article key={blog.id}>
                                             <Link
-                                                href={`/UI-Components/Blogs/${blog.id}`}
+                                                href={`/Blogs/${blog.id}`}
                                                 className="group flex flex-col md:flex-row gap-6"
                                             >
                                                 <div className="w-full md:w-2/5 relative aspect-square rounded-2xl overflow-hidden shadow-md flex-shrink-0">

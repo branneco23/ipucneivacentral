@@ -47,7 +47,7 @@ export default function Faqs() {
             />
             <div className="absolute -bottom-6 -right-6 bg-white p-8 rounded-3xl shadow-xl max-w-[200px] border border-gray-100">
                <p className="text-[#00338d] font-bold text-3xl">24/7</p>
-               <p className="text-gray-500 text-xs uppercase font-bold tracking-tighter">Soporte Espiritual para tu vida</p>
+               <p className="text-gray-500 text-xs uppercase font-bold tracking-tighter">Ayuda Espiritual para tu vida</p>
             </div>
           </div>
         </div>

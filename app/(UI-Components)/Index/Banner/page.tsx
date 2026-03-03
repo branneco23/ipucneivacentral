@@ -51,7 +51,7 @@ export default function Banner() {
         <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
           
           <Link 
-            href="/servicios" 
+            href="/Pages/Services" 
             className={`${BUTTON_BASE} bg-blue-600 hover:bg-blue-700 text-white`}
             aria-label="Ver nuestros horarios de servicios"
           >

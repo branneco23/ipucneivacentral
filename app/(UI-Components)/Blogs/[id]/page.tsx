@@ -4,6 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BLOG_DATA } from "@/app/JsonData/BlogsData";
 
+import Newsletter from '@/app/Components/Newsletter/Newsletter';
+
 // Generamos rutas estáticas
 export async function generateStaticParams() {
   return BLOG_DATA.map((post) => ({
@@ -39,7 +41,7 @@ export default async function Page({ params }: PageProps) {
         />
         <div className="absolute inset-0 bg-black/55 flex flex-col justify-end px-[8%] lg:px-[12%] pb-16">
           <Link
-            href="/UI-Components/Blogs"
+            href="/Blogs"
             className="text-white/80 hover:text-white mb-6 flex items-center gap-2 transition-colors"
           >
             <i className="ri-arrow-left-line"></i> Volver a Blogs
@@ -100,7 +102,7 @@ export default async function Page({ params }: PageProps) {
                 .map((other) => (
                   <Link
                     key={other.id}
-                    href={`/UI-Components/Blogs/${other.id}`}
+                    href={`/Blogs/${other.id}`}
                     className="group"
                   >
                     <span className="text-xs font-bold text-[#00338d] uppercase tracking-wider">
@@ -115,6 +117,8 @@ export default async function Page({ params }: PageProps) {
           </div>
         </aside>
       </div>
+
+      <Newsletter />     
     </article>
   );
 }
