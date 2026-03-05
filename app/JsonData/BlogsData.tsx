@@ -67,6 +67,31 @@ Texto Clave: "Porque tú dices: Yo soy rico, y me he enriquecido, y de ninguna c
   },
   {
     id: "doc-2",
+    title: "La Obra del Espiritu Santo II",
+    postby: "IPUC Sede Central Neiva",
+    date: "12 de Febrero, 2026",
+    tag: "Estudio Bíblico",
+    image: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg",
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1772662577/videoplayback-1_kvWlotr7_1_1_i8gkmr.mp4",
+    desc: `La obra del Espíritu Santo constituye el eje vital de la experiencia cristiana y, desde la perspectiva doctrinal de la Iglesia Pentecostal Unida de Colombia, no puede entenderse como un complemento opcional de la fe, sino como la manifestación misma de Dios obrando en su Iglesia. Cuando el Señor declara en Evangelio según San Juan 16 que enviaría al Consolador, no introduce a un tercero distinto, sino que revela la continuidad de su propia presencia en forma espiritual, pues la doctrina apostólica afirma que Dios es uno y que ese único Dios se manifestó en Jesucristo. Hablar del Espíritu Santo, por tanto, es hablar de la acción activa y presente del mismo Señor en medio de su pueblo.
+
+En el discurso de despedida registrado por Juan, Jesús afirma que el Espíritu convencerá al mundo de pecado, de justicia y de juicio. Esta declaración revela el inicio de la obra individual del Espíritu: no se trata únicamente de un movimiento colectivo o emocional, sino de una intervención divina en la conciencia humana. El hombre, sin la acción del Espíritu, permanece insensible a su condición espiritual; puede justificar su conducta, racionalizar su pecado o vivir en aparente normalidad moral. Sin embargo, cuando el Espíritu obra, despierta la conciencia, confronta el corazón y produce convicción. Esta convicción no es producto de sugestión psicológica, sino del obrar soberano de Dios que guía “a toda la verdad”, como el mismo pasaje enseña.
+
+La experiencia de la Iglesia primitiva confirma esta verdad. El libro de Hechos de los Apóstoles muestra que el crecimiento explosivo de la comunidad cristiana no descansó en estrategias humanas, sino en el derramamiento del Espíritu Santo. La llenura espiritual no fue un elemento periférico, sino la señal distintiva de que el Cristo resucitado estaba actuando. La recepción del Espíritu, evidenciada conforme al patrón bíblico, rompió barreras culturales como la existente entre judíos y samaritanos, y más tarde entre judíos y gentiles, demostrando que delante de Dios no hay acepción de personas. La unidad de la Iglesia no se edificó sobre acuerdos sociológicos, sino sobre la experiencia común del Espíritu.
+
+Desde la comprensión doctrinal de la unicidad de Dios, la manifestación del Espíritu Santo no puede separarse de la persona de Jesucristo. El que prometió enviar al Consolador es el mismo que, glorificado, obra en su Iglesia. Por ello, afirmar que no es necesaria la llenura del Espíritu equivale, en términos teológicos, a minimizar la necesidad de la presencia activa de Dios en la vida del creyente. La Escritura no presenta la experiencia espiritual como un lujo reservado para algunos, sino como una promesa disponible para todos los que creen y obedecen el evangelio.
+
+Históricamente, cuando la Iglesia se institucionalizó y se mezcló con estructuras políticas y elementos ajenos a la pureza apostólica, la centralidad de la experiencia del Espíritu fue desplazada por ritualismos, formalismos y desarrollos doctrinales extraños al testimonio bíblico. La fe se redujo a confesiones nominales y prácticas heredadas, mientras la vivencia transformadora del Espíritu fue relegada. No obstante, a lo largo de la historia siempre hubo remanentes que buscaron la restauración del modelo apostólico, entendiendo que la Iglesia sin la manifestación del Espíritu corre el riesgo de convertirse en mera organización religiosa.
+
+En el contexto contemporáneo, la insistencia en la llenura del Espíritu no responde a un énfasis emocional, sino a una convicción teológica: “sin mí nada podéis hacer”, afirmó el Señor. La eficacia del testimonio cristiano, la santidad práctica y el crecimiento espiritual dependen de la obra continua del Espíritu en el creyente. Esta obra no se limita a una experiencia inicial, sino que se expresa en regeneración, fruto espiritual, dirección divina y manifestación de dones para la edificación del cuerpo de Cristo.
+
+Asimismo, la enseñanza de Juan 16 subraya que el Espíritu no hablará por su propia cuenta, sino que tomará de lo que es de Cristo y lo hará saber. Esta afirmación salvaguarda la doctrina de la unicidad divina y establece que toda auténtica manifestación espiritual exalta a Jesucristo como Señor. Donde el Espíritu obra verdaderamente, hay convicción de pecado, transformación moral, pasión por la santidad y fidelidad al nombre de Jesús.
+
+En conclusión, la obra del Espíritu Santo, entendida desde la doctrina apostólica que sostiene la Iglesia Pentecostal Unida de Colombia, no es un añadido secundario a la fe cristiana, sino la expresión misma de la presencia de Dios en su Iglesia. Desde la convicción inicial del pecador hasta la edificación madura del creyente, el Espíritu guía, transforma y capacita. La Iglesia que desea permanecer fiel al modelo bíblico debe reconocer que su fuerza no proviene de estructuras humanas ni de herencias culturales, sino del poder del Espíritu de Dios obrando en cada corazón que, por la fe en Jesucristo, abre la puerta para que Él habite y gobierne su vida.
+`
+  },
+  {
+    id: "doc-2",
     title: "La Obra del Espíritu Santo - Parte III",
     desc: `Amados hermanos, la Palabra de Dios nos revela una verdad contundente en Efesios 2:1: “Y él os dio vida a vosotros, cuando estabais muertos en vuestros delitos y pecados.” El apóstol Pablo no está hablando de muerte física, sino de una condición espiritual. Se puede tener pulso, respirar, trabajar y aun practicar religión, pero estar espiritualmente muerto delante de Dios. Esa es la condición natural del hombre sin la intervención divina. No es que el hombre esté enfermo espiritualmente; está muerto. Y un muerto no puede levantarse por sí mismo.
 

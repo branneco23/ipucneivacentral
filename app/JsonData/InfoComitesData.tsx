@@ -176,7 +176,8 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 2, titulo: "Impacto Evangelistico", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771509567/WhatsApp_Image_2026-02-19_at_8.56.19_AM_cfon4h.jpg", tipo: "imagen", },
       { id: 3, titulo: "Impacto Evangelistico", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771509566/WhatsApp_Image_2026-02-19_at_8.55.06_AM_yrrbgv.jpg", tipo: "imagen", },
       { id: 4, titulo: "Impacto Evangelistico", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1771510725/WhatsApp_Video_2026-01-21_at_7.20.31_PM_nb0t43.mp4", tipo: "video", },
-      { id: 5, titulo: "Grupo de Trabajo", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771536578/WhatsApp_Image_2026-02-08_at_3.52.59_PM_gnjtqk.jpg", tipo: "imagen", }
+      { id: 5, titulo: "Grupo de Trabajo", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771536578/WhatsApp_Image_2026-02-08_at_3.52.59_PM_gnjtqk.jpg", tipo: "imagen", },
+      { id: 6, titulo: "Impacto Evangelistico Al Parque", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1772642883/WhatsApp_Video_2026-03-04_at_11.45.28_AM_fzt1q4.mp4", tipo: "video", }
     ]
   },
 

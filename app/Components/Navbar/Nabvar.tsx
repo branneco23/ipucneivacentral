@@ -85,8 +85,8 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled
-            ? "bg-gradient-to-br from-blue-800 via-blue-900 to-slate-900 py-2 shadow-lg"
-            : "bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 py-3"
+          ? "bg-gradient-to-br from-blue-800 via-blue-900 to-slate-900 py-2 shadow-lg"
+          : "bg-gradient-to-br from-blue-700 via-blue-800 to-blue-900 py-3"
           }`}
       >
         <div className="flex items-center justify-between px-[4%] lg:px-[6%]">
@@ -169,12 +169,14 @@ export default function Navbar() {
               </div>
             ))}
 
-            {/* Botón WhatsApp */}
+            {/* Botón WhatsApp Actualizado */}
             <Link
-              href="/contacto"
-              className="bg-white text-blue-700 px-8 py-3 rounded-full font-black text-xl shadow-xl hover:scale-105 transition active:scale-95"
+              href="https://wa.me/573125444740?text=Hola!%20Te%20Gustaría%20Darnos%20Tu%20Recomendación."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-green-600 px-8 py-3 rounded-full font-black text-xl shadow-xl hover:scale-105 transition active:scale-95 flex items-center justify-center"
             >
-              <i className="ri-whatsapp-line mr-2"></i> Contáctenos
+              <i className="ri-whatsapp-line mr-2 text-2xl"></i> Contáctenos
             </Link>
           </div>
         </div>
