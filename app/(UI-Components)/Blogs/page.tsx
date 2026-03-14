@@ -112,7 +112,7 @@ export default function Blog() {
                                                     {mainPost.title}
                                                 </h2>
 
-                                                <p className="text-gray-500 text-lg line-clamp-3 leading-relaxed">
+                                                <p className="text-gray-500 text-lg line-clamp-3 leading-relaxed" style={{whiteSpace: "pre-line"}}>
                                                     {mainPost.desc}
                                                 </p>
                                             </div>

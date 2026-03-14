@@ -46,7 +46,7 @@ export const ComitesData: Record<string, Comite> = {
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
+    youtubeIds: ["zzz", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334907/ChatGPT_Image_17_feb_2026_08_27_47_x5vyar.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335047/ChatGPT_Image_17_feb_2026_08_30_12_fvdwh5.png" },
@@ -90,7 +90,13 @@ export const ComitesData: Record<string, Comite> = {
       { id: 12, titulo: "Participacion Escuela Dominical 1", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771867240/WhatsApp_Image_2026-02-23_at_12.19.56_PM_ebgp3e.jpg", tipo: "imagen", },
       { id: 13, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771981201/WhatsApp_Image_2026-02-24_at_7.39.56_PM_vfc4hb.jpg", tipo: "imagen", },
       { id: 14, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772031212/WhatsApp_Image_2026-02-24_at_9.18.57_PM_r9t2r2.jpg", tipo: "imagen", },
-      { id: 15, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1771981228/WhatsApp_Video_2026-02-24_at_7.47.18_PM_iltdqm.mp4", tipo: "video", }
+      { id: 15, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1771981228/WhatsApp_Video_2026-02-24_at_7.47.18_PM_iltdqm.mp4", tipo: "video", },
+      { id: 16, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_1_erl3gr.mp4", tipo: "video", },
+      { id: 17, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_vt6sri.mp4", tipo: "video", },
+      { id: 18, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.32_PM_pm32mb.mp4", tipo: "video", },
+      { id: 19, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.29_PM_ctm60z.mp4", tipo: "video", },
+      { id: 20, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255968/WhatsApp_Video_2026-03-11_at_1.57.30_PM_sdbqca.mp4", tipo: "video", },
+      { id: 21, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255966/WhatsApp_Video_2026-03-11_at_1.57.32_PM_1_yv0sup.mp4", tipo: "video", },
     ],
     historietas: [
       {
@@ -148,6 +154,29 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
             reto: "Busca un bolígrafo y rodea en el texto las palabras que más te llamaron la atención sobre el corazón de David."
           }
         ]
+      },
+      {
+        id: 2,
+        titulo: "Un Joven Conforme al Corazón de Dios",
+        introduccion: "¡Hola! Soy Jim y me alegra mucho conocerte. He invitado a un chico llamado Dylan a que nos acompañe en este viaje para descubrir lo que significa seguir a Jesús y ser un niño conforme a Su corazón.",
+        capitulos: [
+          {
+            rango: "CAPÍTULO 1: ¿Cuál es el deseo de tu corazón?",
+            contenido: `Cuando tenía doce años de edad, mis padres y yo fuimos a nuestras únicas vacaciones familiares. Saliendo de mi hogar de niñez en Oklahoma, pasamos a través de Dodge City, Kansas, camino de Colorado. Por supuesto tuvimos que detenernos en el pueblo histórico del viejo oeste y visitar el famoso cementerio Boot Hill, el lugar donde los forajidos se enterraban.
+      Aún puedo recordar hasta este día una lápida con un mensaje como este:
+      Aquí yace el viejo Joe. Murió con sus botas puestas.
+      ¿Y lo creerías? ¡Al final de la tumba había dos botas que sobresalían de la tierra! Más tarde aprendí que el viejo Joe no fue enterrado allí. Y mucho después averigué que las palabras en la lápida eran un epitafio, que significa "pequeño tributo a una persona muerta".
+      A partir de esa inolvidable visita a Boot Hill, he recopilado algunos otros epitafios. Por ejemplo, un poeta griego escribió este en la tumba de los héroes espartanos en el siglo V a.C.:
+      Ve, dile a los espartanos, amable transeúnte, que aquí, obedientes a su ley, yacemos.
+      Este otro se escribió a la memoria del gran poeta inglés Shakespeare:
+      Buen amigo, por amor a Jesús, abstente de cavar el polvo aquí encerrado. Bendito sea el hombre que perdone estas piedras, y maldito sea el que mueva mis huesos.
+      A medida que crecía, empecé a preguntarme: ¿Qué dirá la gente de mí cuando muera? ¿Qué dirá mi epitafio? No hace falta que seas un anciano para pensar en esto. De hecho, ahora es el mejor momento para decidir cómo quieres que sea tu vida.
+      La Biblia nos habla de un hombre llamado David. Él no era perfecto, pero Dios dijo algo increíble sobre él en Hechos 13:22: "He hallado a David hijo de Isaí, varón conforme a mi corazón, quien hará todo lo que yo quiero".
+      ¡Qué epitafio tan asombroso! Ser conocido como alguien que tiene un corazón que busca a Dios. Eso es lo que realmente importa. El deseo de tu corazón determina la dirección de tu vida. Si tu deseo es seguir a Dios, Él te guiará y te convertirá en el joven que Él diseñó que fueras.`,
+            cita: "Mateo 6:21; Hechos 13:22; Salmo 119:105",
+            reto: "Busca un bolígrafo y rodea en el texto las palabras que más te llamaron la atención sobre el corazón de David."
+          }
+        ]
       }
     ]
   },
@@ -164,12 +193,13 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: "/img/comites/ever.png" },
       { id: 3, nombre: "Mary Molano", cargo: "LIDER DE MISIONES NACIONALES", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771592946/Gemini_Generated_Image_vygpdrvygpdrvygp_b095hd.png" },
       { id: 4, nombre: "Nicolas Duarte", cargo: "LIDER DE MISIONES ESPECIALES", foto: "/img/comites/ruth.png" },
-      { id: 5, nombre: "Campoelias Ochoa", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "/img/comites/ruth.png" },
-      { id: 6, nombre: "Milton", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771106304/WhatsApp_Image_2026-02-14_at_4.56.50_PM_y3ukcy.jpg" },
-      { id: 7, nombre: "Nidia Laverde", cargo: "LIDER DE MISIONES INFANTIL", foto: "/img/comites/ruth.png" },
-      { id: 8, nombre: "Claudia Murcia", cargo: "LIDER DE MISIONES HOSPITALARIAS", foto: "/img/comites/ruth.png" },
-      { id: 9, nombre: "Vicente Artuduaga", cargo: "LIDER DE MISIONES EN INSTITUCIONES PÚBLICAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771429747/ChatGPT_Image_18_feb_2026_10_48_21_uuysoj.png" },
-      { id: 10, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: "/img/comites/ruth.png" },
+      { id: 5, nombre: "Marina Aya", cargo: "LIDER DE MISIONES EXTRANJERAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773070745/ChatGPT_Image_9_mar_2026_10_38_13_aoa1vx.png" },
+      { id: 6, nombre: "Campoelias Ochoa", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "/img/comites/ruth.png" },
+      { id: 7, nombre: "Milton", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771106304/WhatsApp_Image_2026-02-14_at_4.56.50_PM_y3ukcy.jpg" },
+      { id: 8, nombre: "Nidia Laverde", cargo: "LIDER DE MISIONES INFANTIL", foto: "/img/comites/ruth.png" },
+      { id: 9, nombre: "Claudia Murcia", cargo: "LIDER DE MISIONES HOSPITALARIAS", foto: "/img/comites/ruth.png" },
+      { id: 10, nombre: "Vicente Artuduaga", cargo: "LIDER DE MISIONES EN INSTITUCIONES PÚBLICAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771429747/ChatGPT_Image_18_feb_2026_10_48_21_uuysoj.png" },
+      { id: 11, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: "/img/comites/ruth.png" },
     ],
     eventos: [
       { id: 1, titulo: "Impacto Evangelistico", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771509567/WhatsApp_Image_2026-02-19_at_8.54.12_AM_kyovck.jpg", tipo: "imagen", },
@@ -224,13 +254,16 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     fotoGrupal: "/img/comites/portada-local.jpg",
     youtubeIds: ["zzz", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
-      { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770734508/ChatGPT_Image_10_feb_2026_09_41_22_petryp.png" },
+      { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068002/ChatGPT_Image_9_mar_2026_09_51_25_ah0j7g.png" },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/ever.png" },
       { id: 3, nombre: "Norma Santos", cargo: "SECRETARIO(A)", foto: "/img/comites/einer.png" },
       { id: 4, nombre: "Cristina Mayorca", cargo: "VOCAL", foto: "/img/comites/ruth.png" },
       { id: 5, nombre: "Cielo Lemus", cargo: "VOCAL", foto: "/img/comites/ruth.png" },
     ],
-    eventos: []
+    eventos: [
+      { id: 1, titulo: "Reconocimientos Día De La Mujer", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773083838/WhatsApp_Image_2026-03-09_at_2.15.26_PM_yzf45q.jpg", tipo: "imagen", },
+      { id: 2, titulo: "Reconociminetos Día De La Mujer", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773083838/WhatsApp_Image_2026-03-09_at_10.46.22_AM_ojvirj.jpg", tipo: "imagen", },
+    ],
   },
 
   "alabanza": {
@@ -254,7 +287,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     versiculo: "¡Cuán hermosos son sobre los montes los pies del que trae alegres nuevas! Isaías 52:7",
     mision: "Difundir el mensaje de salvación a través de medios digitales y técnicos.",
     vision: "Ser el puente tecnológico para la expansión del evangelio.",
-    youtubeIds: ["zzz", "pIbRtZFnlD8"],
+    youtubeIds: ["zzz", "YU7e80T3qas", "pIbRtZFnlD8"],
     integrantes: [
       { id: 1, nombre: "Paula Ramires", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771960910/ChatGPT_Image_24_feb_2026_14_19_24_slyn3t.png" },
       { id: 2, nombre: "Lorem Lemus", cargo: "SECRETARIO(A)", foto: "/img/comites/joven1.png" },
@@ -269,7 +302,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     versiculo: "A Jehová presta el que da al pobre, y el bien que ha hecho, se lo volverá a pagar. Proverbios 19:17",
     mision: "Socorrer a los necIesitados reflejando el amor de Cristo.",
     vision: "Un brazo extendido de misericordia en la comunidad.",
-    youtubeIds: ["zzz", "f_tgppPm0Yo"],
+    youtubeIds: ["zzz", "JXL5LGSKKVY", "f_tgppPm0Yo"],
     integrantes: [
       { id: 1, nombre: "Luz Soto", cargo: "PRESIDENTE", foto: "/img/comites/joven1.png" },
       { id: 2, nombre: "Maria Lozano", cargo: "VICEPRESIDENTE", foto: "/img/comites/joven1.png" },
@@ -326,7 +359,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 5, nombre: "Mireya Polania", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771971226/ChatGPT_Image_23_feb_2026_11_55_52_cb7fkf.png" },
       { id: 6, nombre: "Flor Amanda", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
       { id: 7, nombre: "Maria Perdomo", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
-      { id: 8, nombre: "Carlos Herrera", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
+      { id: 8, nombre: "Carlos Herrera", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773071484/ChatGPT_Image_9_mar_2026_10_50_00_v4rtmu.png" },
       { id: 9, nombre: "José Collazos", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771594009/WhatsApp_Image_2026-02-19_at_10.50.06_PM_dmy23e.jpg" },
       { id: 10, nombre: "Miltón Valdes", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772124889/ChatGPT_Image_26_feb_2026_11_50_49_cu8g9f.png" },
     ],
@@ -340,8 +373,8 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     vision: "Hogares restaurados y saludables para la gloria de Dios.",
     youtubeIds: ["zzz", "YGpazkIaLt8"],
     integrantes: [
-      { id: 1, nombre: "Estebán Zuñiga", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771605729/Gemini_Generated_Image_pcpshwpcpshwpcps_apugy0.png" },
-      { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771628258/ChatGPT_Image_20_feb_2026_17_53_26_ebmpny.png" },
+      { id: 1, nombre: "Estebán Zuñiga", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085336/ChatGPT_Image_9_mar_2026_14_40_29_thoiw2.png" },
+      { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085423/ChatGPT_Image_9_mar_2026_10_24_25_xjoc0v.png" },
       { id: 3, nombre: "Maria Medina", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
       { id: 4, nombre: "Eber Lozada", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
       { id: 5, nombre: "Norma Santos", cargo: "VOCAL", foto: "/img/comites/joven1.png" },

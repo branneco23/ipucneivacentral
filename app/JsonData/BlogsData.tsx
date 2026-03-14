@@ -67,7 +67,7 @@ Texto Clave: "Porque tú dices: Yo soy rico, y me he enriquecido, y de ninguna c
   },
   {
     id: "doc-2",
-    title: "La Obra del Espiritu Santo II",
+    title: "La Obra del Espiritu Santo - Parte II",
     postby: "IPUC Sede Central Neiva",
     date: "12 de Febrero, 2026",
     tag: "Estudio Bíblico",
@@ -91,7 +91,7 @@ En conclusión, la obra del Espíritu Santo, entendida desde la doctrina apostó
 `
   },
   {
-    id: "doc-2",
+    id: "doc-3",
     title: "La Obra del Espíritu Santo - Parte III",
     desc: `Amados hermanos, la Palabra de Dios nos revela una verdad contundente en Efesios 2:1: “Y él os dio vida a vosotros, cuando estabais muertos en vuestros delitos y pecados.” El apóstol Pablo no está hablando de muerte física, sino de una condición espiritual. Se puede tener pulso, respirar, trabajar y aun practicar religión, pero estar espiritualmente muerto delante de Dios. Esa es la condición natural del hombre sin la intervención divina. No es que el hombre esté enfermo espiritualmente; está muerto. Y un muerto no puede levantarse por sí mismo.
 
@@ -123,32 +123,7 @@ Porque donde el Espíritu del Señor está, allí hay vida. Y donde hay vida, ha
     date: "15 de Febrero, 2026"
   },
   {
-    id: "doc-3",
-    title: "La Obra del Espíritu Santo - Parte IV",
-    desc: `La tesis central sostiene que la vida en el Espíritu no es una mejora moral del hombre, sino un cambio de régimen legal. El ser humano, por naturaleza, opera bajo la "ley del pecado y de la muerte", una fuerza que domina la voluntad y hace que lo indebido parezca normal o inevitable. La intervención de Dios, a través del sacrificio de Cristo en "condición semejante a la del hombre pecador", rompe esa estructura legal. El Espíritu Santo no entra a la fuerza, sino que se establece como una nueva ley interna que otorga libertad. Esta libertad se manifiesta en la capacidad de decir "no" al pecado, no por un esfuerzo humano agotador, sino por una nueva naturaleza que encuentra deleite en la santidad.
-
-El Respeto a la Voluntad y la Progresión de la Gracia
-Un argumento crucial del texto es la no violencia de la voluntad humana por parte de Dios. El Espíritu Santo se describe como un caballero que avanza tanto como el creyente se lo permita. La profundidad de la obra de Dios es directamente proporcional a la "sed" del individuo. Esto implica que la madurez cristiana no es automática; requiere una rendición diaria. Si el creyente se conforma, la obra se estanca; si anhela más, el Espíritu se derrama "sin medida". Esta dinámica convierte la vida cristiana en una búsqueda activa de la "perfección" que Dios prometió completar hasta el día de Jesucristo.
-
-La Identidad Filial como Antídoto a la Inseguridad
-El argumento se extiende a la psicología del creyente a través de la adopción. El Espíritu Santo actúa como un testigo que convence al espíritu humano de su nueva posición: ya no es una criatura distante, sino un hijo con derechos de herencia. Esta "consciencia de hijo" es lo que permite que el lenguaje del creyente cambie, permitiéndole llamar a Dios "Papá" (Abba). Esta identidad es la que marca la diferencia entre leer la Biblia como un libro de ética o vivirla como una promesa personal; para quien tiene el Espíritu, la Palabra tiene "sabor" y produce una satisfacción que el mundo no puede imitar.
-
-La Esperanza Escatológica y la Seguridad del Propósito
-Finalmente, la argumentación alcanza su punto máximo en la seguridad frente a la adversidad. El Espíritu Santo es la garantía de que nada en el presente (estrés), en el pasado (depresión) o en el futuro (ansiedad) puede descarrilar el plan de Dios.
-
-En lo físico: El Espíritu es el "aceite" que impregna incluso los restos mortales, asegurando que, al sonar la trompeta, esa partícula sea reclamada para la resurrección.
-
-En lo circunstancial: La convicción de que "todas las cosas ayudan a bien" no es un optimismo ingenuo, sino una certeza teológica. Incluso la muerte de un Lázaro o una pérdida económica se reinterpretan como escenarios para que la gloria de Dios se manifieste.
-
-A la luz de esta enseñanza, la obra del Espíritu Santo según este estudio es totalizadora: libera la conciencia de la culpa, capacita la voluntad contra el vicio, asegura la identidad frente a la orfandad espiritual y garantiza la victoria final sobre la muerte, estableciendo que el único motor válido para el cristiano es la presencia misma de Dios en su interior.`,
-    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
-    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1772560552/videoplayback-icl7tofy_eiyLODmY_1_ofukcf.mp4",
-    tag: "Doctrina",
-    postby: "Ipuc Sede Central",
-    date: "1 de Marzo, 2026"
-  },
-  {
-    id: "doc-4",
+    id: "doc-6",
     title: "Reino de Dios I",
     desc: `
 El Reino de Dios constituye uno de los temas centrales de la revelación bíblica y uno de los fundamentos doctrinales más importantes de la fe cristiana. A lo largo de la historia, este concepto ha sido malinterpretado por muchos, quienes lo han reducido a una idea política, territorial o exclusivamente futura. Sin embargo, las Escrituras presentan el Reino de Dios como una realidad espiritual, histórica y profética que se desarrolla progresivamente en el plan soberano de Dios.
@@ -176,16 +151,102 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "19 de Febrero, 2026"
   },
   {
-    id: "doc-5",
-    title: "¿Qué significa la Unicidad de Dios?",
-    desc: "Un análisis profundo sobre el pilar fundamental de nuestra doctrina bíblica basado en las sagradas escrituras.",
-    image: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1770060594/AboutImg1_vp5jga.jpg",
+    id: "doc-4",
+    title: "La Obra del Espíritu Santo - Parte IV",
+    desc: `La tesis central sostiene que la vida en el Espíritu no es una mejora moral del hombre, sino un cambio de régimen legal. El ser humano, por naturaleza, opera bajo la "ley del pecado y de la muerte", una fuerza que domina la voluntad y hace que lo indebido parezca normal o inevitable. La intervención de Dios, a través del sacrificio de Cristo en "condición semejante a la del hombre pecador", rompe esa estructura legal. El Espíritu Santo no entra a la fuerza, sino que se establece como una nueva ley interna que otorga libertad. Esta libertad se manifiesta en la capacidad de decir "no" al pecado, no por un esfuerzo humano agotador, sino por una nueva naturaleza que encuentra deleite en la santidad.
+
+El Respeto a la Voluntad y la Progresión de la Gracia
+Un argumento crucial del texto es la no violencia de la voluntad humana por parte de Dios. El Espíritu Santo se describe como un caballero que avanza tanto como el creyente se lo permita. La profundidad de la obra de Dios es directamente proporcional a la "sed" del individuo. Esto implica que la madurez cristiana no es automática; requiere una rendición diaria. Si el creyente se conforma, la obra se estanca; si anhela más, el Espíritu se derrama "sin medida". Esta dinámica convierte la vida cristiana en una búsqueda activa de la "perfección" que Dios prometió completar hasta el día de Jesucristo.
+
+La Identidad Filial como Antídoto a la Inseguridad
+El argumento se extiende a la psicología del creyente a través de la adopción. El Espíritu Santo actúa como un testigo que convence al espíritu humano de su nueva posición: ya no es una criatura distante, sino un hijo con derechos de herencia. Esta "consciencia de hijo" es lo que permite que el lenguaje del creyente cambie, permitiéndole llamar a Dios "Papá" (Abba). Esta identidad es la que marca la diferencia entre leer la Biblia como un libro de ética o vivirla como una promesa personal; para quien tiene el Espíritu, la Palabra tiene "sabor" y produce una satisfacción que el mundo no puede imitar.
+
+La Esperanza Escatológica y la Seguridad del Propósito
+Finalmente, la argumentación alcanza su punto máximo en la seguridad frente a la adversidad. El Espíritu Santo es la garantía de que nada en el presente (estrés), en el pasado (depresión) o en el futuro (ansiedad) puede descarrilar el plan de Dios.
+
+En lo físico: El Espíritu es el "aceite" que impregna incluso los restos mortales, asegurando que, al sonar la trompeta, esa partícula sea reclamada para la resurrección.
+
+En lo circunstancial: La convicción de que "todas las cosas ayudan a bien" no es un optimismo ingenuo, sino una certeza teológica. Incluso la muerte de un Lázaro o una pérdida económica se reinterpretan como escenarios para que la gloria de Dios se manifieste.
+
+A la luz de esta enseñanza, la obra del Espíritu Santo según este estudio es totalizadora: libera la conciencia de la culpa, capacita la voluntad contra el vicio, asegura la identidad frente a la orfandad espiritual y garantiza la victoria final sobre la muerte, estableciendo que el único motor válido para el cristiano es la presencia misma de Dios en su interior.`,
+    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1772560552/videoplayback-icl7tofy_eiyLODmY_1_ofukcf.mp4",
     tag: "Doctrina",
-    postby: "Comité de Educación",
-    date: "20 de Enero, 2026"
+    postby: "Ipuc Sede Central",
+    date: "1 de Marzo, 2026"
   },
   {
-    id: "doc-6",
+    id: "doc-5",
+    title: "La Obra del Espíritu Santo - Parte V",
+    desc: `El bautismo del Espíritu Santo es una obra gloriosa dentro del plan de Dios para la vida del creyente. El Señor Jesucristo, antes de ascender al cielo, habló claramente acerca de esta promesa. En Hechos capítulo 1 versos 5 al 8 se registra que dijo: “Juan ciertamente bautizó con agua, mas vosotros seréis bautizados con el Espíritu Santo dentro de no muchos días”. Estas palabras fueron dirigidas a personas que ya habían creído en Él, que ya habían decidido seguirle y que habían experimentado muchas de las obras del Señor. Sin embargo, Cristo les enseñó que aún había una promesa más que debían recibir. Cuando ellos le preguntaron si en ese tiempo restauraría el reino a Israel, el Señor les respondió que no les correspondía saber los tiempos o las sazones que el Padre había puesto en su sola potestad, pero añadió una verdad poderosa: “pero recibiréis poder cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria y hasta lo último de la tierra”.
+
+Los discípulos esperaban un reino terrenal, un reino político que restaurara el poder de Israel, pero el Señor estaba estableciendo un reino espiritual en el corazón de las personas. Cuando Dios comienza a reinar en la vida de un ser humano, se produce una transformación interior que muchas veces trae lucha, porque la naturaleza humana se resiste a la voluntad de Dios. La Escritura enseña que hay una lucha entre la carne y el Espíritu, y que el creyente debe decidir cada día someterse al Señor. El Espíritu Santo obra en la vida de la persona desde antes de que ella misma lo comprenda. Él es quien convence de pecado, de justicia y de juicio, como lo enseñó el Señor Jesucristo. Es el Espíritu Santo quien prepara el corazón para recibir la palabra de Dios, quien guía a la persona a escuchar el evangelio y quien le permite reconocer su condición delante de Dios.
+
+Muchas personas pueden justificar su manera de vivir hasta que escuchan la palabra del Señor. Entonces el Espíritu Santo obra en su interior y les hace comprender que necesitan el perdón de Dios. Esa obra comienza antes de la conversión, continúa en la vida del creyente y se desarrolla conforme la persona permite que Dios siga obrando en su vida. Sin embargo, el Señor nunca obliga ni violenta la voluntad del ser humano. Dios respeta la decisión de cada persona y espera que el creyente se disponga a buscarle y a permitir que su obra crezca en su corazón. La vida cristiana implica una decisión constante de poner a Dios en primer lugar y de permitir que su voluntad gobierne sobre la nuestra.
+
+Dentro de ese proceso espiritual se encuentra el bautismo del Espíritu Santo, el cual no es simplemente una experiencia para cumplir un requisito religioso, sino una parte esencial de la obra que Dios realiza en sus hijos. El Señor dijo claramente que aquellos que habían creído debían esperar esta promesa. Después de su resurrección, Jesús se apareció a muchos testigos, y el apóstol Pablo afirma que se apareció a más de quinientos hermanos a la vez. Sin embargo, cuando llegó el momento de esperar la promesa del Padre, solamente ciento veinte personas permanecieron reunidas en el aposento alto. Ellos creyeron en la palabra del Señor y decidieron obedecerla.
+
+Aquellos ciento veinte no sabían exactamente cómo sería la experiencia que iban a vivir. Hasta ese momento de la historia nadie había sido bautizado en el Espíritu Santo de la manera en que el Señor lo había prometido. En el Antiguo Testamento el Espíritu de Dios venía sobre algunos hombres para cumplir propósitos específicos, como profetizar o realizar una tarea determinada, pero luego se retiraba. En cambio, en esta nueva dispensación Dios prometió algo diferente, que su Espíritu moraría en los creyentes. Por eso la Escritura enseña que el creyente llega a ser templo del Espíritu Santo y morada de Dios en el Espíritu.
+
+Los discípulos permanecieron unánimes en oración y en comunión, creyendo en la promesa del Señor. Finalmente, tal como se relata en Hechos capítulo 2, cuando llegó el día de Pentecostés estaban todos unánimes juntos, y de repente vino del cielo un estruendo como de un viento recio que llenó toda la casa donde estaban sentados. Se les aparecieron lenguas repartidas como de fuego, asentándose sobre cada uno de ellos, y fueron todos llenos del Espíritu Santo y comenzaron a hablar en otras lenguas según el Espíritu les daba que hablasen. Dios permitió que ellos vieran y oyeran manifestaciones que confirmaban la realidad de lo que estaba ocurriendo.
+
+Cuando la multitud escuchó lo que sucedía, algunos pensaron que estaban embriagados, pero el apóstol Pedro explicó lo que estaba pasando. Citó la profecía de Joel y declaró que aquello era el cumplimiento de lo que Dios había anunciado, diciendo que en los postreros días derramaría de su Espíritu sobre toda carne. Pedro también enseñó que esta promesa no era solamente para aquel grupo de creyentes, sino que se extendía a todos los que el Señor llamara. Por eso en su predicación afirmó que la promesa es para vosotros, para vuestros hijos y para todos los que están lejos, para cuantos el Señor nuestro Dios llamare.
+
+El bautismo del Espíritu Santo es, por tanto, una promesa divina para la iglesia. No es algo limitado a un momento histórico ni a un grupo exclusivo de personas, sino un regalo que Dios concede a quienes creen en Jesucristo y desean vivir una vida llena de su Espíritu. Esta experiencia capacita al creyente para vivir en santidad, fortalece su comunión con Dios y le da poder para ser testigo del evangelio. Tal como lo dijo el Señor en Hechos 1:8, cuando el Espíritu Santo viene sobre la persona, recibe poder para anunciar la salvación y para vivir conforme a la voluntad de Dios.
+
+El creyente que busca al Señor con sinceridad puede experimentar esta promesa gloriosa. Dios no manipula ni obliga a nadie, pero responde a los corazones que le buscan con fe y con hambre espiritual. Así como aquellos ciento veinte creyeron en la palabra de Cristo y esperaron en oración hasta recibir la promesa, también hoy todo aquel que es llamado por Dios puede acercarse a Él y pedirle que cumpla en su vida la promesa del bautismo del Espíritu Santo, para vivir lleno de su presencia y para glorificar el nombre de Jesucristo hasta lo último de la tierra.`,
+    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773080100/escuela-dominical-x6xyseaz-q85xbn1o_VSLe0tlE_1_yjxryc.mp4",
+    tag: "Doctrina",
+    postby: "Ipuc Sede Central",
+    date: "8 de Marzo, 2026"
+  },
+  {
+    id: "doc-7",
+    title: "La Resurrección y el Arrebatamiento de la Iglesia",
+    desc: `
+La esperanza cristiana no termina con la muerte. La fe bíblica enseña que la muerte no es el final de la existencia humana, sino el paso hacia la realidad eterna. La Escritura revela que todos los seres humanos comparecerán ante Dios y que habrá una resurrección universal, pero con destinos distintos según la vida espiritual que cada persona haya sembrado.
+
+El cristiano vive con la esperanza de la vida eterna, la resurrección gloriosa y el encuentro con Cristo en su venida. Estas doctrinas forman parte del estudio de la escatología, es decir, el estudio de los eventos futuros dentro del plan redentor de Dios.
+
+La Biblia enseña que la vida presente es el tiempo en el que el ser humano siembra para la eternidad. Lo que se haga en esta vida tendrá consecuencias eternas. El apóstol Pablo declara claramente este principio espiritual en Gálatas 6:7-8: “No os engañéis; Dios no puede ser burlado: pues todo lo que el hombre sembrare, eso también segará. Porque el que siembra para su carne, de la carne segará corrupción; mas el que siembra para el Espíritu, del Espíritu segará vida eterna”. Este principio revela que la vida presente funciona como un terreno espiritual donde cada persona decide qué sembrar.
+
+Una vida dedicada únicamente a los deseos de la carne produce corrupción espiritual, mientras que una vida orientada hacia Dios produce vida eterna. Por esta razón, la vida terrenal es una oportunidad divina para preparar el destino eterno del alma.
+
+La Escritura también enseña que todos los seres humanos resucitarán. Jesucristo afirmó en Juan 5:28-29 que vendrá la hora cuando todos los que están en los sepulcros oirán su voz, y los que hicieron lo bueno saldrán a resurrección de vida, mientras que los que hicieron lo malo resucitarán para condenación. Esto demuestra que la resurrección no es una idea simbólica ni filosófica, sino una realidad futura determinada por la justicia divina.
+
+El fundamento de la resurrección cristiana es la resurrección de Jesucristo. El apóstol Pablo afirma en 1 Corintios 15:20 que Cristo ha resucitado de los muertos y se ha convertido en las primicias de los que durmieron. Con esto se establece que Cristo fue el primero en resucitar con un cuerpo glorificado para no volver a morir jamás. Su resurrección garantiza la futura resurrección de todos los creyentes.
+
+La Biblia también enseña el orden de los acontecimientos: Cristo como primicias y posteriormente los que son de Cristo en su venida. Esta esperanza se conecta directamente con la doctrina del arrebatamiento de la iglesia.
+
+El arrebatamiento es el evento en el cual Jesucristo vendrá a recoger a su iglesia. El apóstol Pablo explica este acontecimiento en 1 Tesalonicenses 4:16-17 diciendo que el Señor mismo descenderá del cielo con voz de mando, con voz de arcángel y con trompeta de Dios, y los muertos en Cristo resucitarán primero. Luego los creyentes que estén vivos serán arrebatados juntamente con ellos en las nubes para recibir al Señor en el aire, y así estarán siempre con Él.
+
+Este pasaje revela varias verdades fundamentales. Primero, que los creyentes muertos resucitarán. Segundo, que los creyentes vivos serán transformados. Tercero, que la iglesia se encontrará con Cristo en el aire. Este encuentro no ocurrirá inicialmente en la tierra, sino en las nubes, lo que explica por qué será un evento repentino e inesperado para el mundo.
+
+El apóstol Pablo también explica la transformación del cuerpo humano en 1 Corintios 15:51-52 cuando declara: “He aquí, os digo un misterio: no todos dormiremos; pero todos seremos transformados, en un momento, en un abrir y cerrar de ojos, a la final trompeta”. Esto significa que los creyentes recibirán un cuerpo glorificado, incorruptible e inmortal.
+
+El cuerpo actual es vulnerable a la enfermedad, al dolor y a la muerte. Sin embargo, el cuerpo glorificado será incorruptible, inmortal y semejante al cuerpo resucitado de Cristo. Esta transformación será instantánea y ocurrirá en el momento del arrebatamiento.
+
+Jesús también enseñó que el día de su regreso será inesperado. En Mateo 24:36 declaró que nadie sabe el día ni la hora, ni siquiera los ángeles del cielo, sino solamente el Padre. Por esta razón la iglesia debe vivir en constante vigilancia y preparación espiritual.
+
+Esta enseñanza se refleja en varias parábolas de Jesús, especialmente en la parábola de las diez vírgenes en Mateo 25. En la cultura judía, la novia debía esperar al esposo sin conocer el momento exacto de su llegada. De la misma manera, la iglesia espera la venida de Cristo permaneciendo vigilante y preparada.
+
+Desde la primera venida de Cristo, el mundo vive en el tiempo de la gracia, período en el cual el evangelio es predicado a todas las naciones. Jesús declaró en Mateo 24:14 que el evangelio del reino sería predicado en todo el mundo para testimonio a todas las naciones, y entonces vendría el fin.
+
+Durante este tiempo Dios llama a personas de todas las naciones para formar su iglesia. La misión de la iglesia es proclamar el evangelio, anunciar la salvación y preparar a los creyentes para el encuentro con el Señor.
+
+Finalmente, la Biblia enseña que todos comparecerán ante Dios para ser juzgados. Apocalipsis 20:12 describe el juicio final donde los muertos serán juzgados según sus obras. Este juicio revela la justicia perfecta de Dios y confirma que cada vida tendrá consecuencias eternas.
+
+En conclusión, la doctrina bíblica muestra que la vida presente es un tiempo de preparación para la eternidad. Cristo resucitó como primicias, los creyentes resucitarán para vida eterna, y la iglesia será arrebatada para encontrarse con el Señor. Por esta razón el llamado de la Escritura es vivir preparados, sembrando para el Espíritu y aguardando con esperanza el glorioso regreso de Jesucristo.
+`,
+    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773509591/trimmed-culto-de-oracion-y-ensenanza-9ietdgei-puprpb4i-ibxlga1f-usolzmer-5qbfuop_EH8WQdSj_dsq2vx.mp4",
+    tag: "Escatología",
+    postby: "Ipuc Sede Central",
+    date: "12 de Marzo, 2026"
+  },
+  {
+    id: "doc-8",
     title: "Viviendo en santidad hoy",
     desc: "Cómo mantener un testimonio íntegro en un mundo lleno de distracciones y desafíos modernos.",
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
@@ -195,7 +256,7 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "15 de Enero, 2026"
   },
   {
-    id: "doc-7",
+    id: "doc-9",
     title: "La importancia de la oración en familia",
     desc: "Descubre cómo fortalecer los lazos espirituales en tu hogar a través de la oración diaria y el estudio de la palabra.",
     image: `${BLOG_IMG_PATH}/AboutImg1.jpg`,
@@ -205,27 +266,27 @@ En conclusión, el Reino de Dios no es una ideología humana ni una organizació
     date: "25 de Enero, 2026"
   },
   {
-    id: "doc-8",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
-    postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
-  },
-  {
-    id: "doc-9",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
-    postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
-  },
-  {
     id: "doc-10",
+    title: "Juventud con Propósito",
+    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
+  {
+    id: "doc-11",
+    title: "Juventud con Propósito",
+    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://www.youtube.com/embed/ejemplo",
+    tag: "Vida Cristiana",
+    postby: "Liderazgo Local",
+    date: "15 de Enero, 2026"
+  },
+  {
+    id: "doc-12",
     title: "Juventud con Propósito",
     desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,

@@ -103,9 +103,9 @@ export default function Navbar() {
               />
             </div>
             <div className="leading-tight">
-              <h1 className="text-2xl lg:text-4xl font-extrabold text-white">IPUC</h1>
+              <h1 className="text-2xl lg:text-4xl font-extrabold text-white">CENTRAL</h1>
               <span className="text-blue-200 text-sm lg:text-lg font-bold uppercase block">
-                Neiva Central
+                SEDE - NEIVA
               </span>
             </div>
           </Link>

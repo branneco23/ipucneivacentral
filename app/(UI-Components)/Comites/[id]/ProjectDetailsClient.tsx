@@ -237,6 +237,9 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
             <div className="w-full">
               <RevistaLibro historia={data.historietas[0]} />
             </div>
+            <div className="w-full">
+              <RevistaLibro historia={data.historietas[1]} />
+            </div>
           </section>
         )}
       </div>
