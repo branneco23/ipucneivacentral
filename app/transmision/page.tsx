@@ -18,7 +18,7 @@ export default function TransmisionPage() {
   const [isReady, setIsReady] = useState(false);
   
   // El videoId es el "ID de Sala". Si cambia en Firebase, todo el chat se reinicia automáticamente.
-  const [videoId, setVideoId] = useState<string>("emzEQmmdBGk"); // ******SOLO CAMBIAR ESTE ID ******
+  const [videoId, setVideoId] = useState<string>("QAek1OL6v8w"); // ******SOLO CAMBIAR ESTE ID ******
 
   useEffect(() => {
     // 1. Cargar usuario del almacenamiento local
@@ -104,7 +104,6 @@ export default function TransmisionPage() {
                 <div className="flex-1 max-w-md bg-white/40 rounded-3xl p-1 border border-gray-100">
                   <ReactionSystem liveId={videoId} />
                 </div>
-
               </div>
             </div>
           </div>

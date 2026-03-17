@@ -247,13 +247,21 @@ En conclusión, la doctrina bíblica muestra que la vida presente es un tiempo d
   },
   {
     id: "doc-8",
-    title: "Viviendo en santidad hoy",
-    desc: "Cómo mantener un testimonio íntegro en un mundo lleno de distracciones y desafíos modernos.",
+    title: "La Obra del Espiritu Santo - Parte VI",
+    desc: `La vida cristiana no es un estanque de aguas quietas, sino un río caudaloso que avanza bajo la premisa de que aquel que comenzó la buena obra la perfeccionará hasta el día de Jesucristo, como lo afirma Filipenses 1:6. En la experiencia pentecostal, se comprende que la fe no es un evento estático, sino una progresión constante que, como la luz de la aurora mencionada en Proverbios 4:18, va en aumento hasta que el día es perfecto. Esta dinámica espiritual exige un creyente activo, consciente de que la vida en el Señor es movimiento y transformación, huyendo del estancamiento espiritual para abrazar una relación viva y vibrante con el Creador.
+
+En el corazón de esta experiencia se halla el bautismo, un acto que trasciende la simple pertenencia a una organización religiosa. Lejos de ser un trámite para obtener un rótulo denominacional, el bautismo se erige como un mandamiento divino esencial para la salvación. El mismo Señor Jesucristo fue categórico en Marcos 16:16 al sentar la base de la redención: "el que creyere y fuere bautizado, será salvo". Es la respuesta de obediencia que el apóstol Pedro ratifica en sus cartas, señalando que el bautismo que ahora corresponde nos salva, no por quitar las inmundicias de la carne, sino como la aspiración de una buena conciencia hacia Dios.
+
+Sin embargo, el camino no termina en las aguas. El Espíritu Santo despierta en el creyente una sed insaciable, cumpliendo la invitación de Juan 7:37-39, donde el Señor exclama que si alguno tiene sed, venga a Él y beba, prometiendo que de su interior correrán ríos de agua viva. Esta presencia divina impulsa un proceso de santificación donde la voluntad humana es el escenario principal. Dios, en su respeto absoluto por la libertad del hombre, declara en Apocalipsis 3:20: "He aquí, yo estoy a la puerta y llamo". Si el creyente decide abrir la puerta de su voluntad, el Espíritu comienza a limpiar el carácter y a perfeccionar el ser, un trabajo diario que busca que un día seamos semejantes a Él, según la esperanza gloriosa de 1 Juan 3:2.
+
+Este mover del Espíritu no conoce fronteras ni hace acepción de personas, una verdad que quedó sellada en el concilio de Jerusalén descrito en Hechos 15. Allí, el apóstol Pedro testificó cómo Dios, que conoce los corazones, dio el Espíritu Santo a los gentiles lo mismo que a los judíos, purificando por la fe sus corazones y demostrando que no hay diferencia bajo la gracia. La historia bíblica nos recuerda en Hechos 2 que este poder se manifiesta con señales, como el hablar en otras lenguas según el Espíritu da que se hable, una promesa que unió a los ciento veinte en el aposento alto bajo un mismo sentir de unidad y oración.
+
+La esencia de este mensaje reside en la victoria de la cruz y la eficacia de la resurrección. Aunque el mundo se distrae con fechas y tradiciones, la Iglesia sostiene que si Cristo no resucitó, vana es nuestra fe, tal como advierte 1 Corintios 15:14. El sacrificio en el Calvario, profetizado en Isaías 53, donde por su llaga fuimos nosotros curados, es el verdadero motor de la salvación. Por tanto, el llamado actual es a la unidad y a la perseverancia, manteniendo encendido ese fuego en el corazón que arde cuando se escudriñan las Escrituras, caminando con la certeza de que el Espíritu Santo es la guía, la fuerza y el sello de nuestra redención eterna.`,
     image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773743922/videoplayback-fxfp1f4s-42qc5inp_658IO4zF_1_ybs3kj.mp4",
+    tag: "La Obra del Espiritu Santo - Parte VI",
     postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
+    date: "15 de Marzo, 2026"
   },
   {
     id: "doc-9",

@@ -21,7 +21,7 @@ type HistoryTab = "PASTORES" | "HITOS";
 
 const GALLERY_IMAGES = [
   { src: AboutImg1, alt: "Interior de la congregación IPUC", priority: true },
-  { src: AboutImg2, alt: "Fachada principal sede Central", priority: false },
+  { src: AboutImg2, alt: "Campañas de Evangelismo De Nuestros Jóvenes", priority: false },
   { src: AboutImg3, alt: "Comunidad reunida en Neiva", priority: false },
 ];
 

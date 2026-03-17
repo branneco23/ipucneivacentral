@@ -46,11 +46,11 @@ export const ComitesData: Record<string, Comite> = {
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
+    youtubeIds: ["zzz", "Hi_aneMtE0Y", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334907/ChatGPT_Image_17_feb_2026_08_27_47_x5vyar.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335047/ChatGPT_Image_17_feb_2026_08_30_12_fvdwh5.png" },
-      { id: 3, nombre: "Maria Segrera", cargo: "SECRETARIO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335131/ChatGPT_Image_16_feb_2026_19_03_12_oyqxgo.png" },
+      { id: 3, nombre: "Maria Segrera", cargo: "SECRETARIO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773712788/ChatGPT_Image_16_mar_2026_20_56_06_cdncmo.png" },
       { id: 4, nombre: "Crisanto Sanchez", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335669/ChatGPT_Image_17_feb_2026_08_40_35_mpfion.png" },
       { id: 5, nombre: "Judith Vargas", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771287068/ChatGPT_Image_16_feb_2026_19_10_24_xqnrrn.png" },
       { id: 6, nombre: "Javier Zoque", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771435741/ChatGPT_Image_18_feb_2026_12_28_28_izq72z.png" },
@@ -91,12 +91,13 @@ export const ComitesData: Record<string, Comite> = {
       { id: 13, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771981201/WhatsApp_Image_2026-02-24_at_7.39.56_PM_vfc4hb.jpg", tipo: "imagen", },
       { id: 14, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772031212/WhatsApp_Image_2026-02-24_at_9.18.57_PM_r9t2r2.jpg", tipo: "imagen", },
       { id: 15, titulo: "Participacion Escuela Dominical 2", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1771981228/WhatsApp_Video_2026-02-24_at_7.47.18_PM_iltdqm.mp4", tipo: "video", },
-      { id: 16, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_1_erl3gr.mp4", tipo: "video", },
-      { id: 17, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_vt6sri.mp4", tipo: "video", },
-      { id: 18, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.32_PM_pm32mb.mp4", tipo: "video", },
-      { id: 19, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.29_PM_ctm60z.mp4", tipo: "video", },
-      { id: 20, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255968/WhatsApp_Video_2026-03-11_at_1.57.30_PM_sdbqca.mp4", tipo: "video", },
-      { id: 21, titulo: "Y si el problema no es la pantalla", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255966/WhatsApp_Video_2026-03-11_at_1.57.32_PM_1_yv0sup.mp4", tipo: "video", },
+      { id: 16, titulo: "Enseñale a Tu Hijo Sobre La Palabra de Dios", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_1_erl3gr.mp4", tipo: "video", },
+      { id: 17, titulo: "Papá Creo Que Soy Un Lobo", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255971/WhatsApp_Video_2026-03-11_at_1.57.36_PM_vt6sri.mp4", tipo: "video", },
+      { id: 18, titulo: "Cada Acto Trae sus Consecuencias", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.32_PM_pm32mb.mp4", tipo: "video", },
+      { id: 19, titulo: "Te Habian Contado I", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255969/WhatsApp_Video_2026-03-11_at_1.57.29_PM_ctm60z.mp4", tipo: "video", },
+      { id: 20, titulo: "Te Habian Contado II", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255968/WhatsApp_Video_2026-03-11_at_1.57.30_PM_sdbqca.mp4", tipo: "video", },
+      { id: 21, titulo: "Te Habian Contado III", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773255966/WhatsApp_Video_2026-03-11_at_1.57.32_PM_1_yv0sup.mp4", tipo: "video", },
+      { id: 22, titulo: "El que anda con sabios, será sabio", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773766629/WhatsApp_Video_2026-03-16_at_11.34.26_AM_kaflph.mp4", tipo: "video", },
     ],
     historietas: [
       {
@@ -187,7 +188,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Extender el reino de Dios a través de la predicación y el servicio social.",
     vision: "Una iglesia misionera que impacta su ciudad y el mundo.",
     fotoGrupal: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771536578/WhatsApp_Image_2026-02-08_at_3.52.59_PM_gnjtqk.jpg",
-    youtubeIds: ["zzz", "3iHgaJodSug", "BZZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
+    youtubeIds: ["zzz", "3iHgaJodSug", "BZZJU_MTW1s", "EmtNSPeSHNM", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427767/ChatGPT_Image_18_feb_2026_10_15_27_wrho8h.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: "/img/comites/ever.png" },
@@ -199,7 +200,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 8, nombre: "Nidia Laverde", cargo: "LIDER DE MISIONES INFANTIL", foto: "/img/comites/ruth.png" },
       { id: 9, nombre: "Claudia Murcia", cargo: "LIDER DE MISIONES HOSPITALARIAS", foto: "/img/comites/ruth.png" },
       { id: 10, nombre: "Vicente Artuduaga", cargo: "LIDER DE MISIONES EN INSTITUCIONES PÚBLICAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771429747/ChatGPT_Image_18_feb_2026_10_48_21_uuysoj.png" },
-      { id: 11, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: "/img/comites/ruth.png" },
+      { id: 11, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773540789/ChatGPT_Image_14_mar_2026_21_12_15_oozpxk.png" },
     ],
     eventos: [
       { id: 1, titulo: "Impacto Evangelistico", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771509567/WhatsApp_Image_2026-02-19_at_8.54.12_AM_kyovck.jpg", tipo: "imagen", },
@@ -252,7 +253,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Fomentar el crecimiento espíritual y la labor social de la mujer cristiana.",
     vision: "Mujeres sabias que edifican su casa y su iglesia.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "txKKhJm-Yh8", "5iOe2oHhiTs"],
+    youtubeIds: ["zzz", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
       { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068002/ChatGPT_Image_9_mar_2026_09_51_25_ah0j7g.png" },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/ever.png" },
@@ -334,7 +335,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
   "brigadistas": {
     nombre: "Directiva de Brigadista",
     versiculo: "El avisado ve el mal y se esconde; más los simples pasan y reciben el daño. Proverbios 22:3",
-    mision: "Garantizar la seguridad y el mal y se esconde; mas los simples pasan y reciben el daño. Proverbios 22:3",
+    mision: "Garantizar la seguridad",
     vision: "Cultura de prevención y cuidado mutuo.",
     youtubeIds: ["zzz"],
     integrantes: [
@@ -342,7 +343,10 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 2, nombre: "Mayra Poveda", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/joven1.png" },
       { id: 3, nombre: "Sandra Cuellar", cargo: "SECRETARIO(A)", foto: "/img/comites/joven1.png" },
     ],
-    eventos: []
+    eventos: [
+      { id: 1, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_1_cdsisy.jpg", tipo: "imagen", },
+      { id: 2, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_qzg2h8.jpg", tipo: "imagen", },
+    ]
   },
 
   "ujieres": {
@@ -363,7 +367,10 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 9, nombre: "José Collazos", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771594009/WhatsApp_Image_2026-02-19_at_10.50.06_PM_dmy23e.jpg" },
       { id: 10, nombre: "Miltón Valdes", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772124889/ChatGPT_Image_26_feb_2026_11_50_49_cu8g9f.png" },
     ],
-    eventos: []
+    eventos: [
+      { id: 1, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_1_cdsisy.jpg", tipo: "imagen", },
+      { id: 2, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_qzg2h8.jpg", tipo: "imagen", },
+    ]
   },
 
   "familia": {

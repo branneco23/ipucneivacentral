@@ -43,6 +43,7 @@ const navLinks: NavLink[] = [
       { label: "Directiva de Comunicaciones", href: "/Comites/comunicaciones" },
       { label: "Directiva de Obra Social", href: "/Comites/obra-social" },
       { label: "Directiva de Ujieres", href: "/Comites/ujieres" },
+      { label: "Directiva de Brigadistas", href: "/Comites/brigadistas" },
       { label: "Directiva de Intercesión", href: "/Comites/intercesion" },
       { label: "Directiva de Protemplo", href: "/Comites/protemplo" },
       { label: "Directiva de Familia", href: "/Comites/familia" },
@@ -94,7 +95,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3 z-[110]">
             <div className="rounded-2xl p-2 bg-gradient-to-b from-slate-50 via-white to-slate-200 border border-white/70 shadow-[inset_0_2px_6px_rgba(0,0,0,0.15),0_6px_14px_rgba(0,0,0,0.25)] transition-all duration-300 ease-out hover:shadow-[inset_0_1px_3px_rgba(0,0,0,0.12),0_10px_20px_rgba(0,0,0,0.35)] hover:-translate-y-[1px]">
               <Image
-                src="/img/logo.png"
+                src="https://res.cloudinary.com/dbbzk99pj/image/upload/v1773769089/pricing-banner_togwh6.png"
                 alt="Logo IPUC"
                 width={350}
                 height={350}

@@ -10,14 +10,14 @@ export interface DevocionalDia {
 export const DEVOCIONALES_SEMANALES: DevocionalDia[] = [
   { 
     id: 1, diaSemana: 1, nombreDia: "Lunes", 
-    grupo: "Comite Misiones y Evangelismo", 
-    link: "https://meet.google.com/wut-zctm-rxe ", 
+    grupo: "Comite Jóvenes", 
+    link: "https://meet.google.com/twz-guuz-jwe ", 
     hora: "4:30 AM" 
   },
   { 
     id: 2, diaSemana: 2, nombreDia: "Martes", 
-    grupo: "Comite Obra Social", 
-    link: "https://meet.google.com/vwy-bpoz-umg", 
+    grupo: "Comite Ujieres y Brigadistas", 
+    link: "https://meet.google.com/jym-ssgb-wit ", 
     hora: "4:30 AM" 
   },
   { 

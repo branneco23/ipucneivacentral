@@ -33,11 +33,11 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía. Salmos 133:1",
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
-    youtubeIds: ["xyz", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
+    youtubeIds: ["xyz", "Hi_aneMtE0Y", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593674/ChatGPT_Image_16_feb_2026_12_18_21_eeta9e.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771263209/ChatGPT_Image_16_feb_2026_12_32_52_ye4of5.png" },
-      { id: 3, nombre: "Maria Segrera", cargo: "SECRETARIO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771286667/ChatGPT_Image_16_feb_2026_19_00_50_ma1d8u.png" },
+      { id: 3, nombre: "Maria Segrera", cargo: "SECRETARIO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773713108/ChatGPT_Image_16_mar_2026_21_04_22_hqfllw.png" },
       { id: 4, nombre: "Crisanto Sanchez", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771286652/ChatGPT_Image_16_feb_2026_12_47_17_qlkicj.png" },
       { id: 5, nombre: "Judith Vargas", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771287186/ChatGPT_Image_16_feb_2026_19_12_29_yj4jyj.png" },
       { id: 6, nombre: "Javier Zoque", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771287385/ChatGPT_Image_16_feb_2026_19_15_06_nf4ffw.png" },
@@ -81,7 +81,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Mujer virtuosa, ¿Quien la hallará? Proverbios 31:10",
     mision: "Fomentar el crecimiento espiritual de la mujer.",
     vision: "Mujeres sabias que edifican su casa.",
-    youtubeIds: ["xyz", "txKKhJm-Yh8", "5iOe2oHhiTs"],
+    youtubeIds: ["xyz", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
       { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068003/ChatGPT_Image_9_mar_2026_09_27_15_ulmqbh.png` },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
@@ -99,7 +99,7 @@ export const ComitesData: Record<string, Comite> = {
     youtubeIds: ["xyz", "4YAYE30gRDw", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE"],
     integrantes: [
       { id: 1, nombre: "Jhon Fredy Zoque", cargo: "PRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1772047567/ChatGPT_Image_25_feb_2026_14_25_43_it4k9b.png` },
-      { id: 2, nombre: "Enith Arias", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1772568243/ChatGPT_Image_3_mar_2026_14_55_10_jxa6og.png` },
+      { id: 2, nombre: "Enith Arias", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773764496/ChatGPT_Image_17_mar_2026_11_20_22_rraslx.png` },
       { id: 3, nombre: "Jader Alvis", cargo: "RECAUDADOR(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 4, nombre: "Eidy Culma", cargo: "SECRETARIO(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 5, nombre: "Mauricio Ardila", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771516185/WhatsApp_Image_2026-02-19_at_10.19.35_AM_pywxtq.jpg" },
@@ -125,7 +125,7 @@ export const ComitesData: Record<string, Comite> = {
       { id: 8, nombre: "Nidia Laverde", cargo: "LIDER DE MISIONES INFANTIL", foto: `${FOTO_BASE}/joven1.png` },
       { id: 9, nombre: "Claudia Murcia", cargo: "LIDER DE MISIONES HOSPITALARIA", foto: `${FOTO_BASE}/joven1.png` },
       { id: 10, nombre: "Vicente Artuduaga", cargo: "LIDER DE MISIONES EN INSTITUCIONES PÚBLICAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771014405/ChatGPT_Image_13_feb_2026_15_26_14_rbgp3w.png" },
-      { id: 11, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: `${FOTO_BASE}/joven1.png` }
+      { id: 11, nombre: "Andrés Medina", cargo: "AUXILIAR DE MISIONES HOSPITALARIA", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773540789/ChatGPT_Image_14_mar_2026_21_10_43_hmbwux.png` }
     ]
   },
 
