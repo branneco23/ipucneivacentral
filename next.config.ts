@@ -2,12 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: 'export', // <--- Añade esto
   images: {
-    unoptimized: true, // Requerido para exportación estática
     remotePatterns: [
-      { protocol: "https", hostname: "res.cloudinary.com"}
-    ]
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**", // Permite todas las imágenes de tu cuenta de Cloudinary
+      },
+    ],
   },
 };
 

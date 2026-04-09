@@ -265,13 +265,45 @@ La esencia de este mensaje reside en la victoria de la cruz y la eficacia de la 
   },
   {
     id: "doc-9",
-    title: "La importancia de la oración en familia",
-    desc: "Descubre cómo fortalecer los lazos espirituales en tu hogar a través de la oración diaria y el estudio de la palabra.",
-    image: `${BLOG_IMG_PATH}/AboutImg1.jpg`,
-    videoUrl: "https://www.youtube.com/watch?v=9GSBUxXKp2Q",
-    tag: "Estudio Bíblico",
-    postby: "Pastor Reinaldo Gualdrón",
-    date: "25 de Enero, 2026"
+    title: "La Obra del Espiritu Santo - Parte VII",
+    desc: `La Palabra de Dios nos introduce en una de las verdades más gloriosas del Evangelio: la obra del Espíritu Santo en la vida del creyente. El apóstol Pablo declara que no hay condenación para los que están en Cristo Jesús. Esta afirmación no es solo doctrinal, sino profundamente vivencial. No se trata únicamente de entenderla con la mente, sino de experimentarla en el corazón por medio del Espíritu Santo.
+
+Pertenecer a Cristo Jesús es la condición esencial para vivir sin condenación. No basta con conocer acerca de Él, sino que es necesario estar en Él. Esta unión con Cristo es una obra espiritual, realizada por el Espíritu Santo, quien aplica en el creyente los beneficios de la obra redentora.
+
+La ley del Espíritu de vida en Cristo Jesús libera al creyente de la ley del pecado y de la muerte. Esta liberación no es simbólica, es real. Antes, el ser humano estaba dominado por el pecado, incapaz de resistirlo, justificando su conducta y viviendo conforme a su naturaleza caída. Pero cuando el Espíritu Santo obra, produce una transformación interna que permite reconocer el pecado, sentir dolor por él y anhelar una vida diferente.
+
+La ley, aunque santa, no podía producir esa transformación debido a la debilidad de la carne. Por eso Dios envió a su Hijo en semejanza de carne de pecado, para condenar al pecado en la carne. En Cristo Jesús se logró lo que la ley no podía hacer: la victoria sobre el pecado.
+
+El Espíritu Santo es quien hace efectiva esta victoria en la vida del creyente. Él convence de pecado, de justicia y de juicio. Es quien despierta en el corazón la necesidad de arrepentimiento, aun en personas que nunca antes han tenido conocimiento de Dios. No importa la condición cultural, social o incluso limitaciones humanas; cuando el Espíritu Santo obra, el corazón responde.
+
+Sin embargo, el Espíritu Santo no actúa de manera forzada. Él respeta la voluntad humana. Su obra avanza hasta donde la persona lo permita. Dios no invade, Él invita. Por eso, el crecimiento espiritual depende de la disposición del creyente. Aquel que anhela más de Dios, recibe más de Dios, porque Él da el Espíritu sin medida.
+
+Una de las primeras evidencias de la obra del Espíritu Santo es la seguridad de salvación. El creyente no solo lee que no hay condenación, sino que lo siente. Hay paz, gozo y certeza en el corazón. Esta seguridad no proviene de argumentos humanos, sino del testimonio interno del Espíritu.
+
+Otra evidencia es la libertad del dominio del pecado. El creyente ya no está obligado a pecar. Aunque sigue siendo tentado, ahora tiene la capacidad de resistir. El Espíritu Santo le da fuerza para decir no, para huir del pecado y para vivir en santidad. La lucha continúa, pero ya no hay esclavitud.
+
+Vivir en el Espíritu implica una transformación en la manera de pensar y actuar. La persona comienza a enfocarse en las cosas de Dios, a buscar su voluntad y a responder de manera diferente ante las circunstancias. Donde antes había reacción carnal, ahora hay dependencia de Dios. Donde antes había desesperación, ahora hay confianza.
+
+El Espíritu Santo también da vida. Vivifica al creyente en el presente y garantiza la resurrección en el futuro. La presencia del Espíritu en la vida es una marca eterna, como un sello que asegura la redención final. Aun en la muerte, el creyente tiene esperanza, porque el mismo Espíritu que da vida levantará su cuerpo.
+
+Además, el Espíritu Santo da testimonio de que somos hijos de Dios. Esta identidad no es solo teórica, es experimentada. El creyente comienza a identificarse con Dios, a sentir cercanía, a clamar “Padre”. Es una relación viva, no una religión vacía.
+
+También produce esperanza. El creyente deja de vivir en temor al futuro, en culpa por el pasado o en ansiedad por el presente. El Espíritu trae estabilidad, seguridad y confianza en el plan de Dios.
+
+Esta seguridad se expresa en la convicción de que todas las cosas ayudan a bien a los que aman a Dios. No significa que todo sea fácil, sino que todo tiene propósito. Aun las pruebas, enfermedades o pérdidas forman parte del plan divino. El creyente aprende a confiar en medio de cualquier situación.
+
+La obra del Espíritu Santo transforma la perspectiva de la vida. Ya no se vive preguntando constantemente el porqué de las cosas, sino confiando en que Dios tiene el control. Esta certeza elimina la ansiedad y fortalece la fe.
+
+Finalmente, la experiencia personal con el Espíritu Santo marca un antes y un después en la vida del creyente. No importa cuán correcta parezca la vida externa, sin la obra del Espíritu no hay verdadera salvación. Es necesario experimentar el toque de Dios, sentir la necesidad de Él y rendirse completamente.
+
+El llamado es a no detener la obra del Espíritu Santo, sino permitirle obrar cada día más profundamente. Buscar su presencia, anhelar su llenura y vivir en dependencia total de Dios.
+
+Porque la vida cristiana no se sostiene por esfuerzo humano, sino por el poder del Espíritu Santo, quien guía, transforma, fortalece y asegura la vida eterna en Cristo Jesús.`,
+    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1775690855/videoplayback_1_1_t63k9u.mp4",
+    tag: "La Obra del Espiritu Santo - Parte VII",
+    postby: "Liderazgo Local",
+    date: "5 de Abril, 2026"
   },
   {
     id: "doc-10",

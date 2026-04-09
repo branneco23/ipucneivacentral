@@ -309,9 +309,9 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 2, nombre: "Maria Lozano", cargo: "VICEPRESIDENTE", foto: "/img/comites/joven1.png" },
       { id: 3, nombre: "Ester Garcia", cargo: "SECRETARIO(A)", foto: "/img/comites/joven1.png" },
       { id: 4, nombre: "Fernando Betancourth", cargo: "SONIDISTA", foto: "/img/comites/joven1.png" },
-      { id: 5, nombre: "Araceli Lopez", cargo: "RECAUDADOR", foto: "/img/comites/joven1.png" },
+      { id: 5, nombre: "Araceli Lopez", cargo: "RECAUDADOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1774227630/ChatGPT_Image_22_mar_2026_19_59_58_onjh8m.png" },
       { id: 6, nombre: "Reinerio Ardila", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
-      { id: 7, nombre: "Jenny Poveda", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
+      { id: 7, nombre: "Jenny Poveda", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1774277310/ChatGPT_Image_23_mar_2026_09_47_12_bp7qn1.png" },
     ],
     eventos: []
   },

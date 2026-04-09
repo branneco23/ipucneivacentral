@@ -7,10 +7,11 @@ import { Autoplay, EffectFade } from "swiper/modules";
 
 // Importación de datos y estilos
 import { EXPERTISE_DATA, SLIDE_IMAGES } from "@/app/JsonData/ExpertiseData";
+// @ts-ignore
 import "swiper/css";
+// @ts-ignore
 import "swiper/css/effect-fade";
 
-// Constantes de diseño para evitar "Magic Numbers"
 const CASCADE_OFFSET = 40; 
 
 export default function Expertise() {
@@ -38,29 +39,30 @@ export default function Expertise() {
           </div>
         </header>
 
-        {/* Grilla de tarjetas con efecto cascada */}
+        {/* Grilla de tarjetas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {EXPERTISE_DATA.map((item, idx) => (
             <div
               key={item.id}
               className="group transition-all duration-700 ease-out"
               style={{
-                // El efecto cascada solo se activa en desktop para no romper el layout móvil
                 transform: isMounted 
                   ? `translateY(calc(${CASCADE_OFFSET}px * ${idx}))` 
                   : "translateY(0px)",
               }}
             >
-              {/* Contenedor de Imagen con Aspect Ratio controlado */}
-              <div className="relative h-[400px] rounded-[2.5rem] overflow-hidden shadow-2xl bg-blue-900/20">
+              {/* Contenedor de Imagen: Quitamos h-[400px] para que dependa de la imagen */}
+              <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-2xl bg-blue-900/20">
                 <Image
                   src={item.image}
                   alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  // Usamos estas propiedades para ajuste automático de ancho/alto
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: '100%', height: 'auto' }} 
+                  className="transition-transform duration-1000 group-hover:scale-110"
                 />
-                {/* Overlay sutil para mejorar legibilidad si se requiere */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#00338d]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
@@ -80,10 +82,11 @@ export default function Expertise() {
 
       {/* SECCIÓN ASIDE: SLIDER DE GALERÍA */}
       <aside className="relative px-[8%] lg:px-[12%] -mt-12 md:-mt-24 z-20 pb-20">
-        <div className="expertise-main-slider rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="expertise-main-slider rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] bg-white">
           <Swiper
             slidesPerView={1}
             loop={true}
+            autoHeight={true} // Swiper se ajusta a la altura de la imagen actual
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
@@ -91,26 +94,25 @@ export default function Expertise() {
             modules={[Autoplay, EffectFade]}
             speed={1500}
             grabCursor={true}
-            className="w-full h-[350px] md:h-[550px]"
+            className="w-full"
           >
             {SLIDE_IMAGES.map((slide, index) => (
               <SwiperSlide key={index} className="relative">
                 <Image
                   src={slide}
                   alt={`Vista de la congregación ${index + 1}`}
-                  fill
-                  sizes="(max-width: 1280px) 100vw, 1280px"
-                  className="object-cover"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: '100%', height: 'auto' }}
+                  className="block"
                   priority={index === 0}
                 />
-                {/* Overlay decorativo interno al slider */}
-                <div className="absolute inset-0 bg-black/10" />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
         
-        {/* Decoración visual debajo del slider */}
         <div className="flex justify-center mt-8">
           <p className="text-gray-400 text-xs uppercase tracking-[0.3em] font-medium">
             Desliza para ver más • IPUC Central

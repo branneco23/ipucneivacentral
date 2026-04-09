@@ -33,7 +33,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía. Salmos 133:1",
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
-    youtubeIds: ["xyz", "Hi_aneMtE0Y", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
+    youtubeIds: ["xyz", "QLJa9WfrDQc", "Hi_aneMtE0Y", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593674/ChatGPT_Image_16_feb_2026_12_18_21_eeta9e.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771263209/ChatGPT_Image_16_feb_2026_12_32_52_ye4of5.png" },
@@ -50,7 +50,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Confesaos vuestras ofensas unos a otros, y orad unos por otros, para que seáis sanados, Santiago 5: 16",
     mision: "Levantar un altar de oración continuo.",
     vision: "Una iglesia fortalecida en la presencia de Dios.",
-    youtubeIds: ["xyz", "UJm0bvnVknA"],
+    youtubeIds: ["xyz", "KcFF0lLCNsY", "rOTzIxHA9eE", "UJm0bvnVknA"],
     integrantes: [
       { id: 1, nombre: "Esneda Tejada", cargo: "PRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 2, nombre: "Ana Romero", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
@@ -65,7 +65,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Acuérdate de tu creador en los días de tu juventud. Eclesiastés 12:1",
     mision: "Inspirar a la juventud a una vida de santidad.",
     vision: "Generación de relevo comprometida.",
-    youtubeIds: ["xyz", "QNf7Q-If0GM", "5mCeHA_ULz8"],
+    youtubeIds: ["xyz", "tPeT4dyw5vg", "QNf7Q-If0GM", "5mCeHA_ULz8"],
     integrantes: [
       { id: 1, nombre: "Jonathan Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593556/ChatGPT_Image_20_feb_2026_08_18_49_jynelb.png" },
       { id: 2, nombre: "Elizabeth Sanches", cargo: "RECAUDADOR(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771864697/ChatGPT_Image_23_feb_2026_11_37_27_kbvgga.png" },
@@ -96,7 +96,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Instruye al niño en su camino. Proverbios 22:6",
     mision: "Enseñar las sagradas escrituras.",
     vision: "Iglesia fundamentada desde la infancia.",
-    youtubeIds: ["xyz", "4YAYE30gRDw", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE"],
+    youtubeIds: ["xyz", "Hi_aneMtE0Y", "TM1jlmTyHGQ", "e7G057gr8eQ", "JJT32u7_Bb4", "4YAYE30gRDw", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE"],
     integrantes: [
       { id: 1, nombre: "Jhon Fredy Zoque", cargo: "PRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1772047567/ChatGPT_Image_25_feb_2026_14_25_43_it4k9b.png` },
       { id: 2, nombre: "Enith Arias", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773764496/ChatGPT_Image_17_mar_2026_11_20_22_rraslx.png` },
@@ -113,7 +113,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Id por todo el mundo y predicad el evengelio. Marcos 16: 15",
     mision: "Extender el reino de Dios.",
     vision: "Una iglesia misionera que impacta.",
-    youtubeIds: ["xyz", "3iHgaJodSug", "BZZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
+    youtubeIds: ["xyz", "UwMoCoWR-e4", "vSpp7BlGNfM", "3iHgaJodSug", "BZFZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427488/ChatGPT_Image_18_feb_2026_10_10_39_g7uvaf.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: `${FOTO_BASE}/joven1.png` },
@@ -163,14 +163,14 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "A Jehová presta el que da al pobre. Proverbios 19:17",
     mision: "Socorrer a los necesitados.",
     vision: "Brazo extendido de misericordia.",
-    youtubeIds: ["zzz","JXL5LGSKKVY", "f_tgppPm0Yo"],
+    youtubeIds: ["zzz", "Z4ttMefC_rA", "JXL5LGSKKVY", "f_tgppPm0Yo"],
     integrantes: [
       { id: 1, nombre: "Luz Soto", cargo: "PRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 2, nombre: "Maria Lozano", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 3, nombre: "Ester Garcia", cargo: "SECRETARIO(A)", foto: `${FOTO_BASE}/joven1.png` },
-      { id: 4, nombre: "Araceli Lopez", cargo: "RECAUDADOR(A)", foto: `${FOTO_BASE}/joven1.png` },
+      { id: 4, nombre: "Araceli Lopez", cargo: "RECAUDADOR(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1774227629/ChatGPT_Image_22_mar_2026_19_58_27_g6w1cf.png` },
       { id: 5, nombre: "Reinerio Ardila", cargo: "VOCAL", foto: `${FOTO_BASE}/joven1.png` },
-      { id: 6, nombre: "Jenny Poveda", cargo: "VOCAL", foto: `${FOTO_BASE}/joven1.png` }
+      { id: 6, nombre: "Jenny Poveda", cargo: "VOCAL", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1774277309/ChatGPT_Image_23_mar_2026_09_41_14_fes93f.png` }
     ]
   },
 
@@ -179,7 +179,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Porque mejor es un día en tus atrios que mil fuera de ellos.",
     mision: "Servir con excelencia en la recepción.",
     vision: "Orden y amor en cada servicio.",
-    youtubeIds: ["xyz", "zP-UYrYnTKw"],
+    youtubeIds: ["xyz", "MHfizKqnu4M", "zP-UYrYnTKw"],
     integrantes: [
       { id: 1, nombre: "Nohemi Henao", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771595298/Gemini_Generated_Image_qqdw47qqdw47qqdw_ckyuun.png" },
       { id: 2, nombre: "Esperanza Rodriguez", cargo: "VICEPRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771121297/ChatGPT_Image_14_feb_2026_21_06_45_iqgwz5.png" },
@@ -199,7 +199,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Yo me alegré con los que me decián: A la casa de Jehová iremos.",
     mision: "Embellecimiento y mantenimiento del templo.",
     vision: "Un lugar digno para adorar.",
-    youtubeIds: ["xyz", "E7BM5TKwI5E"],
+    youtubeIds: ["xyz", "nB5vVp-YYn8", "E7BM5TKwI5E"],
     integrantes: [
       { id: 1, nombre: "Norma Sterling", cargo: "PRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
       { id: 2, nombre: "Javier Lemus", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
