@@ -100,7 +100,7 @@ export default function Footer() {
             </h2>
 
             <h4 className="text-white/80 text-lg mb-4">
-              support@example.com
+              comunicaciones@ipucneivacentral.org
             </h4>
 
             <div className="flex flex-col gap-4">
