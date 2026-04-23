@@ -1,15 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',      // Permite generar la carpeta 'out'
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**", // Permite todas las imágenes de tu cuenta de Cloudinary
-      },
-    ],
+    unoptimized: true,   // Desactiva la optimización que causa el error
   },
 };
 

@@ -306,24 +306,32 @@ Porque la vida cristiana no se sostiene por esfuerzo humano, sino por el poder d
     date: "5 de Abril, 2026"
   },
   {
-    id: "doc-10",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
-    postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
-  },
-  {
     id: "doc-11",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
+    title: "La Obra del Espiritu Santo - Parte VIII",
+    desc: `EL FUNDAMENTO DE LA GRACIA Y EL RECONOCIMIENTO DE JESUCRISTO
+
+La vida espiritual de la iglesia no se basa en el esfuerzo humano, sino en la manifestación soberana de Dios. El apóstol Pablo inicia su instrucción con una advertencia necesaria: No quiero, hermanos, que ignoréis acerca de los dones espirituales (1 Corintios 12:1). Esta ignorancia puede llevar al creyente a ser arrastrado por corrientes extrañas, tal como cuando éramos gentiles y nos dejábamos llevar por ídolos mudos. La primera señal de la presencia del Espíritu Santo en un individuo es la exaltación del señorío de Cristo. La Escritura es tajante al afirmar que nadie que hable por el Espíritu de Dios llama anatema a Jesús; y nadie puede llamar a Jesús Señor, sino por el Espíritu Santo (1 Corintios 12:3). Reconocer a Jesús como el Kyrios, el amo absoluto, no es una conclusión intelectual, sino una revelación divina que rompe con conceptos culturales y religiosos previos.
+
+DIVERSIDAD DE DONES BAJO UNA MISMA AUTORIDAD
+
+Dentro de la obra del Espíritu Santo, los dones —a menudo llamados carismas— ocupan un lugar central para la salud de la congregación. Es vital comprender que existe una diversidad de dones, pero el Espíritu es el mismo (1 Corintios 12:4). El error común de muchas organizaciones religiosas es permitir que el hombre se apropie de estas manifestaciones, autoproclamándose sanadores o profetas como si el don fuera una posesión personal. Sin embargo, la Biblia enseña que a cada uno le es dada la manifestación del Espíritu para provecho (1 Corintios 12:7), es decir, para el beneficio colectivo de la iglesia y no para el engrandecimiento del ego humano. Los dones pertenecen a Dios; el hombre es solo un canal de bendición.
+
+EL CUERPO DE CRISTO: UNA UNIDAD EN LA DIFERENCIA
+
+La analogía del cuerpo humano es fundamental para entender cómo opera la iglesia. Así como el cuerpo es uno y tiene muchos miembros, así también es Cristo. El texto sagrado nos recuerda que por un solo Espíritu fuimos todos bautizados en un cuerpo, sean judíos o griegos, sean esclavos o libres (1 Corintios 12:13). No hay lugar para la rivalidad ni para el orgullo. El ojo no puede prescindir de la mano, ni la cabeza de los pies. Dios ha ordenado el cuerpo de tal manera que los miembros que parecen más débiles o menos decorosos reciban mayor honor, para que no haya desavenencia en el cuerpo, sino que los miembros todos se preocupen los unos por los otros (1 Corintios 12:25). Si uno padece, todos duelen; si uno es honrado, todos se gozan.
+
+LA SOBERANÍA DE DIOS Y LA REALIDAD DE LA NECESIDAD
+
+Los dones no operan por capricho humano, sino por la voluntad divina. Es el Espíritu quien reparte a cada uno en particular como él quiere (1 Corintios 12:11). Esto significa que la manifestación de Dios responde a una necesidad real y no a un espectáculo de poder. Un ejemplo claro es el don de lenguas; en un entorno donde todos comparten el mismo idioma, la necesidad de este don disminuye, pero ante la presencia de alguien que no comprende el lenguaje, Dios puede activarlo para que el mensaje de salvación sea entregado. La necesidad es, en muchos sentidos, la madre del milagro. Dios se manifiesta para suplir lo que falta, no para alimentar la vanidad de quien es usado.
+
+EL PELIGRO DEL ORGULLO Y EL CAMINO MÁS EXCELENTE
+
+La historia bíblica nos advierte sobre personajes como Simón el Mago, quien intentó comprar el poder del Espíritu para beneficio propio, recibiendo la reprensión de Pedro. Los dones no son un negocio ni una herramienta de manipulación. En Corinto, el orgullo por poseer ciertos dones generaba divisiones, algo que Pablo corrigió enfatizando que todo lo que somos es por la gracia de Dios. El estudio de estas manifestaciones —palabra de sabiduría, fe, sanidades, milagros, profecía y discernimiento de espíritus— debe llevarnos a una mayor comunión y no a la formación de jerarquías espirituales. El apóstol concluye instándonos a buscar los mejores dones, pero señalando una dirección superior: mas yo os muestro un camino aún más excelente (1 Corintios 12:31), abriendo la puerta a la preeminencia del amor sobre toda manifestación sobrenatural.`,
+    image: `\${BLOG_IMG_PATH}/AboutImg4.jpg`,
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1776981206/Secuencia_03_1_1_1_soigdr.mp4",
+    tag: "La Obra del Espiritu Santo - Parte VIII",
     postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
+    date: "19 de Abril, 2026"
   },
   {
     id: "doc-12",
