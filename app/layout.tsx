@@ -11,7 +11,9 @@ import "remixicon/fonts/remixicon.css";
 
 // Componentes
 import Nabvar from "./Components/Navbar/Nabvar";
+import RadioFloating from "./Components/RadioFloating/RadioFloating";
 import Footer from "./Components/Footer/Footer";
+import Popup from "./Components/Popup/VideoPopup";
 
 const audiowide = Audiowide({
   weight: "400",
@@ -39,7 +41,9 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${audiowide.variable} ${golostext.variable} antialiased`}>
         <Nabvar />
+        <Popup/>
         <main>{children}</main>
+        <RadioFloating/>
         <Footer />
       </body>
     </html>

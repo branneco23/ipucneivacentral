@@ -230,7 +230,7 @@ export const ComitesData: Record<string, Comite> = {
     youtubeIds: ["xyz", "YGpazkIaLt8"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085335/ChatGPT_Image_9_mar_2026_14_41_49_rxihb4.png" },
-      { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773069980/ChatGPT_Image_9_mar_2026_10_25_54_ehqfdc.png`},
+      { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085422/ChatGPT_Image_9_mar_2026_10_25_54_lencyg.png`},
       { id: 3, nombre: "Maria Medina", cargo: "VOCAL", foto: `${FOTO_BASE}/joven1.png` },
       { id: 4, nombre: "Eber Lozada", cargo: "VOCAL", foto: `${FOTO_BASE}/joven1.png` },
       { id: 5, nombre: "Norma Santos", cargo: "VOCAL", foto: `${FOTO_BASE}/joven1.png` },

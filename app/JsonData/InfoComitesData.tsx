@@ -46,7 +46,7 @@ export const ComitesData: Record<string, Comite> = {
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "Hi_aneMtE0Y", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
+    youtubeIds: ["zzz", "yrqhnDPFbCM", "Hi_aneMtE0Y", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334907/ChatGPT_Image_17_feb_2026_08_27_47_x5vyar.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335047/ChatGPT_Image_17_feb_2026_08_30_12_fvdwh5.png" },
@@ -56,7 +56,9 @@ export const ComitesData: Record<string, Comite> = {
       { id: 6, nombre: "Javier Zoque", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771435741/ChatGPT_Image_18_feb_2026_12_28_28_izq72z.png" },
       { id: 7, nombre: "Arnoldo Salinas", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771436378/ChatGPT_Image_18_feb_2026_12_39_04_tppsoj.png" },
     ],
-    eventos: []
+    eventos: [
+      { id: 1, titulo: "Asamblea General de Ministros", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1777138156/WhatsApp_Image_2026-04-25_at_12.20.52_PM_xwfeym.jpg", tipo: "imagen", },
+    ]
   },
 
   "escuela-dominical": {
@@ -64,7 +66,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Instruye al niño en su camino, aun cuando fuere viejo no se apartará de él. Proverbios 22:6",
     mision: "Enseñar las sagradas escrituras a todas las edades.",
     vision: "Una iglesia bíblicamente fundamentada desde la infancia.",
-    youtubeIds: ["zzz", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE", "T3GPJ7u2Drs", "sg39LL8QkYk", "vhHx5mG337M"],
+    youtubeIds: ["zzz", "JJT32u7_Bb4", "OcriFtLciec", "JCtKy_k_PEo", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE", "T3GPJ7u2Drs", "sg39LL8QkYk", "vhHx5mG337M"],
     fotoGrupal: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771734177/WhatsApp_Image_2026-02-21_at_10.32.15_PM_pcg9k9.jpg",
     integrantes: [
       { id: 1, nombre: "Jhon Fredy Zoque", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772047567/ChatGPT_Image_25_feb_2026_14_18_54_rxvdgj.png" },
@@ -188,7 +190,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Extender el reino de Dios a través de la predicación y el servicio social.",
     vision: "Una iglesia misionera que impacta su ciudad y el mundo.",
     fotoGrupal: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771536578/WhatsApp_Image_2026-02-08_at_3.52.59_PM_gnjtqk.jpg",
-    youtubeIds: ["zzz", "3iHgaJodSug", "BZZJU_MTW1s", "EmtNSPeSHNM", "py3G9tjyZLY"],
+    youtubeIds: ["zzz", "vSpp7BlGNfM", "3iHgaJodSug", "BZZJU_MTW1s", "EmtNSPeSHNM", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427767/ChatGPT_Image_18_feb_2026_10_15_27_wrho8h.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: "/img/comites/ever.png" },
@@ -218,7 +220,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Levantar un altar de oración continuo por las necesidades de la iglesia.",
     vision: "Una iglesia fortalecida en la presencia de Dios a través del clamor.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "UJm0bvnVknA"],
+    youtubeIds: ["zzz", "KcFF0lLCNsY", "rOTzIxHA9eE", "1APe3TO8c8c", "UJm0bvnVknA"],
     integrantes: [
       { id: 1, nombre: "Esneda Tejada", cargo: "PRESIDENTE(A)", foto: "/img/comites/ever.png" },
       { id: 2, nombre: "Ana Romero", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/einer.png" },
@@ -235,7 +237,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Inspirar a la juventud a una vida de santidad y servicio.",
     vision: "Generación de relevo comprometida con el evangelio",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "QNf7Q-If0GM", "5mCeHA_ULz8"],
+    youtubeIds: ["zzz", "HH_DeQtgFww", "QNf7Q-If0GM", "5mCeHA_ULz8"],
     integrantes: [
       { id: 1, nombre: "Jonathan Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771259878/Nano_Banana_Pro_pon_la_imagen_de_medio_cuerpo__que_se_alcance_a_notar_un_poco_los_pantalones__y_algo_xfnnub.png" },
       { id: 2, nombre: "Elizabeth Sanchez", cargo: "RECAUDADOR(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771864697/ChatGPT_Image_23_feb_2026_11_35_47_hcstqu.png" },
@@ -253,7 +255,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     mision: "Fomentar el crecimiento espíritual y la labor social de la mujer cristiana.",
     vision: "Mujeres sabias que edifican su casa y su iglesia.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
+    youtubeIds: ["zzz", "6_DJyUIhzoo", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
       { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068002/ChatGPT_Image_9_mar_2026_09_51_25_ah0j7g.png" },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/ever.png" },
@@ -288,7 +290,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     versiculo: "¡Cuán hermosos son sobre los montes los pies del que trae alegres nuevas! Isaías 52:7",
     mision: "Difundir el mensaje de salvación a través de medios digitales y técnicos.",
     vision: "Ser el puente tecnológico para la expansión del evangelio.",
-    youtubeIds: ["zzz", "YU7e80T3qas", "pIbRtZFnlD8"],
+    youtubeIds: ["zzz", "m249lt2L89c", "YU7e80T3qas", "pIbRtZFnlD8"],
     integrantes: [
       { id: 1, nombre: "Paula Ramires", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771960910/ChatGPT_Image_24_feb_2026_14_19_24_slyn3t.png" },
       { id: 2, nombre: "Lorem Lemus", cargo: "SECRETARIO(A)", foto: "/img/comites/joven1.png" },
@@ -303,7 +305,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     versiculo: "A Jehová presta el que da al pobre, y el bien que ha hecho, se lo volverá a pagar. Proverbios 19:17",
     mision: "Socorrer a los necIesitados reflejando el amor de Cristo.",
     vision: "Un brazo extendido de misericordia en la comunidad.",
-    youtubeIds: ["zzz", "JXL5LGSKKVY", "f_tgppPm0Yo"],
+    youtubeIds: ["zzz", "Z4ttMefC_rA", "JXL5LGSKKVY", "f_tgppPm0Yo"],
     integrantes: [
       { id: 1, nombre: "Luz Soto", cargo: "PRESIDENTE", foto: "/img/comites/joven1.png" },
       { id: 2, nombre: "Maria Lozano", cargo: "VICEPRESIDENTE", foto: "/img/comites/joven1.png" },
@@ -319,7 +321,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
   "protemplo": {
     nombre: "Directiva Protemplo",
     versiculo: "Yo me alegré con los que me decián: A la casa de Jehová iremos. Salmos 122:1",
-    youtubeIds: ["zzz", "E7BM5TKwI5E"],
+    youtubeIds: ["zzz", "nB5vVp-YYn8", "E7BM5TKwI5E"],
     mision: "Trabajar por el embellecimiento y mantenimiento del templo.",
     vision: "Un lugar digno para adorar a Dios.",
     integrantes: [
@@ -370,6 +372,11 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
     eventos: [
       { id: 1, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_1_cdsisy.jpg", tipo: "imagen", },
       { id: 2, titulo: "Capacitación Primeros Auxilios", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773541256/WhatsApp_Image_2026-03-14_at_8.53.18_PM_qzg2h8.jpg", tipo: "imagen", },
+      { id: 3, titulo: "Salida Recreativa", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1778084400/WhatsApp_Image_2026-04-09_at_4.20.19_PM_x79fxo.jpg", tipo: "imagen", },
+      { id: 4, titulo: "Salida Recreativa", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1778084399/WhatsApp_Image_2026-04-09_at_4.20.20_PM_arlwm1.jpg", tipo: "imagen", },
+      { id: 5, titulo: "Salida Recreativa", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1778084398/WhatsApp_Image_2026-04-09_at_4.20.21_PM_izmwkm.jpg", tipo: "imagen", },
+      { id: 6, titulo: "Salida Recreativa", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1778084397/WhatsApp_Image_2026-04-09_at_4.20.21_PM_2_nsupag.jpg", tipo: "imagen", },
+      { id: 7, titulo: "Salida Recreativa", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1778084396/WhatsApp_Image_2026-04-09_at_4.20.23_PM_g96bwi.jpg", tipo: "imagen", },
     ]
   },
 

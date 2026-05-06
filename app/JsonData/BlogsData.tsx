@@ -239,7 +239,7 @@ Finalmente, la Biblia enseña que todos comparecerán ante Dios para ser juzgado
 
 En conclusión, la doctrina bíblica muestra que la vida presente es un tiempo de preparación para la eternidad. Cristo resucitó como primicias, los creyentes resucitarán para vida eterna, y la iglesia será arrebatada para encontrarse con el Señor. Por esta razón el llamado de la Escritura es vivir preparados, sembrando para el Espíritu y aguardando con esperanza el glorioso regreso de Jesucristo.
 `,
-    image: `${BLOG_IMG_PATH}/AboutImg2.jpg`,
+    image: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg`,
     videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773509591/trimmed-culto-de-oracion-y-ensenanza-9ietdgei-puprpb4i-ibxlga1f-usolzmer-5qbfuop_EH8WQdSj_dsq2vx.mp4",
     tag: "Escatología",
     postby: "Ipuc Sede Central",
@@ -257,7 +257,7 @@ Sin embargo, el camino no termina en las aguas. El Espíritu Santo despierta en 
 Este mover del Espíritu no conoce fronteras ni hace acepción de personas, una verdad que quedó sellada en el concilio de Jerusalén descrito en Hechos 15. Allí, el apóstol Pedro testificó cómo Dios, que conoce los corazones, dio el Espíritu Santo a los gentiles lo mismo que a los judíos, purificando por la fe sus corazones y demostrando que no hay diferencia bajo la gracia. La historia bíblica nos recuerda en Hechos 2 que este poder se manifiesta con señales, como el hablar en otras lenguas según el Espíritu da que se hable, una promesa que unió a los ciento veinte en el aposento alto bajo un mismo sentir de unidad y oración.
 
 La esencia de este mensaje reside en la victoria de la cruz y la eficacia de la resurrección. Aunque el mundo se distrae con fechas y tradiciones, la Iglesia sostiene que si Cristo no resucitó, vana es nuestra fe, tal como advierte 1 Corintios 15:14. El sacrificio en el Calvario, profetizado en Isaías 53, donde por su llaga fuimos nosotros curados, es el verdadero motor de la salvación. Por tanto, el llamado actual es a la unidad y a la perseverancia, manteniendo encendido ese fuego en el corazón que arde cuando se escudriñan las Escrituras, caminando con la certeza de que el Espíritu Santo es la guía, la fuerza y el sello de nuestra redención eterna.`,
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    image: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg`,
     videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1773743922/videoplayback-fxfp1f4s-42qc5inp_658IO4zF_1_ybs3kj.mp4",
     tag: "La Obra del Espiritu Santo - Parte VI",
     postby: "Liderazgo Local",
@@ -299,7 +299,7 @@ Finalmente, la experiencia personal con el Espíritu Santo marca un antes y un d
 El llamado es a no detener la obra del Espíritu Santo, sino permitirle obrar cada día más profundamente. Buscar su presencia, anhelar su llenura y vivir en dependencia total de Dios.
 
 Porque la vida cristiana no se sostiene por esfuerzo humano, sino por el poder del Espíritu Santo, quien guía, transforma, fortalece y asegura la vida eterna en Cristo Jesús.`,
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
+    image: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg`,
     videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1775690855/videoplayback_1_1_t63k9u.mp4",
     tag: "La Obra del Espiritu Santo - Parte VII",
     postby: "Liderazgo Local",
@@ -327,22 +327,29 @@ Los dones no operan por capricho humano, sino por la voluntad divina. Es el Esp�
 EL PELIGRO DEL ORGULLO Y EL CAMINO MÁS EXCELENTE
 
 La historia bíblica nos advierte sobre personajes como Simón el Mago, quien intentó comprar el poder del Espíritu para beneficio propio, recibiendo la reprensión de Pedro. Los dones no son un negocio ni una herramienta de manipulación. En Corinto, el orgullo por poseer ciertos dones generaba divisiones, algo que Pablo corrigió enfatizando que todo lo que somos es por la gracia de Dios. El estudio de estas manifestaciones —palabra de sabiduría, fe, sanidades, milagros, profecía y discernimiento de espíritus— debe llevarnos a una mayor comunión y no a la formación de jerarquías espirituales. El apóstol concluye instándonos a buscar los mejores dones, pero señalando una dirección superior: mas yo os muestro un camino aún más excelente (1 Corintios 12:31), abriendo la puerta a la preeminencia del amor sobre toda manifestación sobrenatural.`,
-    image: `\${BLOG_IMG_PATH}/AboutImg4.jpg`,
+    image: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg`,
     videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1776981206/Secuencia_03_1_1_1_soigdr.mp4",
     tag: "La Obra del Espiritu Santo - Parte VIII",
     postby: "Liderazgo Local",
     date: "19 de Abril, 2026"
   },
   {
-    id: "doc-12",
-    title: "Juventud con Propósito",
-    desc: "Un mensaje especial para los jóvenes que buscan servir a Dios con excelencia.",
-    image: `${BLOG_IMG_PATH}/AboutImg3.jpg`,
-    videoUrl: "https://www.youtube.com/embed/ejemplo",
-    tag: "Vida Cristiana",
+    id: "doc-13",
+    title: "La Obra del Espiritu Santo - Parte IX",
+    desc: `El Espíritu Santo: Motor y Sustancia de la Iglesia
+La Iglesia del Señor no se sostiene por el carisma de sus líderes ni por ingeniosas estrategias de marketing; su único y verdadero motor es el Espíritu Santo. En un mundo donde muchas organizaciones dependen exclusivamente de la gestión humana o, peor aún, se abren a influencias ajenas a la voluntad de Dios, la iglesia de la Unicidad reconoce que sin la presencia del Consolador nada funciona. Es preocupante ver cómo el falso espiritismo intenta infiltrarse en el cristianismo, provocando efectos que confunden el inconsciente y degradan la dignidad del hombre. Pero el Espíritu de Dios no manipula ni trastorna; por el contrario, su obra produce un gozo genuino, una adoración profunda y una rendición absoluta ante la presencia del Señor Jesús. La Biblia es clara al declarar en 1 Corintios 12:3 que nadie puede llamar a Jesús Señor si no es por el Espíritu Santo, confirmando que la verdadera revelación del nombre de Dios viene acompañada de Su poder.
+
+Este poder no es un espectáculo, sino un equipamiento para el servicio. Los discípulos, aún con una mentalidad limitada al reino político de Israel, fueron corregidos por el Señor, quien les prometió el Espíritu Santo para recibir autoridad y ser testigos hasta lo último de la tierra. Aquí es donde entendemos la función de los dones espirituales, los cuales no son capacidades personales ni talentos naturales, sino manifestaciones soberanas de Dios. Pablo instruyó a la iglesia en Corinto, que a pesar de ser rica en dones era inmadura en carácter, enseñándoles que estas manifestaciones son para el provecho común. Los dones de revelación, como la palabra de sabiduría y la palabra de ciencia, no son para el orgullo, sino para aplicar el conocimiento de Dios a situaciones críticas y revelar secretos que solo el Espíritu conoce para sanar y guiar al necesitado.
+
+Sin embargo, a menudo cometemos el error de anhelar solo "la fragancia" de la unción, es decir, lo que se ve y se admira, como los milagros y las sanidades. Olvidamos que el aceite de la unción sacerdotal tenía atributos medicinales profundos. El Espíritu Santo no solo está para levantar a un enfermo de cáncer; está para sanar el mal genio, la amargura y la soberbia. La verdadera unción transforma al hombre violento en alguien manso, como sucedió con Moisés, o al fanático religioso en un servidor dócil, como sucedió con Pablo. De nada sirve hablar en lenguas o profetizar si no somos capaces de soportar al hermano que nos ofende por una insignificancia. El dominio propio es la prueba máxima de la madurez; como enseña el libro de Proverbios, es más fuerte quien controla su espíritu que aquel que conquista una ciudad.
+
+Finalmente, debemos comprender que los dones son concedidos por la soberanía absoluta de Dios. No podemos manipular al Altísimo para que actúe según nuestro antojo; Él reparte a cada uno como Él quiere para la edificación del cuerpo de Cristo. La palabra de sabiduría nos permite poner en práctica lo que creemos, porque la fe sin fidelidad es letra muerta. Si creemos que Dios está en todo lugar, nuestra sabiduría debe llevarnos a vivir en santidad constante, sabiendo que no hay rincón donde esconderse de Su mirada. Dios ha puesto todo a nuestra disposición para que seamos victoriosos, pero la voluntad de buscarle debe nacer de nosotros. Él sirve el banquete espiritual y nos otorga los dones, pero el hambre de salvación y el compromiso de vivir en Su presencia es nuestra ofrenda diaria ante Su altar. Amén.`,
+    image: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1770064333/Hero-bg_plym5t.jpg`, // Ajustado correlativamente
+    videoUrl: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1778080908/Secuencia_01_2_1_bviyoa.mp4",
+    tag: "La Obra del Espiritu Santo - Parte IX",
     postby: "Liderazgo Local",
-    date: "15 de Enero, 2026"
-  },
+    date: "03 de Mayo, 2026"
+  }
 
   // (El resto de entradas 1–14 quedan exactamente como las enviaste,
   // no las alteré ni resumí; tu estructura ya está correcta.)
