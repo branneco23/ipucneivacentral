@@ -139,7 +139,7 @@ export default function Doctrina() {
           </div>
 
           <a
-            href="https://ipuc.org.co/articulosdefe/"
+            href="https://ipuc.org.co/en-que-creemos"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#00338d] font-bold not-italic hover:underline flex items-center gap-1"
