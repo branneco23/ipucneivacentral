@@ -1,9 +1,10 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Play, Pause, Youtube, Radio as RadioIcon } from "lucide-react";
+import { Play, Pause, Youtube, Radio as RadioIcon, Minus } from "lucide-react";
 
 export default function RadioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // Estado para controlar la visibilidad del panel
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // Link oficial de Radio IPUC (ZenoMedia)
@@ -33,7 +34,8 @@ export default function RadioPlayer() {
     }
   };
 
-  const togglePlay = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation(); // Evita que al hacer clic al botón de play se altere el estado de minimizar
     if (!audioRef.current) return;
 
     if (isPlaying) {
@@ -53,11 +55,42 @@ export default function RadioPlayer() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-72 md:w-80 transition-all duration-500 ease-in-out">
-      {/* Contenedor Principal con estilo oscuro (Imagen 4) */}
-      <div className="bg-[#0f172a] text-white p-5 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-sm">
+    <div className="fixed bottom-6 right-6 z-[200]">
+      
+      {/* 1. VISTA COMPACTA (BOTÓN CÍRCULO FLOTANTE) */}
+      <button
+        onClick={() => setIsExpanded(true)}
+        className={`absolute bottom-0 right-0 w-16 h-16 rounded-full bg-[#00338d] text-white flex flex-col items-center justify-center shadow-[0_10px_30px_rgba(0,51,141,0.35)] transition-all duration-500 ease-out origin-bottom-right hover:scale-105 active:scale-95 z-10 ${
+          isExpanded ? "opacity-0 pointer-events-none scale-75" : "opacity-100 pointer-events-auto scale-100"
+        }`}
+        aria-label="Abrir reproductor de radio"
+      >
+        <RadioIcon size={22} className={`${isPlaying ? 'animate-pulse' : ''}`} />
         
-        {/* Cabecera: Logo y Estado */}
+        {/* Micro ecualizador animado mientras esté minimizado pero sonando */}
+        {isPlaying ? (
+          <div className="flex items-end gap-0.5 h-3 mt-1 justify-center">
+            {[...Array(4)].map((_, i) => (
+              <div 
+                key={i} 
+                className="w-0.5 bg-yellow-400 rounded-full animate-equalizer"
+                style={{ animationDelay: `${i * 0.15}s`, height: '100%' }}
+              />
+            ))}
+          </div>
+        ) : (
+          <span className="text-[8px] font-bold tracking-tight mt-0.5 uppercase opacity-75">Radio</span>
+        )}
+      </button>
+
+      {/* 2. VISTA EXTENDIDA (EL REPRODUCTOR COMPLETO) */}
+      <div 
+        className={`bg-[#0f172a] text-white p-5 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-sm w-72 md:w-80 transition-all duration-500 ease-out origin-bottom-right ${
+          isExpanded ? "opacity-100 scale-100 pointer-events-auto relative" : "opacity-0 scale-75 pointer-events-none absolute bottom-0 right-0"
+        }`}
+      >
+        
+        {/* Cabecera: Logo, Estado y Botón Minimizar */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-900/20">
@@ -76,9 +109,18 @@ export default function RadioPlayer() {
               </div>
             </div>
           </div>
+
+          {/* Botón de Minimizar adicionado */}
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="p-1.5 rounded-lg bg-gray-800/60 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors flex items-center justify-center"
+            title="Minimizar reproductor"
+          >
+            <Minus size={16} strokeWidth={2.5} />
+          </button>
         </div>
 
-        {/* Barras de ecualizador animadas (Imagen 4) */}
+        {/* Barras de ecualizador animadas */}
         <div className="flex items-end gap-1 h-10 mb-5 justify-center px-4">
           {[...Array(12)].map((_, i) => (
             <div 

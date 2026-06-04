@@ -13,7 +13,9 @@ import Newsletter from "./Newsletter/page";
 export default function index() {
   return (
     <>
-        <Hero/>
+        <main className="mt-[100px]">
+          <Hero/>
+        </main>
         <About/>
         <Services/>
         <PrincingPlans/>

@@ -98,9 +98,34 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
       )}
 
       {/* BANNER DE IDENTIDAD */}
+      {/* BANNER DE IDENTIDAD */}
       <section className="relative h-[45vh] min-h-[400px] bg-blue-950 flex items-center justify-center overflow-hidden">
-        {data.fotoGrupal && <Image src={data.fotoGrupal} alt={data.nombre} fill priority className="absolute inset-0 object-cover opacity-30" />}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 to-blue-950/90" />
+
+        {data.fotoGrupal && (
+          <>
+            {/* 1. Fondo difuminado para rellenar los laterales sin dejar huecos negros */}
+            <Image
+              src={data.fotoGrupal}
+              alt=""
+              fill
+              priority
+              className="absolute inset-0 object-cover blur-md opacity-20 scale-105"
+            />
+
+            {/* 2. La foto principal adaptada estrictamente a la altura disponible (nunca se cortará) */}
+            <Image
+              src={data.fotoGrupal}
+              alt={data.nombre}
+              fill
+              priority
+              className="absolute inset-0 object-contain p-4 md:p-8 opacity-40"
+            />
+          </>
+        )}
+
+        {/* Degradado y contenido superior */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/30 via-blue-950/60 to-blue-950/90" />
+
         <div className="relative z-10 text-center px-6">
           <p className="text-orange-400 font-black uppercase tracking-[0.4em] text-sm mb-4">Comité Oficial</p>
           <h1 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter mb-6">{data.nombre}</h1>

@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${audiowide.variable} ${golostext.variable} antialiased`}>
         <Nabvar />
-        <Popup/>
+        {/* <Popup/> */}
         <main>{children}</main>
         <RadioFloating/>
         <Footer />

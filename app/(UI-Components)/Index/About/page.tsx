@@ -3,20 +3,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import CountUp from "react-countup";
 import Image, { StaticImageData } from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 // --- DATOS Y TIPOS ---
-// Corregido: Se elimina la importación individual de 'pastores' e 'hitos' 
-// ya que están dentro de HISTORY_DATA
 import { HISTORY_DATA } from "@/app/JsonData/HistoryData";
 import AboutImg1 from "@/public/img/AboutImg1.jpg";
 import AboutImg2 from "@/public/img/AboutImg2.jpg";
 import AboutImg3 from "@/public/img/AboutImg3.jpg";
 
-// --- CONSTANTES DE CONFIGURACIÓN ---
 const VIDEO_SRC = "/img/videoipucneiva.mp4";
 
-// Tipos para el estado de navegación de la historia
 type HistoryTab = "PASTORES" | "HITOS";
 
 const GALLERY_IMAGES = [
@@ -32,10 +28,21 @@ const STATS_DATA = [
   { start: 0, end: 50, suffix: "+", title: "Amigos asistentes", desc: "Amigos que asisten a los servicios." },
 ];
 
-// Variantes de animación reutilizables
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 60, damping: 15 } 
+  }
 };
 
 export default function About() {
@@ -48,95 +55,117 @@ export default function About() {
     setIsMounted(true);
   }, []);
 
-  // Handlers memorizados
   const openImage = useCallback((img: { src: StaticImageData, alt: string }) => setSelectedImg(img), []);
   const closeImage = useCallback(() => setSelectedImg(null), []);
 
   if (!isMounted) return null;
 
   return (
-    <main className="about-page bg-[#f6f6f6] selection:bg-[#00338d] selection:text-white">
+    <main className="about-page bg-slate-50 selection:bg-[#00338d] selection:text-white overflow-hidden">
 
       {/* SECTION 1: HERO & GALLERY */}
-      <section className="px-[8%] lg:px-[12%] py-20">
-        <header className="flex flex-col lg:flex-row gap-10 mb-20">
-          <div className="w-full lg:w-1/3 pt-8">
-            <span className="rounded-full border border-gray-400 px-6 py-2 uppercase font-bold text-[10px] tracking-widest text-gray-600">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+        <header className="flex flex-col lg:flex-row items-start justify-between gap-8 mb-24">
+          <div className="w-full lg:w-1/4">
+            <span className="inline-block bg-[#00338d]/10 backdrop-blur-xs text-[#00338d] rounded-full border border-[#00338d]/20 px-5 py-2 uppercase font-black text-[10px] tracking-widest">
               Sobre la IPUC
             </span>
           </div>
-          <h1 className="w-full lg:w-2/3 CalSans text-4xl md:text-7xl leading-[1.1] text-gray-900">
-            Nosotros Predicamos Lo Que <span className="text-[#00338d]">La Palabra de Jesucristo</span> Nos Enseña
+          <h1 className="w-full lg:w-3/4 text-4xl md:text-7xl font-extrabold tracking-tight text-slate-950 leading-[1.05]">
+            Nosotros Predicamos Lo Que <span className="text-[#00338d] relative inline-block">La Palabra de Jesucristo<span className="absolute bottom-1 left-0 w-full h-[6px] bg-yellow-400 rounded-full -z-10" /></span> Nos Enseña
           </h1>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {GALLERY_IMAGES.map((img, idx) => (
             <motion.figure
               key={idx}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
+              variants={cardVariants}
+              whileHover={{ y: -8, scale: 1.02 }}
               onClick={() => openImage(img)}
-              className={`relative transition-transform duration-500 cursor-zoom-in hover:-translate-y-3 
-                ${idx === 1 ? 'lg:pt-10' : idx === 2 ? 'lg:pt-20' : ''}`}
+              className={`relative cursor-zoom-in group overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-slate-200
+                ${idx === 1 ? 'lg:translate-y-6' : idx === 2 ? 'lg:translate-y-12' : ''}`}
             >
               <Image
                 src={img.src}
                 alt={img.alt}
                 placeholder="blur"
-                className="rounded-3xl shadow-2xl aspect-[4/5] object-cover"
+                className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105"
                 priority={img.priority}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <p className="text-white text-sm font-medium tracking-wide">{img.alt}</p>
+              </div>
             </motion.figure>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* SECTION 2: STATS */}
-      <section className="px-[8%] lg:px-[12%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
-        {STATS_DATA.map((item, index) => (
-          <article key={index} className="group">
-            <h2 className="text-5xl CalSans font-bold mb-6 text-gray-900">
-              <CountUp start={item.start} end={item.end} duration={2.5} enableScrollSpy scrollSpyOnce />
-              {item.suffix}
-            </h2>
-            <div className="py-6 border-t border-gray-300 group-hover:border-[#00338d] transition-colors duration-300">
-              <h3 className="mb-3 text-2xl CalSans text-gray-800">{item.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
-            </div>
-          </article>
-        ))}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-32 pt-12">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {STATS_DATA.map((item, index) => (
+            <motion.article 
+              variants={cardVariants}
+              whileHover={{ y: -4 }}
+              key={index} 
+              className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)] group hover:shadow-[0_20px_40px_rgba(0,33,141,0.04)] hover:border-[#00338d]/20 transition-all duration-300"
+            >
+              <h2 className="text-5xl font-black mb-4 text-slate-950 tracking-tight flex items-center gap-0.5">
+                {/* 🛠️ CORRECCIÓN: Usamos la función callback de renderizado para evitar targets nulos */}
+                <CountUp start={item.start} end={item.end} duration={2.5} enableScrollSpy scrollSpyOnce>
+                  {({ countUpRef }) => <span ref={countUpRef} />}
+                </CountUp>
+                <span className="text-[#00338d]">{item.suffix}</span>
+              </h2>
+              <div className="pt-4 border-t border-slate-100 group-hover:border-[#00338d]/30 transition-colors duration-300">
+                <h3 className="mb-2 text-lg font-bold text-slate-800 tracking-tight">{item.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-medium">{item.desc}</p>
+              </div>
+            </motion.article>
+          ))}
+        </motion.div>
       </section>
 
       {/* SECTION VIDEO PRESENTACIÓN */}
-      <section className="px-[8%] lg:px-[12%] pb-24">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-32">
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          variants={fadeUp}
+          transition={{ duration: 0.8 }}
           onClick={() => setIsVideoOpen(true)}
-          className="relative rounded-[2.5rem] overflow-hidden shadow-2xl cursor-pointer group bg-black"
+          className="relative rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.15)] cursor-pointer group bg-slate-950"
         >
           <video
             src={VIDEO_SRC}
             autoPlay muted loop playsInline
-            className="w-full h-[70vh] object-cover opacity-80 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-100"
+            className="w-full h-[65vh] object-cover opacity-75 transition-transform duration-1000 group-hover:scale-102 group-hover:opacity-85"
           />
 
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 group-hover:bg-[#00338d] transition-all duration-300">
-              <i className="ri-play-fill text-white text-4xl ml-1"></i>
+            <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-2xl group-hover:scale-110 group-hover:bg-[#00338d] group-hover:border-transparent transition-all duration-500">
+              <i className="ri-play-fill text-white text-5xl ml-1"></i>
             </div>
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
 
           <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 pointer-events-none">
-            <span className="text-white/70 text-xs uppercase tracking-widest mb-3">IPUC Neiva Central</span>
-            <h2 className="text-white text-3xl md:text-5xl CalSans max-w-2xl leading-tight">
+            <span className="text-yellow-400 font-bold text-xs uppercase tracking-widest mb-3">IPUC Neiva Central</span>
+            <h2 className="text-white text-3xl md:text-5xl font-black max-w-3xl leading-tight tracking-tight">
               Una historia de fe que sigue transformando vidas
             </h2>
           </div>
@@ -144,51 +173,41 @@ export default function About() {
       </section>
 
       {/* SECTION 3: TIMELINE */}
-      <section className="py-24 bg-white" id="historia">
+      <section className="py-32 bg-white border-t border-slate-100" id="historia">
         <div className="max-w-4xl mx-auto px-6">
           <header className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl CalSans font-bold mb-4 text-gray-900">Nuestra Historia</h2>
-            <p className="italic text-gray-500 text-lg">Trayectoria de fe en IPUC Neiva Central</p>
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-950 tracking-tight">Nuestra Historia</h2>
+            <p className="text-slate-500 text-base font-medium tracking-wide">Trayectoria de fe en IPUC Neiva Central</p>
           </header>
 
-          <nav className="flex justify-center gap-8 mb-20" aria-label="Navegación de historia">
-            <TabButton
-              active={activeTab === "PASTORES"}
-              onClick={() => setActiveTab("PASTORES")}
-              icon="ri-user-follow-line"
-              label="Pastores"
-            />
-            <TabButton
-              active={activeTab === "HITOS"}
-              onClick={() => setActiveTab("HITOS")}
-              icon="ri-map-pin-time-line"
-              label="Hitos"
-            />
+          <nav className="flex justify-center bg-slate-100 p-1.5 rounded-2xl max-w-xs mx-auto mb-24" aria-label="Navegación de historia">
+            <TabButton active={activeTab === "PASTORES"} onClick={() => setActiveTab("PASTORES")} label="Pastores" />
+            <TabButton active={activeTab === "HITOS"} onClick={() => setActiveTab("HITOS")} label="Hitos" />
           </nav>
 
-          <div className="relative">
+          <div className="relative border-l-2 border-slate-100 ml-4 md:ml-0 md:absolute-center-line">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                className="flex flex-col gap-12 relative w-full"
               >
                 {activeTab === "PASTORES"
                   ? HISTORY_DATA.pastores.map((p, idx) => (
-                    <TimelineCard key={p.id} title={p.nombre} sub={p.detalle} date={p.periodo} isLeft={idx % 2 === 0} />
-                  ))
+                      <TimelineCard key={p.id} title={p.nombre} sub={p.detalle} date={p.periodo} isLeft={idx % 2 === 0} />
+                    ))
                   : HISTORY_DATA.hitos.map((h, idx) => (
-                    // Cambia la línea 183 a esto:
-                    <TimelineCard
-                      key={h.id}
-                      title={h.evento}
-                      sub={h.ubicacion ?? ""} // Si es undefined, usa un string vacío
-                      date={h.fecha}
-                      isLeft={idx % 2 === 0}
-                    />
-                  ))}
+                      <TimelineCard
+                        key={h.id}
+                        title={h.evento}
+                        sub={h.ubicacion ?? ""}
+                        date={h.fecha}
+                        isLeft={idx % 2 === 0}
+                      />
+                    ))}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -205,28 +224,28 @@ export default function About() {
   );
 }
 
-// --- COMPONENTES DE APOYO (DESACOPLADOS) ---
+// --- COMPONENTES AUXILIARES ---
 
 function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[210] flex items-center justify-center bg-slate-950/95 backdrop-blur-md p-4"
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl aspect-video bg-black rounded-[2rem] overflow-hidden shadow-2xl"
+        className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl"
       >
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 text-white hover:bg-[#00338d] transition-colors"
+          className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 text-white hover:bg-red-500 transition-colors flex items-center justify-center"
           aria-label="Cerrar video"
         >
           <i className="ri-close-line text-2xl"></i>
         </button>
-        <video src={src} controls autoPlay className="w-full h-full" />
+        <video src={src} controls autoPlay className="w-full h-full object-contain" />
       </motion.div>
     </motion.div>
   );
@@ -237,63 +256,66 @@ function ImageModal({ img, onClose }: { img: { src: StaticImageData, alt: string
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/95 backdrop-blur-sm p-6"
+      className="fixed inset-0 z-[210] flex items-center justify-center bg-slate-950/95 backdrop-blur-md p-6"
     >
       <motion.div
-        initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
+        initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
         onClick={(e) => e.stopPropagation()}
-        className="relative max-w-5xl w-full flex flex-col items-center"
+        className="relative max-w-4xl w-full flex flex-col items-center"
       >
         <button
           onClick={onClose}
-          className="absolute -top-14 right-0 text-white text-4xl hover:text-[#00338d] transition-colors"
+          className="absolute -top-14 right-0 text-white/80 hover:text-white text-4xl transition-colors"
           aria-label="Cerrar imagen"
         >
           <i className="ri-close-line"></i>
         </button>
-        <Image src={img.src} alt={img.alt} className="rounded-3xl object-contain max-h-[85vh] w-auto shadow-2xl" />
-        <p className="text-white/60 mt-4 text-sm tracking-wide">{img.alt}</p>
+        <Image src={img.src} alt={img.alt} className="rounded-2xl object-contain max-h-[80vh] w-auto shadow-2xl" />
+        <p className="text-white/70 mt-4 text-sm font-medium tracking-wide bg-white/5 px-4 py-2 rounded-full border border-white/10">{img.alt}</p>
       </motion.div>
     </motion.div>
   );
 }
 
-function TabButton({ active, onClick, icon, label }: { active: boolean; onClick: () => void; icon: string; label: string }) {
+function TabButton({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 pb-2 text-xl font-bold border-b-2 transition-all duration-300
-        ${active ? "text-[#00338d] border-[#00338d]" : "text-gray-400 border-transparent hover:text-gray-600"}`}
+      className={`w-full py-2.5 text-sm font-black rounded-xl transition-all duration-300
+        ${active ? "bg-white text-[#00338d] shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
     >
-      <i className={icon}></i> {label}
+      {label}
     </button>
   );
 }
 
-// Busca la función TimelineCard (aprox. línea 273) y añade el signo '?'
 function TimelineCard({ title, sub, date, isLeft }: { title: string; sub?: string; date: string; isLeft: boolean }) {
   return (
-    <div className="grid grid-cols-[1fr_max-content_1fr] gap-4 md:gap-10">
-      {isLeft ? <TimelineContent title={title} sub={sub} date={date} align="right" /> : <div />}
+    <motion.div 
+      variants={cardVariants}
+      className="relative grid grid-cols-1 md:grid-cols-2 w-full gap-4 md:gap-16 pl-8 md:pl-0"
+    >
+      <div className="absolute left-0 md:left-1/2 top-2 w-5 h-5 bg-white border-4 border-[#00338d] rounded-full shadow-xs -translate-x-2.5 z-10" />
 
-      <div className="flex flex-col items-center">
-        <div className="w-4 h-4 bg-[#00338d] rounded-full ring-4 ring-blue-50"></div>
-        <div className="w-[2px] h-full bg-gradient-to-b from-[#00338d] to-transparent opacity-20"></div>
+      <div className={`w-full ${isLeft ? "md:text-right order-2 md:order-1" : "md:opacity-0 order-2 md:pointer-events-none hidden md:block"}`}>
+        {isLeft && <TimelineContent title={title} sub={sub} date={date} />}
       </div>
 
-    </div>
+      <div className={`w-full ${!isLeft ? "md:text-left order-2" : "md:opacity-0 order-2 md:pointer-events-none hidden md:block"}`}>
+        {!isLeft && <TimelineContent title={title} sub={sub} date={date} />}
+      </div>
+    </motion.div>
   );
 }
 
-// Cambia la línea 288 a esto:
-function TimelineContent({ title, sub, date, align }: { title: string; sub?: string; date: string; align: "left" | "right" }) {
+function TimelineContent({ title, sub, date }: { title: string; sub?: string; date: string }) {
   return (
-    <div className={`pb-12 ${align === "right" ? "text-right" : "text-left"}`}>
-      <h3 className="text-xl font-bold text-gray-900">{title}</h3>
-      <p className="text-gray-500 text-sm mb-1">{sub}</p>
-      <span className="text-[#00338d] font-bold text-xs px-2 py-1 bg-blue-50 rounded-md italic">
+    <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.01)] hover:bg-white hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
+      <span className="inline-block text-[#00338d] font-black text-[11px] px-2.5 py-1 bg-blue-50 border border-blue-100/50 rounded-md tracking-wider mb-3">
         {date}
       </span>
+      <h3 className="text-xl font-extrabold text-slate-900 tracking-tight leading-snug mb-1">{title}</h3>
+      {sub && <p className="text-slate-500 text-sm font-medium leading-relaxed">{sub}</p>}
     </div>
   );
 }

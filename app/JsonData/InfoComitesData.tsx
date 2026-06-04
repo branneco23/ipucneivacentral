@@ -195,7 +195,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427767/ChatGPT_Image_18_feb_2026_10_15_27_wrho8h.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: "/img/comites/ever.png" },
       { id: 3, nombre: "Mary Molano", cargo: "LIDER DE MISIONES NACIONALES", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771592946/Gemini_Generated_Image_vygpdrvygpdrvygp_b095hd.png" },
-      { id: 4, nombre: "Nicolas Duarte", cargo: "LIDER DE MISIONES ESPECIALES", foto: "/img/comites/ruth.png" },
+      { id: 4, nombre: "Jhonatan Zuñiga", cargo: "LIDER DE MISIONES ESPECIALES", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1780597140/3e073c36-2dee-41f7-8a45-51354b9f541f_ejneom.png" },
       { id: 5, nombre: "Marina Aya", cargo: "LIDER DE MISIONES EXTRANJERAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773070745/ChatGPT_Image_9_mar_2026_10_38_13_aoa1vx.png" },
       { id: 6, nombre: "Campoelias Ochoa", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "/img/comites/ruth.png" },
       { id: 7, nombre: "Milton", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771106304/WhatsApp_Image_2026-02-14_at_4.56.50_PM_y3ukcy.jpg" },

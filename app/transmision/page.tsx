@@ -54,12 +54,4 @@ export default function TransmisionPage() {
   }, [checkYouTubeLive]);
 
   if (!isReady) return <div className="min-h-screen bg-[#f4f4f5]" />;
-
-  return (
-    <main className="min-h-screen bg-[#f4f4f5] pt-40 pb-20 px-[4%]">
-      {/* Resto de tu código igual... */}
-      <FloatingReactions liveId={videoId} />
-      {/* ... */}
-    </main>
-  );
 }

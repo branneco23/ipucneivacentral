@@ -36,7 +36,7 @@ export const CULTOS_ACORDEON: CultoAcordeon[] = [
   {
     id: "contacto",
     titulo: "Contáctanos",
-    contenido: ["WhatsApp: +57 3XX XXX XXXX", "Correo: contacto@ipucneiva.org"]
+    contenido: ["WhatsApp: +57 3XX XXX XXXX", "Correo: comunicaciones@ipucneivacentral.org"]
   }
 ];
 
@@ -182,6 +182,7 @@ export const EVENTOS_ANUALES_2026: EventoCalendario[] = [
   { id: "jun-01", titulo: "Culto de Alabanza", fecha: "2026-06-02", inicio: "19:00", fin: "20:00", color: "#AE02F7" },
   { id: "jun-02", titulo: "Culto de Junta Local", fecha: "2026-06-04", inicio: "19:00", fin: "20:00", color: "#2563eb" },
   { id: "jun-03", titulo: "Ayuno General Intercesión", fecha: "2026-06-06", inicio: "07:00", fin: "12:00", color: "#2563eb" },
+  { id: "jun-03", titulo: "Culto de Ujieres y Brigadistas", fecha: "2026-06-06", inicio: "19:00", fin: "20:00", color: "#2563eb" },
   { id: "jun-04", titulo: "Día Misionero", fecha: "2026-06-07", inicio: "09:30", fin: "12:00", color: "#FF0000" },
   { id: "jun-05", titulo: "Culto de Protemplo", fecha: "2026-06-09", inicio: "19:00", fin: "20:00", color: "#4D27F5" },
   { id: "jun-06", titulo: "Culto de Junta Local", fecha: "2026-06-11", inicio: "19:00", fin: "20:00", color: "#2563eb" },

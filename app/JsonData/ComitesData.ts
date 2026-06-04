@@ -65,7 +65,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Acuérdate de tu creador en los días de tu juventud. Eclesiastés 12:1",
     mision: "Inspirar a la juventud a una vida de santidad.",
     vision: "Generación de relevo comprometida.",
-    youtubeIds: ["xyz", "tPeT4dyw5vg", "QNf7Q-If0GM", "5mCeHA_ULz8"],
+    youtubeIds: ["xyz", "HhbxghQh5sc", "tPeT4dyw5vg", "QNf7Q-If0GM", "5mCeHA_ULz8"],
     integrantes: [
       { id: 1, nombre: "Jonathan Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593556/ChatGPT_Image_20_feb_2026_08_18_49_jynelb.png" },
       { id: 2, nombre: "Elizabeth Sanches", cargo: "RECAUDADOR(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771864697/ChatGPT_Image_23_feb_2026_11_37_27_kbvgga.png" },
@@ -113,13 +113,13 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Id por todo el mundo y predicad el evengelio. Marcos 16: 15",
     mision: "Extender el reino de Dios.",
     vision: "Una iglesia misionera que impacta.",
-    youtubeIds: ["xyz", "Ln0TSfuJQgo", "UwMoCoWR-e4", "vSpp7BlGNfM", "3iHgaJodSug", "BZFZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
+    youtubeIds: ["xyz", "nStgKCx5KJk", "Ln0TSfuJQgo", "UwMoCoWR-e4", "vSpp7BlGNfM", "3iHgaJodSug", "BZFZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427488/ChatGPT_Image_18_feb_2026_10_10_39_g7uvaf.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: `${FOTO_BASE}/joven1.png` },
       { id: 3, nombre: "Mary Molano", cargo: "LIDER DE MISIONES NACIONALES", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772056497/ChatGPT_Image_25_feb_2026_16_54_38_jb4lcd.png" },
       { id: 4, nombre: "Marina Aya", cargo: "LIDER DE MISIONES EXTRANJERAS", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773070745/ChatGPT_Image_9_mar_2026_10_35_17_ozoe8m.png` },
-      { id: 5, nombre: "Nicolas Duarte", cargo: "LIDER DE MISIONES ESPECIALES", foto: `${FOTO_BASE}/joven1.png` },
+      { id: 5, nombre: "Jhonatan Zuñiga", cargo: "LIDER DE MISIONES ESPECIALES", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1780597140/6d9bd9a5-9445-46b2-b5c6-58830a2e4e18_dosrsn.png` },
       { id: 6, nombre: "Campoelias Ochoa", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: `${FOTO_BASE}/joven1.png` },
       { id: 7, nombre: "Milton Valdes", cargo: "LIDER DE MISIONES RESTAURATIVAS", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771106304/WhatsApp_Image_2026-02-14_at_4.56.34_PM_ukuyzi.jpg" },
       { id: 8, nombre: "Nidia Laverde", cargo: "LIDER DE MISIONES INFANTIL", foto: `${FOTO_BASE}/joven1.png` },
@@ -134,7 +134,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Cantad a él, cantadle salmos. 1 Crónicas 16:9",
     mision: "Guiar a la iglesia en adoración.",
     vision: "Excelencia musical para Dios.",
-    youtubeIds: ["xyz", "luGzMl_MNwY", "5MmGHLIOrIw"],
+    youtubeIds: ["xyz", "luGzMl_MNwY", "5MmGHLIOrIw", "eU_LLGLeGts"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771605746/Gemini_Generated_Image_bpm3z9bpm3z9bpm3_nd1rzw.png" },
       { id: 2, nombre: "Jaime Pastrana", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
@@ -227,7 +227,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Pero yo y mi casa serviremos a Jehová. Josué 24:15",
     mision: "Fortalecer el núcleo familiar.",
     vision: "Hogares restaurados.",
-    youtubeIds: ["xyz", "YGpazkIaLt8"],
+    youtubeIds: ["xyz", "YGpazkIaLt8","dGZ8nUX5vNU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085335/ChatGPT_Image_9_mar_2026_14_41_49_rxihb4.png" },
       { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085422/ChatGPT_Image_9_mar_2026_10_25_54_lencyg.png`},
