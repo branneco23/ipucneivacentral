@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',      // Permite generar la carpeta 'out'
+  output: 'export',    // <-- Al quitar las barras, ya generará la carpeta 'out'
   images: {
-    unoptimized: true,   // Desactiva la optimización que causa el error
+    unoptimized: true, // Esto está perfecto para Cloudflare Pages
   },
 };
 

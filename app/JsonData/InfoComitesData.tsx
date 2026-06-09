@@ -246,7 +246,9 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 5, nombre: "Stiven Osuna", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334631/ChatGPT_Image_17_feb_2026_08_23_16_bjewpv.png" },
       { id: 6, nombre: "Aneika ", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771249060/c6ed5cb68c24407599d8f9d5dde5054b_ywbccx.png" },
     ],
-    eventos: []
+        eventos: [
+      { id: 1, titulo: "Juego de Voces Karaoke Juvenil", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1780966873/WhatsApp_Video_2026-06-08_at_7.41.59_PM_rw9m8q.mp4", tipo: "video", },
+    ],
   },
 
   "damas-dorcas": {

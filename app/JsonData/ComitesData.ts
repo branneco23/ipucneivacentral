@@ -33,7 +33,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía. Salmos 133:1",
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
-    youtubeIds: ["xyz", "yrqhnDPFbCM", "7BomPt-U0tQ", "QLJa9WfrDQc", "Hi_aneMtE0Y", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
+    youtubeIds: ["8yLmw-8fkr0", "cUZ3OdgqHAo", "yrqhnDPFbCM", "7BomPt-U0tQ", "QLJa9WfrDQc", "Hi_aneMtE0Y", "OgEKJkcqXUo", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t","nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593674/ChatGPT_Image_16_feb_2026_12_18_21_eeta9e.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771263209/ChatGPT_Image_16_feb_2026_12_32_52_ye4of5.png" },
@@ -65,7 +65,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Acuérdate de tu creador en los días de tu juventud. Eclesiastés 12:1",
     mision: "Inspirar a la juventud a una vida de santidad.",
     vision: "Generación de relevo comprometida.",
-    youtubeIds: ["xyz", "HhbxghQh5sc", "tPeT4dyw5vg", "QNf7Q-If0GM", "5mCeHA_ULz8"],
+    youtubeIds: ["HhbxghQh5sc", "tPeT4dyw5vg", "QNf7Q-If0GM", "5mCeHA_ULz8"],
     integrantes: [
       { id: 1, nombre: "Jonathan Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771593556/ChatGPT_Image_20_feb_2026_08_18_49_jynelb.png" },
       { id: 2, nombre: "Elizabeth Sanches", cargo: "RECAUDADOR(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771864697/ChatGPT_Image_23_feb_2026_11_37_27_kbvgga.png" },
@@ -96,7 +96,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Instruye al niño en su camino. Proverbios 22:6",
     mision: "Enseñar las sagradas escrituras.",
     vision: "Iglesia fundamentada desde la infancia.",
-    youtubeIds: ["xyz", "JCtKy_k_PEo", "Hi_aneMtE0Y", "TM1jlmTyHGQ", "e7G057gr8eQ", "JJT32u7_Bb4", "4YAYE30gRDw", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE"],
+    youtubeIds: ["qb8X8v138qI", "hGBRivdIqf4", "JCtKy_k_PEo", "Hi_aneMtE0Y", "TM1jlmTyHGQ", "e7G057gr8eQ", "JJT32u7_Bb4", "4YAYE30gRDw", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE"],
     integrantes: [
       { id: 1, nombre: "Jhon Fredy Zoque", cargo: "PRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1772047567/ChatGPT_Image_25_feb_2026_14_25_43_it4k9b.png` },
       { id: 2, nombre: "Enith Arias", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773764496/ChatGPT_Image_17_mar_2026_11_20_22_rraslx.png` },
@@ -113,7 +113,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Id por todo el mundo y predicad el evengelio. Marcos 16: 15",
     mision: "Extender el reino de Dios.",
     vision: "Una iglesia misionera que impacta.",
-    youtubeIds: ["xyz", "nStgKCx5KJk", "Ln0TSfuJQgo", "UwMoCoWR-e4", "vSpp7BlGNfM", "3iHgaJodSug", "BZFZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
+    youtubeIds: ["X61PeJtd_tM","nStgKCx5KJk", "Ln0TSfuJQgo", "UwMoCoWR-e4", "vSpp7BlGNfM", "3iHgaJodSug", "BZFZJU_MTW1s", "ZkiViKRcLoA", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427488/ChatGPT_Image_18_feb_2026_10_10_39_g7uvaf.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: `${FOTO_BASE}/joven1.png` },
@@ -134,7 +134,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Cantad a él, cantadle salmos. 1 Crónicas 16:9",
     mision: "Guiar a la iglesia en adoración.",
     vision: "Excelencia musical para Dios.",
-    youtubeIds: ["xyz", "luGzMl_MNwY", "5MmGHLIOrIw", "eU_LLGLeGts"],
+    youtubeIds: ["eU_LLGLeGts", "luGzMl_MNwY", "5MmGHLIOrIw", "eU_LLGLeGts"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771605746/Gemini_Generated_Image_bpm3z9bpm3z9bpm3_nd1rzw.png" },
       { id: 2, nombre: "Jaime Pastrana", cargo: "VICEPRESIDENTE(A)", foto: `${FOTO_BASE}/joven1.png` },
@@ -179,7 +179,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Porque mejor es un día en tus atrios que mil fuera de ellos.",
     mision: "Servir con excelencia en la recepción.",
     vision: "Orden y amor en cada servicio.",
-    youtubeIds: ["xyz", "yKb_vGbbMdw", "MHfizKqnu4M", "zP-UYrYnTKw"],
+    youtubeIds: ["3E1H7laeSU4", "yKb_vGbbMdw", "MHfizKqnu4M", "zP-UYrYnTKw"],
     integrantes: [
       { id: 1, nombre: "Nohemi Henao", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771595298/Gemini_Generated_Image_qqdw47qqdw47qqdw_ckyuun.png" },
       { id: 2, nombre: "Esperanza Rodriguez", cargo: "VICEPRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771121297/ChatGPT_Image_14_feb_2026_21_06_45_iqgwz5.png" },
@@ -227,7 +227,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Pero yo y mi casa serviremos a Jehová. Josué 24:15",
     mision: "Fortalecer el núcleo familiar.",
     vision: "Hogares restaurados.",
-    youtubeIds: ["xyz", "YGpazkIaLt8","dGZ8nUX5vNU"],
+    youtubeIds: ["dGZ8nUX5vNU", "YGpazkIaLt8","dGZ8nUX5vNU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085335/ChatGPT_Image_9_mar_2026_14_41_49_rxihb4.png" },
       { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085422/ChatGPT_Image_9_mar_2026_10_25_54_lencyg.png`},

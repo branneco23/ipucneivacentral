@@ -16,8 +16,8 @@ export const DEVOCIONALES_SEMANALES: DevocionalDia[] = [
   },
   { 
     id: 2, diaSemana: 2, nombreDia: "Martes", 
-    grupo: "Comite Ujieres y Brigadistas", 
-    link: "https://meet.google.com/jym-ssgb-wit ", 
+    grupo: "Comite Intercesión", 
+    link: "https://meet.google.com/zmy-rtfa-dwg", 
     hora: "4:30 AM" 
   },
   { 

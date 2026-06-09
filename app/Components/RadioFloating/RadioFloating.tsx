@@ -6,9 +6,9 @@ export default function RadioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // Estado para controlar la visibilidad del panel
   const audioRef = useRef<HTMLAudioElement>(null);
-  
+
   // Link oficial de Radio IPUC (ZenoMedia)
-  const audioUrl = "https://play14.tikast.com:22038/stream"; 
+  const audioUrl = "https://play14.tikast.com:22038/stream";
 
   // Lógica para detener la radio si otros videos/audios comienzan a sonar
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function RadioPlayer() {
 
     // Escuchamos el evento 'play' en todo el documento
     document.addEventListener("play", handleOtherMediaPlay, true);
-    
+
     return () => {
       document.removeEventListener("play", handleOtherMediaPlay, true);
     };
@@ -46,7 +46,7 @@ export default function RadioPlayer() {
       allVideos.forEach((video) => video.pause());
 
       // Cargamos y reproducimos la radio
-      audioRef.current.load(); 
+      audioRef.current.load();
       audioRef.current.play().catch((error) => {
         console.error("Error al reproducir radio:", error);
       });
@@ -56,40 +56,38 @@ export default function RadioPlayer() {
 
   return (
     <div className="fixed bottom-6 right-6 z-[200]">
-      
+
       {/* 1. VISTA COMPACTA (BOTÓN CÍRCULO FLOTANTE) */}
       <button
         onClick={() => setIsExpanded(true)}
-        className={`absolute bottom-0 right-0 w-16 h-16 rounded-full bg-[#00338d] text-white flex flex-col items-center justify-center shadow-[0_10px_30px_rgba(0,51,141,0.35)] transition-all duration-500 ease-out origin-bottom-right hover:scale-105 active:scale-95 z-10 ${
-          isExpanded ? "opacity-0 pointer-events-none scale-75" : "opacity-100 pointer-events-auto scale-100"
-        }`}
+        className={`absolute bottom-0 right-0 w-20 h-20 rounded-full bg-[#00338d] text-white flex flex-col items-center justify-center shadow-[0_12px_35px_rgba(0,51,141,0.4)] transition-all duration-500 ease-out origin-bottom-right hover:scale-105 active:scale-95 z-10 ${isExpanded ? "opacity-0 pointer-events-none scale-75" : "opacity-100 pointer-events-auto scale-100"
+          }`}
         aria-label="Abrir reproductor de radio"
       >
-        <RadioIcon size={22} className={`${isPlaying ? 'animate-pulse' : ''}`} />
-        
+        <RadioIcon size={38} className={`${isPlaying ? 'animate-pulse' : ''}`} />
+
         {/* Micro ecualizador animado mientras esté minimizado pero sonando */}
         {isPlaying ? (
-          <div className="flex items-end gap-0.5 h-3 mt-1 justify-center">
+          <div className="flex items-end gap-0.5 h-3.5 mt-1 justify-center">
             {[...Array(4)].map((_, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="w-0.5 bg-yellow-400 rounded-full animate-equalizer"
                 style={{ animationDelay: `${i * 0.15}s`, height: '100%' }}
               />
             ))}
           </div>
         ) : (
-          <span className="text-[8px] font-bold tracking-tight mt-0.5 uppercase opacity-75">Radio</span>
+          <span className="text-[10px] font-bold tracking-wider mt-0.5 uppercase opacity-80">Radio</span>
         )}
       </button>
 
       {/* 2. VISTA EXTENDIDA (EL REPRODUCTOR COMPLETO) */}
-      <div 
-        className={`bg-[#0f172a] text-white p-5 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-sm w-72 md:w-80 transition-all duration-500 ease-out origin-bottom-right ${
-          isExpanded ? "opacity-100 scale-100 pointer-events-auto relative" : "opacity-0 scale-75 pointer-events-none absolute bottom-0 right-0"
-        }`}
+      <div
+        className={`bg-[#0f172a] text-white p-5 rounded-2xl shadow-2xl border border-gray-800 backdrop-blur-sm w-72 md:w-80 transition-all duration-500 ease-out origin-bottom-right ${isExpanded ? "opacity-100 scale-100 pointer-events-auto relative" : "opacity-0 scale-75 pointer-events-none absolute bottom-0 right-0"
+          }`}
       >
-        
+
         {/* Cabecera: Logo, Estado y Botón Minimizar */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -123,10 +121,10 @@ export default function RadioPlayer() {
         {/* Barras de ecualizador animadas */}
         <div className="flex items-end gap-1 h-10 mb-5 justify-center px-4">
           {[...Array(12)].map((_, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={`w-1.5 bg-yellow-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-equalizer' : 'h-1.5'}`}
-              style={{ 
+              style={{
                 animationDelay: `${i * 0.08}s`,
                 height: isPlaying ? '100%' : '6px'
               }}
@@ -141,13 +139,12 @@ export default function RadioPlayer() {
         </div>
 
         {/* Botón de Control Principal */}
-        <button 
+        <button
           onClick={togglePlay}
-          className={`w-full flex items-center justify-center gap-3 font-bold py-3.5 rounded-xl transition-all active:scale-[0.97] shadow-lg ${
-            isPlaying 
-            ? 'bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20' 
-            : 'bg-white text-[#0f172a] hover:bg-gray-100'
-          }`}
+          className={`w-full flex items-center justify-center gap-3 font-bold py-3.5 rounded-xl transition-all active:scale-[0.97] shadow-lg ${isPlaying
+              ? 'bg-red-500/10 text-red-500 border border-red-500/50 hover:bg-red-500/20'
+              : 'bg-white text-[#0f172a] hover:bg-gray-100'
+            }`}
         >
           {isPlaying ? (
             <><Pause size={18} fill="currentColor" /> DETENER</>
@@ -157,9 +154,9 @@ export default function RadioPlayer() {
         </button>
 
         {/* Enlace secundario (YouTube) */}
-        <a 
-          href="https://youtube.com/@IPUCoficial" 
-          target="_blank" 
+        <a
+          href="https://youtube.com/@IPUCoficial"
+          target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 text-gray-500 text-[11px] mt-4 hover:text-red-500 transition-colors font-medium"
         >
