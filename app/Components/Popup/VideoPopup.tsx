@@ -45,14 +45,14 @@ export default function VideoPopup() {
                 controls
                 playsInline
                 className="w-full h-full object-contain"
-                src="https://res.cloudinary.com/dbbzk99pj/video/upload/v1778085037/WhatsApp_Video_2026-05-06_at_10.48.40_AM_rjzlvf.mp4"
+                src="https://res.cloudinary.com/dbbzk99pj/video/upload/v1781307741/WhatsApp_Video_2026-06-12_at_9.58.11_AM_pnam2c.mp4"
               />
             </div>
 
             {/* Texto Inferior */}
             <div className="p-6 text-center">
               <h3 className="text-xl font-bold text-gray-800">¡Bienvenidos a IPUC Neiva Central!</h3>
-              <p className="text-gray-500 text-sm mt-1">Convensión Distrital.</p>
+              <p className="text-gray-500 text-sm mt-1">Culto Misionero Juvenil.</p>
             </div>
           </motion.div>
         </div>

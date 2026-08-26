@@ -49,38 +49,74 @@ export default function RevistaLibro({ historia }: { historia: any }) {
               </p>
             </div>
 
-            {/* 2. GENERACIÓN DE PÁGINAS */}
+            {/* 2. GENERACIÓN DE PÁGINAS DINÁMICAS */}
             {historia.capitulos.map((cap: any, capIdx: number) => {
+              // Separamos por saltos de línea dobles o sencillos para estructurar párrafos limpios
               const parrafos = cap.contenido.split('\n').filter((p: string) => p.trim() !== "");
               
-              return parrafos.map((texto: string, pIdx: number) => (
-                <div 
-                  key={`${capIdx}-${pIdx}`}
-                  className="flex-none w-full md:w-1/2 snap-start h-[550px] md:h-[650px] p-8 md:p-14 border-r border-slate-100 flex flex-col"
-                >
-                  <div className="flex justify-between items-center mb-6 border-b pb-2">
-                    <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest">
-                      Capítulo {capIdx + 1}
-                    </span>
-                    <span className="text-slate-300 font-serif text-sm">
-                      pág. {capIdx + 1}.{pIdx + 1}
-                    </span>
-                  </div>
+              // Agrupamos los párrafos en bloques de 2 o 3 para que quepan bien por página sin desbordar
+              const TAMANO_PAGINA = 2; 
+              const paginasAgrupadas = [];
+              for (let i = 0; i < parrafos.length; i += TAMANO_PAGINA) {
+                paginasAgrupadas.push(parrafos.slice(i, i + TAMANO_PAGINA));
+              }
 
-                  <div className="flex-grow flex items-center overflow-hidden">
-                    <p className="text-slate-800 text-lg md:text-xl leading-relaxed font-serif text-justify">
-                      {texto}
-                    </p>
-                  </div>
+              return paginasAgrupadas.map((bloqueParrafos: string[], pIdx: number) => {
+                const esUltimaPaginaDelCapitulo = pIdx === paginasAgrupadas.length - 1;
 
-                  {pIdx === parrafos.length - 1 && (
-                    <div className="mt-6 bg-orange-50 p-4 rounded-xl border-l-4 border-orange-500">
-                      <p className="text-[10px] font-black text-orange-800 uppercase mb-1">⚔️ El Desafío</p>
-                      <p className="text-sm italic text-slate-600">{cap.reto}</p>
+                return (
+                  <div 
+                    key={`${capIdx}-${pIdx}`}
+                    className="flex-none w-full md:w-1/2 snap-start h-[550px] md:h-[650px] p-6 md:p-12 border-r border-slate-100 flex flex-col justify-between"
+                  >
+                    {/* Encabezado de la página */}
+                    <div className="flex justify-between items-center mb-4 border-b pb-2">
+                      <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest block max-w-[70%] truncate">
+                        {cap.rango || `Capítulo ${capIdx + 1}`}
+                      </span>
+                      <span className="text-slate-300 font-serif text-sm whitespace-nowrap">
+                        pág. {capIdx + 1}.{pIdx + 1}
+                      </span>
                     </div>
-                  )}
-                </div>
-              ));
+
+                    {/* Contenido con scroll interno sutil por si el texto es muy largo */}
+                    <div className="flex-grow overflow-y-auto pr-1 custom-scrollbar space-y-4 text-justify">
+                      {bloqueParrafos.map((parrafo: string, index: number) => {
+                        // Detectar si el párrafo es un título interno destacado (como los que pusiste con **)
+                        if (parrafo.startsWith("**") && parrafo.endsWith("**")) {
+                          return (
+                            <h3 key={index} className="text-lg font-bold text-slate-900 font-serif pt-2 text-left text-orange-700">
+                              {parrafo.replace(/\*\*/g, "")}
+                            </h3>
+                          );
+                        }
+                        return (
+                          <p key={index} className="text-slate-800 text-base md:text-lg leading-relaxed font-serif">
+                            {parrafo}
+                          </p>
+                        );
+                      })}
+                    </div>
+
+                    {/* Caja de desafío e información del capítulo al final */}
+                    {esUltimaPaginaDelCapitulo && (
+                      <div className="mt-4 space-y-2 flex-none">
+                        {cap.cita && (
+                          <p className="text-xs text-slate-400 italic font-serif">
+                            📖 Citas: {cap.cita}
+                          </p>
+                        )}
+                        {cap.reto && (
+                          <div className="bg-orange-50 p-3 rounded-xl border-l-4 border-orange-500">
+                            <p className="text-[10px] font-black text-orange-800 uppercase mb-0.5">⚔️ El Desafío</p>
+                            <p className="text-xs italic text-slate-600 leading-snug">{cap.reto}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              });
             })}
 
             {/* 3. PÁGINA FINAL */}
@@ -93,7 +129,7 @@ export default function RevistaLibro({ historia }: { historia: any }) {
             </div>
           </div>
 
-          {/* BOTONES DE NAVEGACIÓN (Fuera del flex para no romper columnas) */}
+          {/* BOTONES DE NAVEGACIÓN */}
           <button 
             onClick={() => scroll("left")}
             className="absolute left-[-25px] top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-xl hover:bg-orange-600 hover:text-white transition-all z-30"
@@ -115,8 +151,15 @@ export default function RevistaLibro({ historia }: { historia: any }) {
       </div>
 
       <style jsx>{`
-        /* Ocultar scrollbar pero permitir funcionalidad */
         div::-webkit-scrollbar { display: none; }
+        .custom-scrollbar::-webkit-scrollbar {
+          display: block;
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.1);
+          border-radius: 4px;
+        }
       `}</style>
     </div>
   );

@@ -11,8 +11,11 @@
     "@emailjs/browser": "^4.4.1",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.1",
+    "@hookform/resolvers": "^5.9.1",
     "@iconify/react": "^6.0.2",
+    "@prisma/client": "^7.9.1",
     "bootstrap-icons": "^1.13.1",
+    "clsx": "^2.1.1",
     "firebase": "^12.14.0",
     "framer-motion": "^12.24.0",
     "lucide-react": "^0.577.0",
@@ -20,17 +23,23 @@
     "react": "19.2.3",
     "react-countup": "^6.5.3",
     "react-dom": "19.2.3",
+    "react-hook-form": "^7.85.0",
     "react-icons": "^5.5.0",
     "remixicon": "^4.8.0",
     "swiper": "^12.0.3",
-    "yet-another-react-lightbox": "^3.28.0"
+    "tailwind-merge": "^3.6.0",
+    "yet-another-react-lightbox": "^3.28.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/node": "^20",
+    "@types/node": "^20.19.43",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "prisma": "^7.9.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -134,7 +134,7 @@ Eso nos lleva a la pregunta más importante de todas: ¿Dónde está tu tesoro? 
 
 Al comenzar esta aventura de seguir a Jesús y obedecerle, aquí tienes un versículo clave que te muestra lo que Dios quiere que sea lo primero en tu vida. Es Hechos 13:22, ¡y es dinamita! En este versículo, Dios describe el corazón del hombre que eligió para ser rey de su pueblo. Esto es lo que Dios dice:
 
-"He encontrado en David, hijo de Jesé, un hombre conforme a mi corazón; hará todo lo que yo quiera que haga."
+"He encontrado en David, hijo de Jesé, un hombre conforme a mi corazón; hará todo lo que yo quiero que haga."
 
 ¿Qué hace una persona conforme al corazón de Dios que la distingue? Amigo mío, este es el objetivo de este libro: que te conviertas en un niño conforme al corazón de Dios, un niño que sigue a Dios y está dispuesto a embarcarse en la aventura de hacer lo que Dios quiere que haga. ¿Suena imposible? Pues no lo es. ¡Sigue leyendo!
 
@@ -150,7 +150,7 @@ Al comenzar esta aventura de seguir a Jesús y obedecerle, aquí tienes un vers�
 
 Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que hará lo que Dios quiere que haga. Su razonamiento es el siguiente: «Si Dios quiere que haga esto, lo haré. Y si Dios no quiere que lo haga, ¡seguro que no lo haré!».
 
-¿Te preguntas: "¿Cómo? ¿Cómo puedo saber qué quiere Dios que haga? ¿Cómo puedo estar seguro de lo que Él quiere?". ¡Tengo buenas noticias para ti! Dios ya te ha revelado su voluntad en su Palabra, la Biblia. Así que asegúrate de dedicar un tiempo cada día a leerla. Si no entiendes lo que lees o tienes preguntas, pregúntales a tus padres, a tu pastor o a tu maestro de escuela dominical. Dios te ha dado a estas personas para guiarte y ayudarte a entender lo que Dios quiere que hagas, cómo quiere que actúen y las decisiones que quiere que tomes.
+¿Te preguntas: "¿Cómo? ¿Cómo puedo saber qué quiere Dios que haga? ¿Cómo puedo estar seguro de lo que Él quiere?". ¡Tengo buenas noticias para ti! Dios ya te ha revelado su voluntad en su Palabra, la Biblia. Así que asegúrate de dedicar un tiempo cada día a leerla. Si no entiendes lo que lees o tienes preguntas, pregúntales a tus padres, a tu pastor o a tu maestro de escuela dominical. Dios te ha dado a estas personas para guiarte y ayudarte a entender lo que Dios quiere que haga, cómo quiere que actúen y las decisiones que quiere que tomes.
 
 "Tu palabra es lámpara a mis pies y lumbrera a mi camino" (Salmo 119:105).`,
             cita: "Mateo 6:21; Hechos 13:22; Salmo 119:105",
@@ -166,18 +166,67 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
           {
             rango: "CAPÍTULO 1: ¿Cuál es el deseo de tu corazón?",
             contenido: `Cuando tenía doce años de edad, mis padres y yo fuimos a nuestras únicas vacaciones familiares. Saliendo de mi hogar de niñez en Oklahoma, pasamos a través de Dodge City, Kansas, camino de Colorado. Por supuesto tuvimos que detenernos en el pueblo histórico del viejo oeste y visitar el famoso cementerio Boot Hill, el lugar donde los forajidos se enterraban.
-      Aún puedo recordar hasta este día una lápida con un mensaje como este:
-      Aquí yace el viejo Joe. Murió con sus botas puestas.
-      ¿Y lo creerías? ¡Al final de la tumba había dos botas que sobresalían de la tierra! Más tarde aprendí que el viejo Joe no fue enterrado allí. Y mucho después averigué que las palabras en la lápida eran un epitafio, que significa "pequeño tributo a una persona muerta".
-      A partir de esa inolvidable visita a Boot Hill, he recopilado algunos otros epitafios. Por ejemplo, un poeta griego escribió este en la tumba de los héroes espartanos en el siglo V a.C.:
-      Ve, dile a los espartanos, amable transeúnte, que aquí, obedientes a su ley, yacemos.
-      Este otro se escribió a la memoria del gran poeta inglés Shakespeare:
-      Buen amigo, por amor a Jesús, abstente de cavar el polvo aquí encerrado. Bendito sea el hombre que perdone estas piedras, y maldito sea el que mueva mis huesos.
-      A medida que crecía, empecé a preguntarme: ¿Qué dirá la gente de mí cuando muera? ¿Qué dirá mi epitafio? No hace falta que seas un anciano para pensar en esto. De hecho, ahora es el mejor momento para decidir cómo quieres que sea tu vida.
-      La Biblia nos habla de un hombre llamado David. Él no era perfecto, pero Dios dijo algo increíble sobre él en Hechos 13:22: "He hallado a David hijo de Isaí, varón conforme a mi corazón, quien hará todo lo que yo quiero".
-      ¡Qué epitafio tan asombroso! Ser conocido como alguien que tiene un corazón que busca a Dios. Eso es lo que realmente importa. El deseo de tu corazón determina la dirección de tu vida. Si tu deseo es seguir a Dios, Él te guiará y te convertirá en el joven que Él diseñó que fueras.`,
-            cita: "Mateo 6:21; Hechos 13:22; Salmo 119:105",
-            reto: "Busca un bolígrafo y rodea en el texto las palabras que más te llamaron la atención sobre el corazón de David."
+
+Aún puedo recordar hasta este día una lápida con un mensaje como este:
+Aquí yace el viejo Joe. Murió con sus botas puestas.
+
+¿Andas buscando dejar una marca profunda en este mundo? No hace falta que seas un anciano para empezar a meditar sobre el rumbo que está tomando tu camino. De hecho, la juventud es el mejor momento para decidir de manera radical qué tipo de vida quieres construir y qué dirección vas a tomar.
+
+La Palabra de Dios nos habla de manera extraordinaria sobre un joven llamado David. Aunque no fue un hombre perfecto, el Señor dio un testimonio increíble acerca de él en el libro de los Hechos: «He hallado a David hijo de Isaí, varón conforme a mi corazón, quien hará todo lo que yo quiero» (Hechos 13:22). ¡Qué reconocimiento tan asombroso! Ser recordado como alguien con un corazón apasionado por buscar a Dios. El anhelo más profundo de tu corazón determina por completo el rumbo de tus pasos y tus decisiones diarias.
+
+**¡Un Enfoque Radical!**
+El verdadero valor se encuentra cuando tu mayor deseo es seguir fielmente los pasos del Señor. Cuando te dispones a obedecerle con convicción, Él se encarga de transformarte paso a paso en el joven fuerte e íntegro que diseñó con un propósito eterno.
+
+**A — Asegura tus prioridades.** Un joven conforme al corazón de Dios evalúa constantemente dónde tiene puesto su tesoro. Es muy fácil distraerse con las cosas del mundo o las opiniones de los demás, pero la Biblia nos insta a poner a Dios en primer lugar en todo lo que hacemos.
+
+**B — Busca la sabiduría en su palabra.** Para conocer la voluntad de Dios y no desviar tus pasos, es vital que te sumerjas diariamente en la lectura bíblica. Sus mandamientos son una lámpara que ilumina tus decisiones en los momentos de confusión y te protegen de cometer errores graves.`,
+            cita: "Hechos 13:22; Salmo 119:105; Proverbios 4:23",
+            reto: "Haz una lista de las tres cosas que más consumen tu tiempo esta semana y evalúa si te están acercando o alejando del propósito de Dios."
+          },
+          {
+            rango: "CAPÍTULO 2: Las disciplinas de un joven piadoso",
+            contenido: `Imagina lo extraño que sería que un niño nunca diera un estirón físico y se quedara atrapado en la talla de un infante para siempre. Sería una situación muy preocupante. De la misma manera, en el ámbito spiritual, Dios no quiere que te quedes estancado en la misma madurez de hace años. Él te llama a experimentar un desarrollo dinámico y constante.
+
+El crecimiento espiritual no ocurre por casualidad ni de forma automática. Requiere una entrega voluntaria y diaria. Significa abrir tu mente y tus fuerzas para que el Espíritu Santo moldee tu carácter cristiano.
+
+**¡Pasos para madurar con fuerza!**
+Para crecer firmemente necesitas labrar el suelo de tu propio corazón. Esto se logra mediante la autodisciplina en la oración, manteniendo una comunión activa y sincera con nuestro Creador, y apartándote de aquellas influencias que apagan tu fe.
+
+**C — Cultiva hábitos saludables.** Así como ejercitas tu cuerpo, ejercita tu espíritu. Lee las Escrituras no por obligación, sino buscando activamente respuestas para los desafíos reales que enfrentas hoy en la escuela, con tus amigos o con tu familia.
+
+**D — Desarrolla raíces firmes.** La estabilidad en tu caminar cristiano se demuestra cuando te mantienes fiel aun cuando nadie te está mirando. Al igual que David cuidando las ovejas en el desierto, tus momentos a solas con Dios preparan tu carácter para las grandes batallas del mañana.`,
+            cita: "1 Pedro 2:2; 2 Pedro 3:18; 1 Samuel 16:11",
+            reto: "Establece un horario fijo de 10 minutos cada mañana para leer un pasaje bíblico antes de iniciar tus actividades diarias."
+          },
+          {
+            rango: "CAPÍTULO 3: El valor de las elecciones sabias",
+            contenido: `¿Alguna vez te has puesto a contar cuántas decisiones tienes que tomar a lo largo de un solo día? ¡Son muchísimas! Desde qué ropa ponerte o qué comer, hasta cómo responder ante una falta de respeto o qué mirar en las redes sociales. Cada una de esas elecciones, por pequeña que parezca, va construyendo tu futuro y define tu integridad.
+
+Dios afirma con claridad en las Escrituras que cuando buscas su dirección para tomar decisiones, tu camino se vuelve mucho más seguro. Tomar elecciones sabias te ayuda de manera inmediata a evitar problemas innecesarios, mejorar la calidad de tus amistades y fortalecer tu relación familiar.
+
+**¡La Brújula de Dios!**
+Las decisiones correctas nacen de un corazón que teme al Señor y valora su consejo por encima de las modas pasajeras de la sociedad.
+
+**E — Elige con cuidado a tus amigos.** Las personas que te rodean ejercen una influencia gigante en tu forma de pensar y actuar. Un joven conforme al corazón de Dios busca rodearse de amistades que lo impulsen a ser mejor cristiano y que respeten sus convicciones.
+
+**F — Fija tus límites con anticipación.** No eres una hoja al viento que se mueve según sople el día. Establece tus normas morales y espirituales desde ahora, basándote firmemente en los principios eternos de la Palabra de Dios.`,
+            cita: "Proverbios 1:7; Proverbios 13:20; Salmo 1:1",
+            reto: "Identifica una decisión importante que debas tomar pronto y busca un versículo bíblico que te sirva de guía para resolverla sabiamente."
+          },
+          {
+            rango: "CAPÍTULO 4: El triunfo sobre la tentación",
+            contenido: `A lo largo de tu vida como joven vas a enfrentar presiones de todo tipo. El desánimo, los pensamientos incorrectos o las propuestas de amigos que te incitan a ocultar la verdad son pruebas reales en el día a día. David tuvo que enfrentar gigantes visibles y batallas invisibles en su mente, pero su enfoque estuvo en el poder de Dios y no en sus propias fuerzas.
+
+La Biblia nos enseña que no hay tentación que sea más fuerte que el soporte que el Señor te ofrece. Cuando decides pararte firme y clamar por su ayuda, Él te provee de manera inmediata la salida exacta y la fortaleza para vencer.
+
+**¡Fuerza en la batalla!**
+El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" a los planes perfectos que Dios ha trazado para su vida.
+
+**G — Guarda tus ojos y tu mente.** Lo que permites que entre a tu vida a través de las pantallas define lo que guardas en el corazón. Mantén un filtro limpio y lleno de la luz de Cristo en todo momento.
+
+**H — Haz de Dios tu refugio constante.** Cuando te sientas débil o presionado por el grupo, recuerda que la oración es tu conexión directa con el trono de la gracia. Dios nunca le dará la espalda a un corazón sincero que busca mantenerse puro.`,
+            cita: "1 Corintios 10:13; Salmo 119:9; Santiago 4:7",
+            reto: "Identifica un área o distracción donde sientas que estás flaqueando y cuéntaselo en oración a Dios pidiéndole dirección."
           }
         ]
       }
@@ -246,7 +295,7 @@ Como ya hemos descubierto, un niño conforme al corazón de Dios es un niño que
       { id: 5, nombre: "Stiven Osuna", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334631/ChatGPT_Image_17_feb_2026_08_23_16_bjewpv.png" },
       { id: 6, nombre: "Aneika ", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771249060/c6ed5cb68c24407599d8f9d5dde5054b_ywbccx.png" },
     ],
-        eventos: [
+    eventos: [
       { id: 1, titulo: "Juego de Voces Karaoke Juvenil", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1780966873/WhatsApp_Video_2026-06-08_at_7.41.59_PM_rw9m8q.mp4", tipo: "video", },
     ],
   },
