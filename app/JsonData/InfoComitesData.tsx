@@ -306,7 +306,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     mision: "Fomentar el crecimiento espíritual y la labor social de la mujer cristiana.",
     vision: "Mujeres sabias que edifican su casa y su iglesia.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "6_DJyUIhzoo", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
+    youtubeIds: ["MZlF3DfTMnc", "RS9iAxIRqXo", "ay-pB_oSPMc", "6_DJyUIhzoo", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
       { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068002/ChatGPT_Image_9_mar_2026_09_51_25_ah0j7g.png" },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/ever.png" },
@@ -325,7 +325,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     versiculo: "Cantad a él, cantadle salmos; Hablad de todas sus maravillas. 1 Crónicas 16:9",
     mision: "Guiar a la iglesia en adoración genuina.",
     vision: "Excelencia musical para la gloria de Dios.",
-    youtubeIds: ["zzz", "5MmGHLIOrIw"],
+    youtubeIds: ["d0GEPBgsG3s", "VKZVGxOGD3k", "eU_LLGLeGts", "luGzMl_MNwY", "5MmGHLIOrIw"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771605778/Gemini_Generated_Image_zg6n7hzg6n7hzg6n_f5k9ic.png" },
       { id: 2, nombre: "Jaime Pastrana", cargo: "VICEPRESIDENTE", foto: "/img/comites/joven1.png" },
@@ -341,7 +341,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     versiculo: "¡Cuán hermosos son sobre los montes los pies del que trae alegres nuevas! Isaías 52:7",
     mision: "Difundir el mensaje de salvación a través de medios digitales y técnicos.",
     vision: "Ser el puente tecnológico para la expansión del evangelio.",
-    youtubeIds: ["zzz", "m249lt2L89c", "YU7e80T3qas", "pIbRtZFnlD8"],
+    youtubeIds: ["5DVfADm_QMU", "zo_KWMpKXow", "m249lt2L89c", "YU7e80T3qas", "pIbRtZFnlD8"],
     integrantes: [
       { id: 1, nombre: "Paula Ramires", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771960910/ChatGPT_Image_24_feb_2026_14_19_24_slyn3t.png" },
       { id: 2, nombre: "Lorem Lemus", cargo: "SECRETARIO(A)", foto: "/img/comites/joven1.png" },

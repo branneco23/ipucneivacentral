@@ -62,7 +62,13 @@ export const HISTORY_DATA = {
     },
     {
       id: 11,
-      nombre: "Esteban Zúñiga",
+      nombre: "Arbey Bustamante y Amparo Garzón",
+      detalle: "Amor y Respeto al Servicio a Dios.",
+      periodo: "2021-2025"
+    },
+    {
+      id: 12,
+      nombre: "Esteban Zúñiga y Edith Poveda",
       detalle: "Pastor actual liderando la celebración de los 70 años.",
       periodo: "Actualidad"
     }

@@ -39,6 +39,9 @@ const asignarImagenExacta = (titulo: string): string => {
 
   if (t.includes("dominical") || t.includes("maestro") || t.includes("niño") ) 
     return "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773782341/ChatGPT_Image_17_mar_2026_15_59_31_upcbzh.png";
+  
+  if (t.includes("jóvenes") || t.includes("gavillas") || t.includes("juventud") ) 
+    return "https://res.cloudinary.com/dbbzk99pj/image/upload/v1788871662/4702c1e9-25c6-4a0d-a8e1-f41c5b78738b_nucon1.png";
 
   if (t.includes("familia") || t.includes("ayuno")) 
     return "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773782341/ChatGPT_Image_17_mar_2026_16_18_06_erwfkk.png";

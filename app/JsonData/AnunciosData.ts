@@ -16,10 +16,20 @@ export interface ParalexItem {
 const IMG_PATH = "/img";
 
 export const PARALEX_DATA: readonly ParalexItem[] = [
-    {
+  {
     id: 1,
-    tag: "Gran Culto Misionero",
+    tag: "Mesas De Trabajo",
     number: "01",
+    title: "Mesas De Trabajo",
+    location: "En Nuestro Templo",
+    hours: "7:00pm",
+    year: "2026",
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1789064194/WhatsApp_Image_2026-09-07_at_5.11.24_PM_csh8cg.jpg`,
+  },
+  {
+    id: 2,
+    tag: "Gran Culto Misionero",
+    number: "02",
     title: "Gran Culto Misionero",
     location: "En Nuestro Templo",
     hours: "7:00pm",
@@ -27,9 +37,19 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1778078011/WhatsApp_Image_2026-05-05_at_8.27.29_AM_qd0nio.jpg`,
   },
   {
-    id: 2,
+    id: 3,
+    tag: "Gran Culto Misionero",
+    number: "03",
+    title: "Gran Culto Misionero",
+    location: "En Nuestro Templo",
+    hours: "7:00pm",
+    year: "2026",
+    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1778078011/WhatsApp_Image_2026-05-05_at_8.27.29_AM_qd0nio.jpg`,
+  },
+  {
+    id: 4,
     tag: "Semana Evangelística",
-    number: "02",
+    number: "04",
     title: "Semana Evangelística",
     location: "En Nuestro Templo",
     hours: "",
@@ -37,9 +57,9 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1787714030/WhatsApp_Image_2026-08-25_at_7.21.15_AM_f1vjcq.jpg`,
   },
   {
-    id: 3,
+    id: 5,
     tag: "Ofrenda Solidaria",
-    number: "03",
+    number: "05",
     title: "Ofrenda Solidaria a los Damnificados",
     location: "En Nuestro Templo",
     hours: "9:30am",
@@ -47,23 +67,13 @@ export const PARALEX_DATA: readonly ParalexItem[] = [
     bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1787714030/WhatsApp_Image_2026-08-25_at_11.49.14_AM_hcvsxq.jpg`,
   },
   {
-    id: 4,
+    id: 6,
     tag: "Culto Evangelístico",
-    number: "04",
+    number: "06",
     title: "Culto Evangelístico",
     location: "En Nuestro Templo",
     hours: "19:00pm",
     year: "2026",
     bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1787714030/WhatsApp_Image_2026-08-25_at_7.25.26_AM_ixe05s.jpg`,
-  },
-  {
-    id: 5,
-    tag: "Rompiendo Cadenas",
-    number: "05",
-    title: "Caravana Rompiendo Cadenas",
-    location: "Sector Correspondiente a la Sede",
-    hours: "7:00pm",
-    year: "2026",
-    bg: `https://res.cloudinary.com/dbbzk99pj/image/upload/v1787714030/WhatsApp_Image_2026-08-25_at_7.24.45_AM_nz1gyt.jpg`,
   },
 ];
