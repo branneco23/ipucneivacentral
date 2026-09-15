@@ -39,11 +39,27 @@ interface MiembroComite {
   id: string;
   nombre: string;
   cargo: string;
-  tipo: "directiva" | "coordinador";
+  tipo: string;
   fotoUrl?: string;
 }
 
-// Optimizar y convertir imagen a WebP y retornar Base64 directamente
+// Listado completo oficial de comités y directivas para el selector
+const categoriasOficialesComites = [
+  "Directiva Local",
+  "Directiva de Jóvenes",
+  "Directiva de Damas (Dorcas)",
+  "Directiva de Escuela Dominical",
+  "Directiva de Misiones y Evangelismo",
+  "Directiva de Alabanza",
+  "Directiva de Comunicaciones",
+  "Directiva de Obra Social",
+  "Directiva de Ujieres",
+  "Directiva de Brigadistas",
+  "Directiva de Intercesión",
+  "Directiva de Protemplo",
+  "Directiva de Familia"
+];
+
 const convertirImagenABase64WebP = (file: File, calidad = 0.75): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -53,7 +69,6 @@ const convertirImagenABase64WebP = (file: File, calidad = 0.75): Promise<string>
       img.src = event.target?.result as string;
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        // Redimensionar si es muy grande para que quepa perfecto en Firestore (máx 800px de ancho)
         let width = img.width;
         let height = img.height;
         const maxWidth = 800;
@@ -106,10 +121,10 @@ export default function AdminPanelPage() {
   const [uploadingDevocional, setUploadingDevocional] = useState(false);
   const [devocionales, setDevocionales] = useState<DevocionalItem[]>([]);
 
-  // Comités State
+  // Comités State (inicializado con la primera opción del arreglo)
   const [nombreMiembro, setNombreMiembro] = useState("");
   const [cargoMiembro, setCargoMiembro] = useState("");
-  const [tipoMiembro, setTipoMiembro] = useState<"directiva" | "coordinador">("directiva");
+  const [tipoMiembro, setTipoMiembro] = useState(categoriasOficialesComites[0]);
   const [fotoMiembroFile, setFotoMiembroFile] = useState<File | null>(null);
   const [uploadingMiembro, setUploadingMiembro] = useState(false);
   const [comitesList, setComitesList] = useState<MiembroComite[]>([]);
@@ -171,7 +186,6 @@ export default function AdminPanelPage() {
 
   const handleLogout = () => signOut(auth);
 
-  // Crear Anuncio guardando Base64 directo en Firestore
   const handleCreateAnuncio = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploadingAnuncio(true);
@@ -244,7 +258,6 @@ export default function AdminPanelPage() {
     }
   };
 
-  // Crear Miembro guardando Base64 directo en Firestore
   const handleCreateMiembro = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploadingMiembro(true);
@@ -264,7 +277,7 @@ export default function AdminPanelPage() {
         createdAt: serverTimestamp(),
       });
 
-      setStatusMsg("Integrante guardado.");
+      setStatusMsg("Integrante guardado exitosamente.");
       setNombreMiembro("");
       setCargoMiembro("");
       setFotoMiembroFile(null);
@@ -569,17 +582,20 @@ export default function AdminPanelPage() {
 
         {activeTab === "comites" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <form onSubmit={handleCreateMiembro || handleCreateMiembro} className="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4" onSubmitCapture={handleCreateMiembro}>
+            <form onSubmit={handleCreateMiembro} className="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
               <h2 className="text-lg font-bold">Agregar Integrante de Comité</h2>
               <div>
-                <label className="block text-xs mb-1">Tipo de Integrante</label>
+                <label className="block text-xs mb-1">Tipo de Comité / Directiva</label>
                 <select
                   value={tipoMiembro}
-                  onChange={(e) => setTipoMiembro(e.target.value as any)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm"
+                  onChange={(e) => setTipoMiembro(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500"
                 >
-                  <option value="directiva">Comité Directiva</option>
-                  <option value="coordinador">Coordinadores</option>
+                  {categoriasOficialesComites.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
@@ -635,7 +651,7 @@ export default function AdminPanelPage() {
                         </div>
                       )}
                       <div>
-                        <span className="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded font-bold uppercase">
+                        <span className="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded font-bold uppercase">
                           {item.tipo}
                         </span>
                         <h4 className="font-bold text-sm text-white mt-0.5">{item.nombre}</h4>

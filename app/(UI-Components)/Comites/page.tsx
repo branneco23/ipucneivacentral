@@ -1,121 +1,127 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
-interface Integrante {
+interface MiembroComite {
   id: string;
   nombre: string;
   cargo: string;
+  tipo: string;
   fotoUrl?: string;
-  comite: string;
 }
 
-const COMITES_ORDEN = [
+const categoriasOficiales = [
   "Directiva Local",
-  "Jóvenes (JAPUC)",
-  "Damas Dorcas",
-  "Escuela Dominical",
-  "Misioneritas",
-  "Alabanza y Música"
+  "Directiva de Jóvenes",
+  "Directiva de Damas (Dorcas)",
+  "Directiva de Escuela Dominical",
+  "Directiva de Misiones y Evangelismo",
+  "Directiva de Alabanza",
+  "Directiva de Comunicaciones",
+  "Directiva de Obra Social",
+  "Directiva de Ujieres",
+  "Directiva de Brigadistas",
+  "Directiva de Intercesión",
+  "Directiva de Protemplo",
+  "Directiva de Familia"
 ];
 
-export default function ComitesPublicPage() {
-  const [integrantes, setIntegrantes] = useState<Integrante[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+export default function ComitesPage() {
+  const [comites, setComites] = useState<MiembroComite[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "comites"),
-      (snapshot) => {
-        const docs: Integrante[] = snapshot.docs.map((doc) => ({
+    const q = query(collection(db, "comites"), orderBy("createdAt", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const lista = snapshot.docs.map((doc) => {
+        const data = doc.data() as Omit<MiembroComite, "id">;
+        // Opcional: compatibilidad temporal si tienes datos antiguos guardados como "Comité Directiva"
+        let tipoNormalizado = data.tipo;
+        if (tipoNormalizado === "Comité Directiva") {
+          tipoNormalizado = "Directiva Local";
+        }
+        return {
           id: doc.id,
-          ...(doc.data() as Omit<Integrante, "id">),
-        }));
-        setIntegrantes(docs);
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error al cargar comités desde Firestore:", error);
-        setLoading(false);
-      }
-    );
+          ...data,
+          tipo: tipoNormalizado,
+        };
+      });
+      setComites(lista);
+      setLoading(false);
+    });
 
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white py-20 flex justify-center items-center">
-        <div className="w-10 h-10 border-4 border-[#00338d] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-white text-slate-800 py-16 px-4 md:px-12">
-      <div className="max-w-7xl mx-auto space-y-24">
-        {COMITES_ORDEN.map((nombreComite) => {
-          const miembrosComite = integrantes.filter(
-            (item) => item.comite?.toLowerCase() === nombreComite.toLowerCase()
-          );
+    <div className="min-h-screen bg-slate-950 text-slate-100 py-12 px-4 sm:px-6 lg:px-8 pt-28">
+      <div className="max-w-7xl mx-auto space-y-16">
+        <div className="text-center space-y-3">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase italic">
+            Nuestros Comités y Directivas
+          </h1>
+          <p className="text-slate-400 text-base max-w-2xl mx-auto">
+            Conoce a los líderes y hermanos que sirven con dedicación en las diferentes áreas y ministerios de nuestra iglesia.
+          </p>
+        </div>
 
-          if (miembrosComite.length === 0) return null;
+        {loading ? (
+          <div className="text-center py-20 text-slate-500 text-sm">Cargando comités...</div>
+        ) : comites.length === 0 ? (
+          <div className="text-center py-20 bg-slate-900/50 border border-slate-800 rounded-3xl">
+            <p className="text-slate-400 text-sm">No hay integrantes registrados todavía en el panel.</p>
+          </div>
+        ) : (
+          categoriasOficiales.map((cat) => {
+            const miembrosCat = comites.filter((m) => m.tipo === cat);
+            
+            // Si no hay miembros en esta categoría específica, puedes optar por ocultarla 
+            // o mostrar un aviso. Actualmente la ocultamos para mantener la página limpia:
+            if (miembrosCat.length === 0) return null;
 
-          return (
-            <section key={nombreComite} className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl md:text-5xl font-extrabold text-[#002B66] uppercase tracking-wider font-serif">
-                  {nombreComite}
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 items-end justify-center">
-                {miembrosComite.map((persona) => {
-                  const [primerNombre, ...restoNombre] = persona.nombre.trim().split(" ");
-                  const apellidos = restoNombre.join(" ");
-
-                  return (
-                    <div key={persona.id} className="flex flex-col items-center">
-                      <span className="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2 text-center">
-                        {persona.cargo}
-                      </span>
-
-                      <div className="w-full aspect-[3/4] bg-slate-100 rounded-t-sm overflow-hidden relative flex items-end justify-center">
-                        {persona.fotoUrl ? (
+            return (
+              <div key={cat} className="space-y-6">
+                <div className="border-b border-slate-800 pb-3">
+                  <h2 className="text-2xl font-black uppercase text-blue-400 tracking-wide">
+                    {cat}
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                  {miembrosCat.map((miembro) => (
+                    <div
+                      key={miembro.id}
+                      className="group bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-xl hover:border-slate-700 transition-all flex flex-col"
+                    >
+                      <div className="w-full h-80 bg-slate-950/60 p-4 flex items-center justify-center relative overflow-hidden">
+                        {miembro.fotoUrl ? (
                           <img
-                            src={persona.fotoUrl}
-                            alt={persona.nombre}
-                            className="w-full h-full object-cover object-top"
+                            src={miembro.fotoUrl}
+                            alt={miembro.nombre}
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                           />
                         ) : (
-                          <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                            <i className="ri-user-line text-4xl"></i>
+                          <div className="w-20 h-20 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-2xl border border-blue-500/30">
+                            {miembro.nombre ? miembro.nombre.charAt(0) : "?"}
                           </div>
                         )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-40 pointer-events-none" />
                       </div>
 
-                      <div className="w-full bg-[#001D4A] text-white py-3 px-2 text-center rounded-b-sm shadow-md">
-                        <span className="block text-[9px] uppercase tracking-widest text-slate-300 font-medium">
-                          HNO(A).
+                      <div className="p-6 text-center space-y-2 bg-slate-900 flex-1 flex flex-col justify-between border-t border-slate-800/60">
+                        <span className="inline-block bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest mx-auto">
+                          {miembro.cargo}
                         </span>
-                        <h3 className="text-sm md:text-base font-bold leading-tight uppercase font-serif tracking-wide">
-                          {primerNombre}
-                        </h3>
-                        {apellidos && (
-                          <span className="block text-[10px] md:text-xs font-semibold text-slate-300 uppercase tracking-widest leading-none mt-0.5">
-                            {apellidos}
-                          </span>
-                        )}
+                        <h3 className="font-bold text-lg text-white leading-tight">{miembro.nombre}</h3>
                       </div>
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-            </section>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );
