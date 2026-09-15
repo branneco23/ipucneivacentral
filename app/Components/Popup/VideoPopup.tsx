@@ -45,7 +45,7 @@ export default function VideoPopup() {
                 controls
                 playsInline
                 className="w-full h-full object-contain"
-                src="https://res.cloudinary.com/dbbzk99pj/video/upload/v1781307741/WhatsApp_Video_2026-06-12_at_9.58.11_AM_pnam2c.mp4"
+                src="https://res.cloudinary.com/dbbzk99pj/video/upload/v1789492555/WhatsApp_Video_2026-09-15_at_11.35.58_AM_mkikdl.mp4"
               />
             </div>
 

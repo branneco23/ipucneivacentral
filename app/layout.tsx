@@ -45,7 +45,7 @@ export default function RootLayout({
       <body className={`${audiowide.variable} ${golostext.variable} antialiased`}>
         <Nabvar />
         <ComitesProvider>
-          {/* <Popup/> */}
+          <Popup/> 
           <main>{children}</main>
           <RadioFloating />
           <Footer />
