@@ -1,68 +1,80 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { db } from "@/services/firebase";
-import { ref, onValue } from "firebase/database";
+import { db } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export default function TransmisionPage() {
   const [isReady, setIsReady] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
-  const [isLiveActive, setIsLiveActive] = useState<boolean>(false);
+  const [isLiveActive, setIsLiveActive] = useState<boolean>(true);
   const [domain, setDomain] = useState<string>("");
 
   const YOUTUBE_CHANNEL_ID = "UCr5SX280UbD1R2fNDsFIUdg";
   const FALLBACK_VIDEO_ID = "XGNJoRzIMV0";
+
+  const extractYouTubeId = (input: any): string | null => {
+    if (!input) return null;
+    const cleanInput = String(input).trim();
+    if (/^[a-zA-Z0-9_-]{11}$/.test(cleanInput)) {
+      return cleanInput;
+    }
+    const match = cleanInput.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : null;
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setDomain(window.location.hostname);
     }
 
-    const fetchLatestChannelVideo = async () => {
+    const liveDocRef = doc(db, "envivos", "main");
+
+    const unsubscribe = onSnapshot(liveDocRef, async (docSnap) => {
+      let foundValidVideo = false;
+      let manualActiveState = true;
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        manualActiveState = Boolean(data.activo);
+        const extractedId = extractYouTubeId(data.url);
+
+        if (extractedId) {
+          setActiveVideoId(extractedId);
+          setIsLiveActive(manualActiveState);
+          foundValidVideo = true;
+        }
+      }
+
+      // Si no hay video manual o queremos asegurar que consulte el directo real del canal si está activo
       try {
-        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
-        const data = await res.json();
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`)}`);
+        const rssData = await response.json();
 
-        if (data && data.items && data.items.length > 0) {
-          const latestItem = data.items[0];
-          const videoIdMatch = latestItem.link.match(/v=([a-zA-Z0-9_-]{11})/);
-          const videoId = videoIdMatch ? videoIdMatch[1] : null;
+        if (rssData && rssData.items && rssData.items.length > 0) {
+          const latestItem = rssData.items[0];
+          const videoId = extractYouTubeId(latestItem.link);
+          const titleLower = latestItem.title.toLowerCase();
+          
+          // Detectamos si el video más reciente del canal es un directo activo
+          const isRssLive = titleLower.includes("en vivo") || titleLower.includes("directo") || titleLower.includes("live");
 
-          if (videoId) {
+          if (isRssLive && videoId) {
             setActiveVideoId(videoId);
-            const titleLower = latestItem.title.toLowerCase();
-            const isLive = titleLower.includes("en vivo") || 
-                           titleLower.includes("directo") || 
-                           titleLower.includes("live");
-
-            setIsLiveActive(isLive);
-            return;
+            setIsLiveActive(true);
+            foundValidVideo = true;
           }
         }
-      } catch (error) {
-        console.error("Error al obtener video RSS:", error);
+      } catch (e) {
+        console.error("Error al consultar RSS de YouTube", e);
       }
 
-      setActiveVideoId(FALLBACK_VIDEO_ID);
-      setIsLiveActive(false);
-    };
-
-    // 1. Escucha activa de Firebase Realtime Database
-    const liveRef = ref(db, "current_live");
-    const unsubscribe = onValue(liveRef, (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        if (data.videoId && data.videoId.trim().length > 5) {
-          // Prioridad: ID ingresado desde el Panel
-          setActiveVideoId(data.videoId.trim());
-          setIsLiveActive(Boolean(data.isLive));
-          setIsReady(true);
-          return;
-        }
+      if (!foundValidVideo) {
+        setActiveVideoId(FALLBACK_VIDEO_ID);
+        setIsLiveActive(false);
       }
-      // 2. Si no hay ID manual activo, buscar por RSS
-      fetchLatestChannelVideo().then(() => setIsReady(true));
+
+      setIsReady(true);
     });
 
     return () => unsubscribe();
@@ -71,8 +83,13 @@ export default function TransmisionPage() {
   if (!isReady) return <div className="min-h-screen bg-[#f4f4f5]" />;
 
   const videoToShow = activeVideoId || FALLBACK_VIDEO_ID;
-  const embedUrl = `https://www.youtube.com/embed/${videoToShow}?autoplay=1&enablejsapi=1`;
+  
+  // Parámetros agregados para forzar el menor consumo de datos posibles:
+  // -vq=small o calidad baja por defecto (manejado mediante suggestQuality o controles embebidos)
+  // - autoplay=1, playsinline=1, controls=1
+  const embedUrl = `https://www.youtube.com/embed/${videoToShow}?autoplay=1&enablejsapi=1&playsinline=1&vq=small`;
 
+  // El chat se habilita correctamente si la transmisión está activa y el dominio está detectado
   const chatUrl =
     isLiveActive && domain
       ? `https://www.youtube.com/live_chat?v=${videoToShow}&embed_domain=${domain}`

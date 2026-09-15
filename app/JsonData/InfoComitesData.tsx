@@ -58,6 +58,7 @@ export const ComitesData: Record<string, Comite> = {
     ],
     eventos: [
       { id: 1, titulo: "Asamblea General de Ministros", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1777138156/WhatsApp_Image_2026-04-25_at_12.20.52_PM_xwfeym.jpg", tipo: "imagen", },
+      { id: 2, titulo: "Día del Pastor y Celebración de sus Cumpleaños", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1789401671/WhatsApp_Image_2026-09-07_at_6.05.55_PM_ei2y75.jpg", tipo: "imagen", },
     ]
   },
 

@@ -9,6 +9,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 // @ts-ignore
 import "remixicon/fonts/remixicon.css";
 
+// Context Provider
+import { ComitesProvider } from "@/app/Context/ComitesContext";
+
 // Componentes
 import Nabvar from "./Components/Navbar/Nabvar";
 import RadioFloating from "./Components/RadioFloating/RadioFloating";
@@ -41,10 +44,12 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${audiowide.variable} ${golostext.variable} antialiased`}>
         <Nabvar />
-        {/* <Popup/> */}
-        <main>{children}</main>
-        <RadioFloating/>
-        <Footer />
+        <ComitesProvider>
+          {/* <Popup/> */}
+          <main>{children}</main>
+          <RadioFloating />
+          <Footer />
+        </ComitesProvider>
       </body>
     </html>
   );

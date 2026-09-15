@@ -1,28 +1,18 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics, isSupported } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBOGGuQMmqqgYROd9cESOBFKebyd9fMWXM",
-  authDomain: "ipuc-neiva-central-77b89.firebaseapp.com",
-  projectId: "ipuc-neiva-central-77b89",
-  storageBucket: "ipuc-neiva-central-77b89.firebasestorage.app",
-  messagingSenderId: "448776719065",
-  appId: "1:448776719065:web:8e474dfc26ec4db039ccc8",
-  measurementId: "G-GQJBKKV856"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-
-// Inicializar servicios básicos de forma segura para ambientes estáticos
-export const auth = getAuth(app);
+const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
-// Analytics solo se ejecuta en el navegador del usuario, no durante el build
-if (typeof window !== "undefined") {
-  isSupported().then((supported) => {
-    if (supported) getAnalytics(app);
-  });
-}
+export const storage = getStorage(app);
+export const auth = getAuth(app);

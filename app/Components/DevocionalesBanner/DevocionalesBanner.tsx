@@ -1,21 +1,52 @@
 "use client";
-import React from 'react';
-import { DEVOCIONALES_SEMANALES } from "@/app/JsonData/DevocionalesData";
+import React, { useState, useEffect } from 'react';
+import { db } from "@/lib/firebase"; // Asegúrate de que esta ruta apunte a tu archivo de configuración de firebase
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
+
+interface DevocionalItem {
+  id: string;
+  titulo?: string;
+  linkMeet?: string;
+  link?: string;
+  hora?: string;
+  grupo?: string;
+}
 
 export default function DevocionalesBanner() {
-  // 1. Obtenemos el día actual (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
-  const hoyNum = new Date().getDay();
+  const [devocional, setDevocional] = useState<DevocionalItem | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 2. Intentamos buscar el devocional de hoy. 
-  // Si es sábado (6) o domingo (0), no encontrará nada en tu lista actual.
-  const devocionalHoy = DEVOCIONALES_SEMANALES.find(d => d.diaSemana === hoyNum);
+  useEffect(() => {
+    // Consulta en tiempo real el último devocional registrado desde tu panel de administración
+    const q = query(
+      collection(db, "devocionales"), 
+      orderBy("createdAt", "desc"), 
+      limit(1)
+    );
 
-  // 3. Lógica de CORRECCIÓN: Si no hay devocional hoy, usamos el primero de la lista (Lunes)
-  // Esto evita que el componente devuelva null y desaparezca.
-  const devocionalAMostrar = devocionalHoy || DEVOCIONALES_SEMANALES[0];
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) {
+        const docData = snapshot.docs[0];
+        const data = docData.data();
+        setDevocional({
+          id: docData.id,
+          titulo: data.titulo || "Unidos en Oración",
+          // Mapea tanto 'linkMeet' como 'link' por compatibilidad con cómo lo guardes
+          link: data.linkMeet || data.link || "#", 
+          hora: data.hora || "4:30 AM",
+          grupo: data.grupo || "Central",
+        });
+      } else {
+        setDevocional(null);
+      }
+      setLoading(false);
+    });
 
-  // Si por alguna razón la lista está vacía, aquí sí protegemos
-  if (!devocionalAMostrar) return null;
+    return () => unsubscribe();
+  }, []);
+
+  // Si está cargando o no hay ningún devocional registrado en Firebase, no renderiza nada
+  if (loading || !devocional) return null;
 
   return (
     <section className="relative overflow-hidden bg-[#00338d] rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 text-white shadow-2xl shadow-blue-900/20 my-8">
@@ -31,7 +62,7 @@ export default function DevocionalesBanner() {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
             </span>
             <span className="text-xs font-bold uppercase tracking-widest">
-              {devocionalHoy ? `Devocional de Hoy: ${devocionalAMostrar.nombreDia}` : `Próximo Devocional: Lunes`}
+              Devocional en Vivo: {devocional.titulo}
             </span>
           </div>
 
@@ -46,7 +77,7 @@ export default function DevocionalesBanner() {
               </div>
               <div>
                 <p className="text-[10px] uppercase font-bold opacity-60">Hora de inicio</p>
-                <p className="text-xl font-black italic">{devocionalAMostrar.hora}</p>
+                <p className="text-xl font-black italic">{devocional.hora}</p>
               </div>
             </div>
             
@@ -58,7 +89,7 @@ export default function DevocionalesBanner() {
               </div>
               <div>
                 <p className="text-[10px] uppercase font-bold opacity-60">Dirigido por</p>
-                <p className="text-xl font-black italic uppercase">{devocionalAMostrar.grupo}</p>
+                <p className="text-xl font-black italic uppercase">{devocional.grupo}</p>
               </div>
             </div>
           </div>
@@ -66,7 +97,7 @@ export default function DevocionalesBanner() {
 
         <div className="flex flex-col items-center gap-4">
           <a 
-            href={devocionalAMostrar.link}
+            href={devocional.link}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative px-10 py-5 bg-white text-[#00338d] rounded-2xl font-black text-lg uppercase italic transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] active:scale-95"

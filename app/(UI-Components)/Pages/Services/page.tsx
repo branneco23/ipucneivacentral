@@ -71,12 +71,12 @@ export default function MainLanding() {
         </div>
       </section>
 
-      {/* SECCIÓN DE DEVOCIONALES RESTAURADA */}
+      {/* SECCIÓN DE DEVOCIONALES (Conectada a Firebase a través del componente) */}
       <div className="px-4 sm:px-10 md:px-[8%] max-w-screen-2xl mx-auto">
         <DevocionalBanner />
       </div>
 
-      {/* CALENDARIO SEMANAL */}
+      {/* CALENDARIO SEMANAL (Justo abajo de los devocionales) */}
       <section className="px-4 sm:px-10 md:px-[8%] py-12 max-w-screen-2xl mx-auto">
         <div className="max-w-7xl mx-auto">
           

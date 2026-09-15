@@ -62,9 +62,9 @@ export const HISTORY_DATA = {
     },
     {
       id: 11,
-      nombre: "Arbey Bustamante y Amparo Garzón",
+      nombre: "Arbey Bustamante y Amparo Garzón - Jefferson Jimenez y Astrid Gómez",
       detalle: "Amor y Respeto al Servicio a Dios.",
-      periodo: "2021-2025"
+      periodo: "2019-2025"
     },
     {
       id: 12,

@@ -17,6 +17,7 @@
     "bootstrap-icons": "^1.13.1",
     "clsx": "^2.1.1",
     "firebase": "^12.14.0",
+    "firebase-admin": "^14.4.0",
     "framer-motion": "^12.24.0",
     "lucide-react": "^0.577.0",
     "next": "^16.1.6",

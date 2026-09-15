@@ -1,77 +1,122 @@
 "use client";
 
-import React, { useMemo } from "react";
-import Link from "next/link";
-import CommitteeMembers from "@/app/Components/CommiteeMember/CommitteeMembers";
-import { COMITES_MEMBERS } from '@/app/JsonData/ComitesData';
+import React, { useState, useEffect } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-/**
- * Función auxiliar para formatear los IDs de los comités.
- * Se movió fuera del componente para evitar que se redeclare en cada render.
- */
-const formatTitle = (slug: string): string => {
-  return slug
-    .replace(/-/g, ' ')
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-};
+interface Integrante {
+  id: string;
+  nombre: string;
+  cargo: string;
+  fotoUrl?: string;
+  comite: string;
+}
 
-export default function ComitesPage() {
-  // 1. Memorización de las llaves del objeto para optimizar el rendimiento
-  const nombresComites = useMemo(() => Object.keys(COMITES_MEMBERS), []);
+const COMITES_ORDEN = [
+  "Directiva Local",
+  "Jóvenes (JAPUC)",
+  "Damas Dorcas",
+  "Escuela Dominical",
+  "Misioneritas",
+  "Alabanza y Música"
+];
+
+export default function ComitesPublicPage() {
+  const [integrantes, setIntegrantes] = useState<Integrante[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "comites"),
+      (snapshot) => {
+        const docs: Integrante[] = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<Integrante, "id">),
+        }));
+        setIntegrantes(docs);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error al cargar comités desde Firestore:", error);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white py-20 flex justify-center items-center">
+        <div className="w-10 h-10 border-4 border-[#00338d] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <main className="min-h-screen bg-white selection:bg-blue-100">
-      {/* BANNER DE ENCABEZADO */}
-      <header className='section-bg text-white flex flex-col items-center justify-center min-h-[450px] relative overflow-hidden'>
-        {/* Overlay optimizado con gradiente para profundidad */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/20 z-0" />
-        
-        <div className="relative z-10 flex flex-col items-center px-6 text-center">
-          <h1 className='text-6xl md:text-8xl GolosText font-black uppercase tracking-tighter drop-shadow-2xl'>
-            Comités
-          </h1>
-          
-          <nav aria-label="Breadcrumb" className='flex items-center text-sm md:text-base mt-8 bg-white/10 hover:bg-white/15 transition-all px-6 py-2.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg'>
-            <Link href="/" className="hover:text-blue-300 transition-colors font-medium">Inicio</Link>
-            <i className="ri-arrow-right-s-line mx-2 opacity-40 text-xl" aria-hidden="true" />
-            <span className="font-bold text-white uppercase tracking-wider">Directivas 2026</span>
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen bg-white text-slate-800 py-16 px-4 md:px-12">
+      <div className="max-w-7xl mx-auto space-y-24">
+        {COMITES_ORDEN.map((nombreComite) => {
+          const miembrosComite = integrantes.filter(
+            (item) => item.comite?.toLowerCase() === nombreComite.toLowerCase()
+          );
 
-      {/* SECCIONES POR COMITÉ */}
-      <section className="py-24 max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="space-y-32">
-          {nombresComites.map((idComite) => {
-            const integrantes = COMITES_MEMBERS[idComite];
-            
-            // Validación defensiva
-            if (!integrantes || integrantes.length === 0) return null;
+          if (miembrosComite.length === 0) return null;
 
-            return (
-              <article 
-                key={idComite} 
-                id={idComite} // Permite navegar mediante anchor links (ej. comites#comite-misiones)
-                className="scroll-mt-32 transition-all duration-500"
-              >
-                <CommitteeMembers 
-                  integrantes={integrantes} 
-                  tituloComite={formatTitle(idComite)} 
-                />
-              </article>
-            );
-          })}
-        </div>
-      </section>
+          return (
+            <section key={nombreComite} className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl md:text-5xl font-extrabold text-[#002B66] uppercase tracking-wider font-serif">
+                  {nombreComite}
+                </h2>
+              </div>
 
-      {/* FOOTER DE SECCIÓN / CTA */}
-      <footer className="py-20 bg-gray-50 text-center">
-        <p className="text-gray-400 font-medium italic">
-          "Trabajando unánimes por la obra del Señor"
-        </p>
-      </footer>
-    </main>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 items-end justify-center">
+                {miembrosComite.map((persona) => {
+                  const [primerNombre, ...restoNombre] = persona.nombre.trim().split(" ");
+                  const apellidos = restoNombre.join(" ");
+
+                  return (
+                    <div key={persona.id} className="flex flex-col items-center">
+                      <span className="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2 text-center">
+                        {persona.cargo}
+                      </span>
+
+                      <div className="w-full aspect-[3/4] bg-slate-100 rounded-t-sm overflow-hidden relative flex items-end justify-center">
+                        {persona.fotoUrl ? (
+                          <img
+                            src={persona.fotoUrl}
+                            alt={persona.nombre}
+                            className="w-full h-full object-cover object-top"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
+                            <i className="ri-user-line text-4xl"></i>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="w-full bg-[#001D4A] text-white py-3 px-2 text-center rounded-b-sm shadow-md">
+                        <span className="block text-[9px] uppercase tracking-widest text-slate-300 font-medium">
+                          HNO(A).
+                        </span>
+                        <h3 className="text-sm md:text-base font-bold leading-tight uppercase font-serif tracking-wide">
+                          {primerNombre}
+                        </h3>
+                        {apellidos && (
+                          <span className="block text-[10px] md:text-xs font-semibold text-slate-300 uppercase tracking-widest leading-none mt-0.5">
+                            {apellidos}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
   );
 }
