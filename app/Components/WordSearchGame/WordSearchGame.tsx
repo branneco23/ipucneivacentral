@@ -2,7 +2,14 @@
 
 import React, { useState } from 'react';
 
-// Estructura de niveles más grandes y retadores (12x12)
+// Si deseas que reciba props personalizadas desde afuera, define esta interfaz:
+interface SopaLetrasProps {
+  titulo?: string;
+  descripcion?: string;
+  palabras?: string[];
+}
+
+// Estructura de niveles gigantes (12x12)
 const niveles = [
   {
     nivel: 1,
@@ -66,7 +73,6 @@ const niveles = [
   }
 ];
 
-// Paleta de colores alegres y dinámicos para cada palabra encontrada
 const coloresCelebracion = [
   "bg-emerald-500 text-white border-emerald-500 shadow-emerald-500/30",
   "bg-fuchsia-500 text-white border-fuchsia-500 shadow-fuchsia-500/30",
@@ -78,13 +84,17 @@ const coloresCelebracion = [
   "bg-teal-500 text-white border-teal-500 shadow-teal-500/30",
 ];
 
-export default function WordSearchGame() {
+export default function WordSearchGame({ titulo, descripcion }: SopaLetrasProps) {
   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
   const [lastFoundEffect, setLastFoundEffect] = useState<string | null>(null);
 
   const nivelActual = niveles[currentLevelIndex];
+
+  // Si mandan un título personalizado lo usamos, si no, usamos el del nivel
+  const tituloMostrado = titulo || nivelActual.titulo;
+  const descripcionMostrada = descripcion || nivelActual.descripcion;
 
   const handleCellClick = (rowIndex: number, colIndex: number) => {
     const cellId = `${rowIndex}-${colIndex}`;
@@ -99,13 +109,11 @@ export default function WordSearchGame() {
       newFoundWords = foundWords.filter(w => w !== word);
     } else {
       newFoundWords = [...foundWords, word];
-      // Activamos el efecto visual de celebración temporal para esta palabra
       setLastFoundEffect(word);
       setTimeout(() => setLastFoundEffect(null), 1000);
     }
     setFoundWords(newFoundWords);
 
-    // Validar si completó todas las palabras del nivel actual
     if (newFoundWords.length === nivelActual.palabras.length) {
       setTimeout(() => {
         if (currentLevelIndex < niveles.length - 1) {
@@ -126,20 +134,17 @@ export default function WordSearchGame() {
 
   return (
     <div className="bg-slate-50 border border-slate-200 p-6 md:p-12 rounded-[2.5rem] shadow-sm my-10 max-w-5xl mx-auto transition-all duration-500">
-      
-      {/* Cabecera y Niveles */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 pb-6 border-b border-slate-200">
         <div>
           <span className="bg-orange-100 text-orange-600 text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-widest">
             Sopa de Letras Gigante • Modo Aventura
           </span>
           <h3 className="text-2xl md:text-3xl font-black text-slate-900 uppercase mt-2">
-            {nivelActual.titulo}
+            {tituloMostrado}
           </h3>
-          <p className="text-slate-600 text-sm mt-1">{nivelActual.descripcion}</p>
+          <p className="text-slate-600 text-sm mt-1">{descripcionMostrada}</p>
         </div>
 
-        {/* Indicadores de Nivel */}
         <div className="flex gap-3">
           {niveles.map((n, idx) => (
             <div
@@ -158,7 +163,6 @@ export default function WordSearchGame() {
         </div>
       </div>
 
-      {/* Cuadrícula Más Grande (12 columnas) */}
       <div className="flex justify-center mb-8 overflow-x-auto p-2">
         <div className="grid grid-cols-12 gap-1.5 md:gap-2 bg-white p-6 rounded-3xl shadow-inner border border-slate-100">
           {nivelActual.grid.map((row, rowIndex) =>
@@ -183,7 +187,6 @@ export default function WordSearchGame() {
         </div>
       </div>
 
-      {/* Bloque de Palabras con Colores Dinámicos y Celebración */}
       <div className="text-center">
         {esCompleto ? (
           <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-6 rounded-3xl mb-6 shadow-xl shadow-emerald-500/20 animate-bounce">
@@ -198,7 +201,6 @@ export default function WordSearchGame() {
           </p>
         )}
 
-        {/* Lista de palabras con estilos de colores únicos */}
         <div className="flex flex-wrap justify-center gap-3 mb-6">
           {nivelActual.palabras.map((word, index) => {
             const isFound = foundWords.includes(word);
@@ -221,7 +223,6 @@ export default function WordSearchGame() {
           })}
         </div>
 
-        {/* Botón de reinicio */}
         <button
           onClick={reiniciarNivel}
           className="text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest underline transition-colors"
@@ -229,7 +230,6 @@ export default function WordSearchGame() {
           Reiniciar este nivel
         </button>
       </div>
-
     </div>
   );
 }

@@ -59,6 +59,7 @@ export const ComitesData: Record<string, Comite> = {
     eventos: [
       { id: 1, titulo: "Asamblea General de Ministros", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1777138156/WhatsApp_Image_2026-04-25_at_12.20.52_PM_xwfeym.jpg", tipo: "imagen", },
       { id: 2, titulo: "Día del Pastor y Celebración de sus Cumpleaños", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1789401671/WhatsApp_Image_2026-09-07_at_6.05.55_PM_ei2y75.jpg", tipo: "imagen", },
+      { id: 3, titulo: "Día del Pastor y Celebración de sus Cumpleaños", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1789490850/WhatsApp_Image_2026-09-15_at_11.18.58_AM_cg0tcq.jpg", tipo: "imagen", },
     ]
   },
 
@@ -298,6 +299,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     ],
     eventos: [
       { id: 1, titulo: "Juego de Voces Karaoke Juvenil", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1780966873/WhatsApp_Video_2026-06-08_at_7.41.59_PM_rw9m8q.mp4", tipo: "video", },
+      { id: 2, titulo: "Campaña Evangelistica Juvenil", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1789491587/FDownloader.Net_AQPZjx26dLmIAUsGw873fB5E2EoVva8gbgAc_WajAX9n4ozJBOUum6hCfqnHDSEBXXoMqqv1U88Mre-BSJjEpkMWGqxV250uxbej5Gcdg8ym-A_720p__HD_1_1_ud9h0q.mp4", tipo: "video", },
     ],
   },
 
@@ -318,6 +320,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     eventos: [
       { id: 1, titulo: "Reconocimientos Día De La Mujer", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773083838/WhatsApp_Image_2026-03-09_at_2.15.26_PM_yzf45q.jpg", tipo: "imagen", },
       { id: 2, titulo: "Reconociminetos Día De La Mujer", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773083838/WhatsApp_Image_2026-03-09_at_10.46.22_AM_ojvirj.jpg", tipo: "imagen", },
+      { id: 3, titulo: "Hermoso Servicio por las Damas Dorcas", imagen: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1789490850/WhatsApp_Image_2026-09-15_at_11.23.14_AM_rssyzf.jpg", tipo: "imagen", },
     ],
   },
 
@@ -334,7 +337,9 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
       { id: 4, nombre: "Dagoberto Conde", cargo: "VOCAL", foto: "/img/comites/joven1.png" },
       { id: 5, nombre: "Claudia Murcia", cargo: "VOCAL", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771632176/Gemini_Generated_Image_rowdtzrowdtzrowd_b8wb9n.png" },
     ],
-    eventos: []
+    eventos: [
+      { id: 1, titulo: "Tarde de Cuerdas", imagen: "https://res.cloudinary.com/dbbzk99pj/video/upload/v1789491964/AQOAOGHDOnwcMuREVuT1rFYZ2OCKU6TShZs6fi2TofirL5pAoWDX5vLOe3zovnZRg6CGp2uKsurVQbeTwRPqsLjoFfNEm1TxmqLPz832idcgTA_et29lp.mp4", tipo: "video", },
+    ]
   },
 
   "comunicaciones": {
