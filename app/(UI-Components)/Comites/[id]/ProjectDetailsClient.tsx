@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ComitesData } from '@/app/JsonData/InfoComitesData';
 import RevistaLibro from '@/app/Components/MagazineBook/MagazineBook';
+import SopaLetras from '@/app/Components/WordSearchGame/WordSearchGame';
 
 interface ProjectDetailsProps {
   id: string;
@@ -265,6 +266,17 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
             <div className="w-full">
               <RevistaLibro historia={data.historietas[1]} />
             </div>
+          </section>
+        )}
+
+        {/* --- SECCIÓN DE SOPA DE LETRAS (Especial para Escuela Dominical) --- */}
+        {id === "escuela-dominical" && (
+          <section className="max-w-[1400px] mx-auto px-6 mb-32">
+            <SopaLetras
+              titulo="Sopa de Letras: Un Corazón Conforme a Dios"
+              descripcion="Busca los conceptos que aprendimos en el capítulo de Jim y Dylan."
+              palabras={["CORAZÓN", "DIOS", "JESÚS", "BIBLIA", "AMOR", "DAVID"]}
+            />
           </section>
         )}
       </div>
