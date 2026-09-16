@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
 interface MiembroComite {
   id: string;
@@ -10,6 +10,7 @@ interface MiembroComite {
   cargo: string;
   tipo: string;
   fotoUrl?: string;
+  orden?: number;
 }
 
 const categoriasOficiales = [
@@ -33,22 +34,30 @@ export default function ComitesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const q = query(collection(db, "comites"), orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    // Lectura segura en tiempo real con ordenamiento local para reflejar los cambios del panel
+    const unsubscribe = onSnapshot(collection(db, "comites"), (snapshot) => {
       const lista = snapshot.docs.map((doc) => {
-        const data = doc.data() as Omit<MiembroComite, "id">;
-        // Opcional: compatibilidad temporal si tienes datos antiguos guardados como "Comité Directiva"
-        let tipoNormalizado = data.tipo;
+        const data = doc.data();
+        let tipoNormalizado = data.tipo || "";
         if (tipoNormalizado === "Comité Directiva") {
           tipoNormalizado = "Directiva Local";
         }
         return {
           id: doc.id,
-          ...data,
+          nombre: data.nombre || "",
+          cargo: data.cargo || "",
           tipo: tipoNormalizado,
-        };
+          fotoUrl: data.fotoUrl || "",
+          orden: typeof data.orden === "number" ? data.orden : 9999,
+        } as MiembroComite;
       });
+
+      // Ordenar por el campo orden de menor a mayor
+      lista.sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
       setComites(lista);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error al obtener comités públicos:", error);
       setLoading(false);
     });
 
@@ -77,8 +86,6 @@ export default function ComitesPage() {
           categoriasOficiales.map((cat) => {
             const miembrosCat = comites.filter((m) => m.tipo === cat);
             
-            // Si no hay miembros en esta categoría específica, puedes optar por ocultarla 
-            // o mostrar un aviso. Actualmente la ocultamos para mantener la página limpia:
             if (miembrosCat.length === 0) return null;
 
             return (

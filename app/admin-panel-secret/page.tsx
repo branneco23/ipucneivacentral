@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db, auth } from "@/lib/firebase";
 import {
   signInWithEmailAndPassword,
@@ -15,9 +15,11 @@ import {
   doc,
   onSnapshot,
   setDoc,
+  getDoc,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  writeBatch
 } from "firebase/firestore";
 
 interface AnuncioItem {
@@ -41,6 +43,7 @@ interface MiembroComite {
   cargo: string;
   tipo: string;
   fotoUrl?: string;
+  orden?: number;
 }
 
 // Listado completo oficial de comités y directivas para el selector
@@ -94,7 +97,8 @@ const convertirImagenABase64WebP = (file: File, calidad = 0.75): Promise<string>
 export default function AdminPanelPage() {
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"anuncios" | "envivos" | "devocionales" | "comites">("anuncios");
+  // NUEVA PESTAÑA: "configComites" para editar páginas internas por comité
+  const [activeTab, setActiveTab] = useState<"anuncios" | "envivos" | "devocionales" | "comites" | "configComites">("anuncios");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -121,13 +125,25 @@ export default function AdminPanelPage() {
   const [uploadingDevocional, setUploadingDevocional] = useState(false);
   const [devocionales, setDevocionales] = useState<DevocionalItem[]>([]);
 
-  // Comités State (inicializado con la primera opción del arreglo)
+  // Comités State (Integrantes)
   const [nombreMiembro, setNombreMiembro] = useState("");
   const [cargoMiembro, setCargoMiembro] = useState("");
   const [tipoMiembro, setTipoMiembro] = useState(categoriasOficialesComites[0]);
   const [fotoMiembroFile, setFotoMiembroFile] = useState<File | null>(null);
   const [uploadingMiembro, setUploadingMiembro] = useState(false);
   const [comitesList, setComitesList] = useState<MiembroComite[]>([]);
+
+  // NUEVO: Configuración de Páginas Internas por Comité
+  const [comiteSeleccionadoConfig, setComiteSeleccionadoConfig] = useState(categoriasOficialesComites[0]);
+  const [subtituloComite, setSubtituloComite] = useState("");
+  const [videoPrincipalUrl, setVideoPrincipalUrl] = useState("");
+  const [mostrarBiblioteca, setMostrarBiblioteca] = useState(false);
+  const [mostrarSopaLetras, setMostrarSopaLetras] = useState(false);
+  const [savingConfigComite, setSavingConfigComite] = useState(false);
+
+  // Referencias para Drag & Drop
+  const dragItemIndex = useRef<number | null>(null);
+  const dragOverItemIndex = useRef<number | null>(null);
 
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
@@ -161,9 +177,21 @@ export default function AdminPanelPage() {
       setDevocionales(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<DevocionalItem, "id">) })));
     });
 
-    const qComites = query(collection(db, "comites"), orderBy("createdAt", "desc"));
-    const unsubComites = onSnapshot(qComites, (snap) => {
-      setComitesList(snap.docs.map(d => ({ id: d.id, ...(d.data() as Omit<MiembroComite, "id">) })));
+    const unsubComites = onSnapshot(collection(db, "comites"), (snap) => {
+      const lista = snap.docs.map(d => {
+        const data = d.data();
+        return {
+          id: d.id,
+          nombre: data.nombre || "",
+          cargo: data.cargo || "",
+          tipo: data.tipo || "",
+          fotoUrl: data.fotoUrl || "",
+          orden: typeof data.orden === "number" ? data.orden : 9999,
+        } as MiembroComite;
+      });
+
+      lista.sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+      setComitesList(lista);
     });
 
     return () => {
@@ -173,6 +201,29 @@ export default function AdminPanelPage() {
       unsubComites();
     };
   }, [user]);
+
+  // NUEVO: Cargar la configuración específica cada vez que cambia el comité seleccionado en la pestaña de configuración
+  useEffect(() => {
+    if (!user) return;
+    const docId = comiteSeleccionadoConfig.toLowerCase().replace(/[^a-z0-9]/g, "_");
+    const fetchConfigComite = async () => {
+      const docRef = doc(db, "configComites", docId);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        setSubtituloComite(data.subtitulo || "");
+        setVideoPrincipalUrl(data.videoPrincipalUrl || "");
+        setMostrarBiblioteca(data.mostrarBiblioteca ?? false);
+        setMostrarSopaLetras(data.mostrarSopaLetras ?? false);
+      } else {
+        setSubtituloComite("");
+        setVideoPrincipalUrl("");
+        setMostrarBiblioteca(false);
+        setMostrarSopaLetras(false);
+      }
+    };
+    fetchConfigComite();
+  }, [comiteSeleccionadoConfig, user]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -269,11 +320,14 @@ export default function AdminPanelPage() {
         fotoUrl = await convertirImagenABase64WebP(fotoMiembroFile, 0.75);
       }
 
+      const nuevoOrden = comitesList.length;
+
       await addDoc(collection(db, "comites"), {
         nombre: nombreMiembro,
         cargo: cargoMiembro,
         tipo: tipoMiembro,
         fotoUrl,
+        orden: nuevoOrden,
         createdAt: serverTimestamp(),
       });
 
@@ -286,6 +340,67 @@ export default function AdminPanelPage() {
       setStatusMsg("Error al guardar integrante.");
     } finally {
       setUploadingMiembro(false);
+    }
+  };
+
+  // NUEVO: Guardar la configuración específica de la página interna del comité seleccionado
+  const handleSaveConfigComite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingConfigComite(true);
+    const docId = comiteSeleccionadoConfig.toLowerCase().replace(/[^a-z0-9]/g, "_");
+
+    try {
+      await setDoc(doc(db, "configComites", docId), {
+        comite: comiteSeleccionadoConfig,
+        subtitulo: subtituloComite,
+        videoPrincipalUrl,
+        mostrarBiblioteca,
+        mostrarSopaLetras,
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+
+      setStatusMsg(`¡Configuración de "${comiteSeleccionadoConfig}" guardada con éxito!`);
+    } catch (error) {
+      console.error("Error al guardar configuración del comité:", error);
+      setStatusMsg("Error al guardar la configuración interna.");
+    } finally {
+      setSavingConfigComite(false);
+    }
+  };
+
+  const handleDragStart = (index: number) => {
+    dragItemIndex.current = index;
+  };
+
+  const handleDragEnter = (index: number) => {
+    dragOverItemIndex.current = index;
+  };
+
+  const handleDragEnd = async () => {
+    if (dragItemIndex.current !== null && dragOverItemIndex.current !== null) {
+      const nuevaLista = [...comitesList];
+      const [itemMovido] = nuevaLista.splice(dragItemIndex.current, 1);
+      nuevaLista.splice(dragOverItemIndex.current, 0, itemMovido);
+
+      dragItemIndex.current = null;
+      dragOverItemIndex.current = null;
+      setComitesList(nuevaLista);
+
+      try {
+        setStatusMsg("Guardando nuevo orden...");
+        const batch = writeBatch(db);
+
+        nuevaLista.forEach((item, index) => {
+          const docRef = doc(db, "comites", item.id);
+          batch.update(docRef, { orden: index });
+        });
+
+        await batch.commit();
+        setStatusMsg("¡Orden actualizado con éxito!");
+      } catch (error) {
+        console.error("Error al actualizar el orden en Firestore:", error);
+        setStatusMsg("Error al guardar el nuevo orden.");
+      }
     }
   };
 
@@ -373,13 +488,14 @@ export default function AdminPanelPage() {
             { id: "envivos", label: "Transmisión En Vivo" },
             { id: "devocionales", label: "Devocionales" },
             { id: "comites", label: "Integrantes de Comités" },
+            { id: "configComites", label: "Páginas Internas de Comités" }, // NUEVA PESTAÑA
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-5 py-2.5 rounded-xl text-xs font-bold transition ${activeTab === tab.id
-                  ? "bg-blue-600 text-white"
-                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                ? "bg-blue-600 text-white"
+                : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
                 }`}
             >
               {tab.label}
@@ -615,7 +731,7 @@ export default function AdminPanelPage() {
                   required
                   value={cargoMiembro}
                   onChange={(e) => setCargoMiembro(e.target.value)}
-                  placeholder="ej: Director General"
+                  placeholder="ej: LÍDER DE MISIONES NACIONALES"
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm"
                 />
               </div>
@@ -639,12 +755,23 @@ export default function AdminPanelPage() {
 
             <div className="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
               <h2 className="text-lg font-bold">Integrantes Registrados ({comitesList.length})</h2>
+              <p className="text-xs text-slate-400">Mantén presionado un integrante y arrástralo hacia arriba o hacia abajo para cambiar su orden.</p>
+
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                {comitesList.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700">
+                {comitesList.map((item, index) => (
+                  <div
+                    key={item.id}
+                    draggable
+                    onDragStart={() => handleDragStart(index)}
+                    onDragEnter={() => handleDragEnter(index)}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={(e) => e.preventDefault()}
+                    className="flex items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700 cursor-grab active:cursor-grabbing hover:border-slate-600 transition-colors"
+                  >
                     <div className="flex items-center gap-3">
+                      <span className="text-slate-500 font-bold text-xs select-none">⠿</span>
                       {item.fotoUrl ? (
-                        <img src={item.fotoUrl} alt="" className="w-12 h-12 object-cover rounded-full bg-slate-700" />
+                        <img src={item.fotoUrl} alt="" className="w-12 h-12 object-cover rounded-full bg-slate-700 pointer-events-none" />
                       ) : (
                         <div className="w-12 h-12 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold text-sm">
                           {item.nombre.charAt(0)}
@@ -658,9 +785,11 @@ export default function AdminPanelPage() {
                         <p className="text-xs text-slate-400">{item.cargo}</p>
                       </div>
                     </div>
+
                     <button
+                      type="button"
                       onClick={() => handleDelete("comites", item.id)}
-                      className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs hover:bg-red-500/20"
+                      className="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs hover:bg-red-500/20 ml-2"
                     >
                       Eliminar
                     </button>
@@ -668,6 +797,91 @@ export default function AdminPanelPage() {
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* NUEVA SECCIÓN: Configurar páginas internas dinámicas por cada comité */}
+        {activeTab === "configComites" && (
+          <div className="max-w-2xl mx-auto bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-6">
+            <div>
+              <h2 className="text-lg font-bold">Personalizar Página Interna de Comité</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Selecciona un comité y configura qué secciones especiales o multimedia mostrar en su página pública (como Escuela Dominical o Misiones).
+              </p>
+            </div>
+
+            <form onSubmit={handleSaveConfigComite} className="space-y-4">
+              <div>
+                <label className="block text-xs mb-1 font-semibold">Seleccionar Comité a Editar</label>
+                <select
+                  value={comiteSeleccionadoConfig}
+                  onChange={(e) => setComiteSeleccionadoConfig(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  {categoriasOficialesComites.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs mb-1">Subtítulo o Descripción Corta de Cabecera</label>
+                <input
+                  type="text"
+                  value={subtituloComite}
+                  onChange={(e) => setSubtituloComite(e.target.value)}
+                  placeholder="ej: Instruyendo a la niñez en la palabra de Dios"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs mb-1">URL del Video Principal de YouTube (Contenido Multimedia)</label>
+                <input
+                  type="text"
+                  value={videoPrincipalUrl}
+                  onChange={(e) => setVideoPrincipalUrl(e.target.value)}
+                  placeholder="https://www.youtube.com/embed/..."
+                  className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm"
+                />
+              </div>
+
+              <div className="border-t border-slate-800 pt-4 space-y-3">
+                <p className="text-xs font-bold text-slate-300">Secciones Opcionales (Activar o Desactivar)</p>
+                
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="mostrarBiblioteca"
+                    checked={mostrarBiblioteca}
+                    onChange={(e) => setMostrarBiblioteca(e.target.checked)}
+                    className="w-4 h-4 accent-blue-600"
+                  />
+                  <label htmlFor="mostrarBiblioteca" className="text-sm">Mostrar sección &quot;Biblioteca de Crecimiento&quot;</label>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="mostrarSopaLetras"
+                    checked={mostrarSopaLetras}
+                    onChange={(e) => setMostrarSopaLetras(e.target.checked)}
+                    className="w-4 h-4 accent-blue-600"
+                  />
+                  <label htmlFor="mostrarSopaLetras" className="text-sm">Mostrar juego interactivo (&quot;Sopa de Letras&quot;)</label>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={savingConfigComite}
+                className="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-xs transition"
+              >
+                {savingConfigComite ? "Guardando configuración..." : "Guardar Cambios de esta Página"}
+              </button>
+            </form>
           </div>
         )}
       </div>
