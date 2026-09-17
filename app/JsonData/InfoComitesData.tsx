@@ -46,7 +46,7 @@ export const ComitesData: Record<string, Comite> = {
     mision: "Liderar la congregación en unidad y orden.",
     vision: "Crecimiento espiritual y administrativo constante.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "yrqhnDPFbCM", "Hi_aneMtE0Y", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
+    youtubeIds: ["eW4NNE2ak9g", "sZmcYNDbFi8", "yOj577BhsJE", "yrqhnDPFbCM", "Hi_aneMtE0Y", "UeHOBDBEh3I", "-5LE3FEj9C8", "TiJK-cLwEc0", "lWflt8Y7Uxo&t", "cobsHqlOBcs&t", "nvLRZXq0QoU"],
     integrantes: [
       { id: 1, nombre: "Esteban Zuñiga", cargo: "PASTOR", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771334907/ChatGPT_Image_17_feb_2026_08_27_47_x5vyar.png" },
       { id: 2, nombre: "Fernando Betancourth", cargo: "TESORERO(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771335047/ChatGPT_Image_17_feb_2026_08_30_12_fvdwh5.png" },
@@ -68,7 +68,7 @@ export const ComitesData: Record<string, Comite> = {
     versiculo: "Instruye al niño en su camino, aun cuando fuere viejo no se apartará de él. Proverbios 22:6",
     mision: "Enseñar las sagradas escrituras a todas las edades.",
     vision: "Una iglesia bíblicamente fundamentada desde la infancia.",
-    youtubeIds: ["zzz", "JJT32u7_Bb4", "OcriFtLciec", "JCtKy_k_PEo", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE", "T3GPJ7u2Drs", "sg39LL8QkYk", "vhHx5mG337M"],
+    youtubeIds: ["ywzyPkyI6uw", "JJT32u7_Bb4", "OcriFtLciec", "JCtKy_k_PEo", "FhwfSZHjtBU", "YGpazkIaLt8", "fEQHPIhJm3Q", "ap63FfytNeE", "T3GPJ7u2Drs", "sg39LL8QkYk", "vhHx5mG337M"],
     fotoGrupal: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771734177/WhatsApp_Image_2026-02-21_at_10.32.15_PM_pcg9k9.jpg",
     integrantes: [
       { id: 1, nombre: "Jhon Fredy Zoque", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1772047567/ChatGPT_Image_25_feb_2026_14_18_54_rxvdgj.png" },
@@ -241,7 +241,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     mision: "Extender el reino de Dios a través de la predicación y el servicio social.",
     vision: "Una iglesia misionera que impacta su ciudad y el mundo.",
     fotoGrupal: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771536578/WhatsApp_Image_2026-02-08_at_3.52.59_PM_gnjtqk.jpg",
-    youtubeIds: ["zzz", "vSpp7BlGNfM", "3iHgaJodSug", "BZZJU_MTW1s", "EmtNSPeSHNM", "py3G9tjyZLY"],
+    youtubeIds: ["wYNIAzO3aqQ", "vSpp7BlGNfM", "3iHgaJodSug", "BZZJU_MTW1s", "EmtNSPeSHNM", "py3G9tjyZLY"],
     integrantes: [
       { id: 1, nombre: "Alexander Prieto", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771427767/ChatGPT_Image_18_feb_2026_10_15_27_wrho8h.png" },
       { id: 2, nombre: "Alexandra Granda", cargo: "LIDER DE BIS Y REFAM", foto: "/img/comites/ever.png" },
@@ -271,7 +271,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     mision: "Levantar un altar de oración continuo por las necesidades de la iglesia.",
     vision: "Una iglesia fortalecida en la presencia de Dios a través del clamor.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "KcFF0lLCNsY", "rOTzIxHA9eE", "1APe3TO8c8c", "UJm0bvnVknA"],
+    youtubeIds: ["NjbJ-6JpFOs", "KcFF0lLCNsY", "rOTzIxHA9eE", "1APe3TO8c8c", "UJm0bvnVknA"],
     integrantes: [
       { id: 1, nombre: "Esneda Tejada", cargo: "PRESIDENTE(A)", foto: "/img/comites/ever.png" },
       { id: 2, nombre: "Ana Romero", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/einer.png" },
@@ -288,7 +288,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     mision: "Inspirar a la juventud a una vida de santidad y servicio.",
     vision: "Generación de relevo comprometida con el evangelio",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["zzz", "HH_DeQtgFww", "QNf7Q-If0GM", "5mCeHA_ULz8"],
+    youtubeIds: ["SOiKQ40WKbk", "HH_DeQtgFww", "QNf7Q-If0GM", "5mCeHA_ULz8"],
     integrantes: [
       { id: 1, nombre: "Jonathan Zuñiga", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771259878/Nano_Banana_Pro_pon_la_imagen_de_medio_cuerpo__que_se_alcance_a_notar_un_poco_los_pantalones__y_algo_xfnnub.png" },
       { id: 2, nombre: "Elizabeth Sanchez", cargo: "RECAUDADOR(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1771864697/ChatGPT_Image_23_feb_2026_11_35_47_hcstqu.png" },
@@ -362,7 +362,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     versiculo: "A Jehová presta el que da al pobre, y el bien que ha hecho, se lo volverá a pagar. Proverbios 19:17",
     mision: "Socorrer a los necIesitados reflejando el amor de Cristo.",
     vision: "Un brazo extendido de misericordia en la comunidad.",
-    youtubeIds: ["zzz", "Z4ttMefC_rA", "JXL5LGSKKVY", "f_tgppPm0Yo"],
+    youtubeIds: ["KVM6erLN_IY", "Z4ttMefC_rA", "JXL5LGSKKVY", "f_tgppPm0Yo"],
     integrantes: [
       { id: 1, nombre: "Luz Soto", cargo: "PRESIDENTE", foto: "/img/comites/joven1.png" },
       { id: 2, nombre: "Maria Lozano", cargo: "VICEPRESIDENTE", foto: "/img/comites/joven1.png" },
@@ -442,7 +442,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     versiculo: "Pero yo y mi casa serviremos a Jehová. Josué 24:15",
     mision: "Fortalecer el núcleo familiar bajo los principios bíblicos.",
     vision: "Hogares restaurados y saludables para la gloria de Dios.",
-    youtubeIds: ["zzz", "YGpazkIaLt8"],
+    youtubeIds: ["Q5pPR_oeBfQ", "YGpazkIaLt8"],
     integrantes: [
       { id: 1, nombre: "Estebán Zuñiga", cargo: "PRESIDENTE", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085336/ChatGPT_Image_9_mar_2026_14_40_29_thoiw2.png" },
       { id: 2, nombre: "Edith Poveda", cargo: "VICEPRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773085423/ChatGPT_Image_9_mar_2026_10_24_25_xjoc0v.png" },

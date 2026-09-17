@@ -1,235 +1,396 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-// Si deseas que reciba props personalizadas desde afuera, define esta interfaz:
-interface SopaLetrasProps {
-  titulo?: string;
-  descripcion?: string;
-  palabras?: string[];
-}
+// ==========================================
+// BANCOS DE PALABRAS PARA LA SOPA DE LETRAS
+// ==========================================
+const WORDS_FACIL = ["ADAN", "NOE", "ABRAHAM", "ISAAC", "JACOB", "JOSE", "MOISES", "JOSUE", "DAVID", "SALOMON", "ELIAS", "ELISEO", "ISAIAS", "DANIEL", "MARIA"];
+const WORDS_MEDIO = ["SAMUEL", "ESTER", "RUT", "NEHEMIAS", "GEDEON", "JONAS", "MATEO", "MARCOS", "LUCAS", "JUAN", "PEDRO", "PABLO", "TOMAS", "ESTEBAN", "BERNABE", "SARA", "REBECA", "RAQUEL", "ISRAEL", "SENACHERIB"];
+const WORDS_DIFICIL = ["MELQUISEDEC", "MATUSALEN", "ZERUBABEL", "HABACUC", "ZEFANIAS", "APOCALIPSIS", "DEUTERONOMIO", "LEVITICO", "BARUC", "OBADIAS", "NAHUM", "AGEO", "MALAQUIAS", "MEFIBOSET", "JESABEL", "NABUCODONOSOR", "BALAAM", "EZEQUIAS", "JOSAFAT", "CORNELIO", "ONESIMO", "FILIMON", "TIMOTEO", "TITUS", "SULAMITA"];
 
-// Estructura de niveles gigantes (12x12)
-const niveles = [
-  {
-    nivel: 1,
-    titulo: "Nivel 1: Los Fundamentos de la Fe",
-    descripcion: "Encuentra los conceptos esenciales para iniciar el camino.",
-    palabras: ["CORAZÓN", "DIOS", "JESÚS", "BIBLIA", "AMOR", "FE", "LUZ", "PAZ"],
-    grid: [
-      ['C', 'O', 'R', 'A', 'Z', 'Ó', 'N', 'X', 'Y', 'Z', 'A', 'B'],
-      ['B', 'I', 'B', 'L', 'I', 'A', 'F', 'E', 'A', 'B', 'C', 'D'],
-      ['J', 'E', 'S', 'Ú', 'S', 'M', 'O', 'R', 'C', 'D', 'E', 'F'],
-      ['A', 'M', 'O', 'R', 'P', 'Q', 'R', 'S', 'T', 'I', 'G', 'H'],
-      ['D', 'E', 'S', 'T', 'I', 'N', 'O', 'U', 'V', 'O', 'I', 'J'],
-      ['O', 'B', 'E', 'D', 'E', 'C', 'E', 'W', 'X', 'S', 'K', 'L'],
-      ['L', 'U', 'Z', 'P', 'A', 'Z', 'Y', 'Z', 'A', 'B', 'M', 'N'],
-      ['G', 'R', 'A', 'C', 'I', 'A', 'C', 'D', 'E', 'F', 'O', 'P'],
-      ['V', 'I', 'D', 'A', 'H', 'I', 'J', 'O', 'G', 'H', 'Q', 'R'],
-      ['E', 'S', 'P', 'E', 'R', 'A', 'N', 'Z', 'A', 'I', 'S', 'T'],
-      ['M', 'I', 'L', 'A', 'G', 'R', 'O', 'J', 'K', 'L', 'U', 'V'],
-      ['P', 'A', 'C', 'T', 'O', 'M', 'N', 'O', 'P', 'Q', 'W', 'X']
-    ]
+const GRIDS_SOPA = {
+  facil: [
+    ["A", "B", "R", "A", "H", "A", "M", "X", "Z", "J", "O", "S", "E", "P"],
+    ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P"],
+    ["A", "I", "S", "A", "A", "C", "Q", "W", "E", "R", "T", "Y", "U", "I"],
+    ["N", "O", "E", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "S"],
+    ["J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "Q", "W", "E", "A"],
+    ["O", "P", "I", "U", "Y", "T", "R", "E", "W", "Q", "A", "S", "D", "L"],
+    ["S", "A", "L", "O", "M", "O", "N", "F", "G", "H", "J", "K", "L", "O"],
+    ["E", "D", "C", "V", "B", "N", "M", "J", "I", "U", "Y", "T", "R", "M"],
+    ["M", "O", "I", "S", "E", "S", "Q", "W", "E", "R", "T", "Y", "U", "O"],
+    ["D", "A", "V", "I", "D", "A", "S", "D", "F", "G", "H", "J", "K", "N"],
+    ["J", "U", "A", "N", "Z", "X", "C", "V", "B", "N", "M", "Q", "W", "E"],
+    ["E", "L", "I", "A", "S", "I", "U", "Y", "T", "R", "E", "W", "Q", "A"],
+  ],
+  medio: [
+    ["S", "A", "M", "U", "E", "L", "X", "Z", "E", "S", "T", "E", "R", "K"],
+    ["R", "U", "T", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X"],
+    ["N", "E", "H", "E", "M", "I", "A", "S", "Q", "W", "E", "R", "T", "Y"],
+    ["G", "E", "D", "E", "O", "N", "J", "O", "N", "A", "S", "U", "I", "O"],
+    ["M", "A", "T", "E", "O", "M", "A", "R", "C", "O", "S", "P", "A", "L"],
+    ["L", "U", "C", "A", "S", "J", "U", "A", "N", "P", "E", "D", "R", "O"],
+    ["P", "A", "B", "L", "O", "T", "O", "M", "A", "S", "Z", "X", "C", "V"],
+    ["E", "S", "T", "E", "B", "A", "N", "B", "E", "R", "N", "A", "B", "E"],
+    ["S", "A", "R", "A", "R", "E", "B", "E", "C", "A", "Q", "W", "E", "R"],
+    ["R", "A", "Q", "U", "E", "L", "I", "S", "R", "A", "E", "L", "T", "Y"],
+    ["S", "E", "N", "A", "C", "H", "E", "R", "I", "B", "U", "I", "O", "P"],
+  ],
+  dificil: [
+    ["M", "E", "L", "Q", "U", "I", "S", "E", "D", "E", "C", "X", "Z", "A"],
+    ["M", "A", "T", "U", "S", "A", "L", "E", "N", "Q", "W", "E", "R", "P"],
+    ["Z", "E", "R", "U", "B", "A", "B", "E", "L", "A", "S", "D", "F", "O"],
+    ["H", "A", "B", "A", "C", "U", "C", "Z", "E", "F", "A", "N", "I", "C"],
+    ["A", "P", "O", "C", "A", "L", "I", "P", "S", "I", "S", "U", "I", "A"],
+    ["D", "E", "U", "T", "E", "R", "O", "N", "O", "M", "I", "O", "O", "L"],
+    ["L", "E", "V", "I", "T", "I", "C", "O", "B", "A", "R", "U", "C", "I"],
+    ["O", "B", "A", "D", "I", "A", "S", "N", "A", "H", "U", "M", "Y", "P"],
+    ["A", "G", "E", "O", "M", "A", "L", "A", "Q", "U", "I", "A", "S", "S"],
+    ["M", "E", "F", "I", "B", "O", "S", "E", "T", "J", "E", "S", "A", "B"],
+    ["N", "A", "B", "U", "C", "O", "D", "O", "N", "O", "S", "O", "R", "E"],
+    ["B", "A", "L", "A", "A", "M", "E", "Z", "E", "Q", "U", "I", "A", "S"],
+  ]
+};
+
+// ==========================================
+// CONFIGURACIÓN DE CRUCIGRAMAS POR NIVEL (FIGURAS Y CANTIDADES ÚNICAS)
+// ==========================================
+const CROSSWORDS_CONFIG = {
+  facil: {
+    gridSize: 8, // Cuadrícula 8x8 (Figura compacta, 4 palabras cruzadas)
+    // Función para definir qué celdas son activas (blancas) y sus números indicadores
+    isActiveCell: (r: number, c: number) => {
+      // Cruz sencilla: Vertical en col 3 (de r:1 a r:6 -> DANIEL) y Horizontal en r:3 (de c:1 a c:6 -> DAVID)
+      // Más otra horizontal abajo (OSEAS en r:6, c:2 a c:6) y vertical corta (NOE en r:4 a r:6, col 6)
+      return (
+        (c === 3 && r >= 1 && r <= 6) || // 1. DANIEL (Vertical)
+        (r === 3 && c >= 1 && c <= 6) || // 2. DAVID (Horizontal)
+        (r === 6 && c >= 2 && c <= 6) || // 3. OSEAS (Horizontal)
+        (c === 6 && r >= 4 && r <= 6)    // 4. NOE (Vertical)
+      );
+    },
+    getCellNum: (r: number, c: number) => {
+      if (r === 1 && c === 3) return "1";
+      if (r === 3 && c === 1) return "2";
+      if (r === 6 && c === 2) return "3";
+      if (r === 4 && c === 6) return "4";
+      return null;
+    },
+    clues: {
+      horizontales: [
+        { id: 2, text: "2. Rey de Israel que venció a Goliat (5 letras)" },
+        { id: 3, text: "3. Profeta del Antiguo Testamento (5 letras)" }
+      ],
+      verticales: [
+        { id: 1, text: "1. Profeta arrojado al foso de los leones (6 letras)" },
+        { id: 4, text: "4. Constructor del Arca en el diluvio (3 letras)" }
+      ]
+    }
   },
-  {
-    nivel: 2,
-    titulo: "Nivel 2: El Camino de la Aventura",
-    descripcion: "¡Subiste de categoría! Busca los términos de crecimiento y guía.",
-    palabras: ["VERDAD", "CAMINO", "VIDA", "GRACIA", "MILAGRO", "PACTO", "HIJO", "AUDACIA"],
-    grid: [
-      ['V', 'E', 'R', 'D', 'A', 'D', 'X', 'Y', 'Z', 'A', 'B', 'C'],
-      ['C', 'A', 'M', 'I', 'N', 'O', 'F', 'E', 'A', 'B', 'C', 'D'],
-      ['V', 'I', 'D', 'A', 'S', 'M', 'O', 'R', 'C', 'D', 'E', 'F'],
-      ['G', 'R', 'A', 'C', 'I', 'A', 'R', 'S', 'T', 'I', 'G', 'H'],
-      ['M', 'I', 'L', 'A', 'G', 'R', 'O', 'U', 'V', 'O', 'I', 'J'],
-      ['P', 'A', 'C', 'T', 'O', 'C', 'E', 'W', 'X', 'S', 'K', 'L'],
-      ['H', 'I', 'J', 'O', 'A', 'Z', 'Y', 'Z', 'A', 'B', 'M', 'N'],
-      ['A', 'U', 'D', 'A', 'C', 'I', 'A', 'D', 'E', 'F', 'O', 'P'],
-      ['B', 'E', 'N', 'D', 'I', 'C', 'I', 'O', 'N', 'H', 'Q', 'R'],
-      ['F', 'I', 'D', 'E', 'L', 'I', 'D', 'A', 'D', 'I', 'S', 'T'],
-      ['S', 'A', 'N', 'T', 'O', 'R', 'O', 'J', 'K', 'L', 'U', 'V'],
-      ['P', 'R', 'O', 'M', 'E', 'S', 'A', 'N', 'O', 'P', 'W', 'X']
-    ]
+  medio: {
+    gridSize: 10, // Cuadrícula 10x10 (Figura mediana en bloque, 6 palabras cruzadas)
+    isActiveCell: (r: number, c: number) => {
+      return (
+        (c === 4 && r >= 1 && r <= 7) || // ESTER (Vertical)
+        (r === 2 && c >= 2 && c <= 8) || // SAMUEL (Horizontal)
+        (r === 5 && c >= 1 && c <= 6) || // JONAS (Horizontal)
+        (c === 2 && r >= 5 && r <= 9) || // RUT (Vertical)
+        (r === 7 && c >= 4 && c <= 9) || // GEDEON (Horizontal)
+        (c === 7 && r >= 2 && r <= 7)    // MATEO (Vertical)
+      );
+    },
+    getCellNum: (r: number, c: number) => {
+      if (r === 1 && c === 4) return "1";
+      if (r === 2 && c === 2) return "2";
+      if (r === 5 && c === 1) return "3";
+      if (r === 5 && c === 2) return "4";
+      if (r === 7 && c === 4) return "5";
+      if (r === 2 && c === 7) return "6";
+      return null;
+    },
+    clues: {
+      horizontales: [
+        { id: 2, text: "2. Profeta ungidor de reyes (6 letras)" },
+        { id: 3, text: "3. Profeta tragado por un gran pez (5 letras)" },
+        { id: 5, text: "5. Juez de Israel con 300 hombres (6 letras)" }
+      ],
+      verticales: [
+        { id: 1, text: "1. Reina judía que salvó a su pueblo (5 letras)" },
+        { id: 4, text: "4. Joven moabita fiel antecesora de David (3 letras)" },
+        { id: 6, text: "6. Apóstol y evangelista primer nombre (5 letras)" }
+      ]
+    }
   },
-  {
-    nivel: 3,
-    titulo: "Nivel 3: Maestro de la Gran Aventura",
-    descripcion: "¡El reto definitivo! Despliega todo tu potencial bíblico.",
-    palabras: ["BENDICION", "FIDELIDAD", "PROMESA", "SANTIDAD", "VICTORIA", "PROPOSITO", "ALABANZA", "TESTIGO"],
-    grid: [
-      ['B', 'E', 'N', 'D', 'I', 'C', 'I', 'O', 'N', 'X', 'Y', 'Z'],
-      ['F', 'I', 'D', 'E', 'L', 'I', 'D', 'A', 'D', 'B', 'C', 'D'],
-      ['P', 'R', 'O', 'M', 'E', 'S', 'A', 'R', 'C', 'D', 'E', 'F'],
-      ['S', 'A', 'N', 'T', 'I', 'D', 'A', 'D', 'T', 'I', 'G', 'H'],
-      ['V', 'I', 'C', 'T', 'O', 'R', 'I', 'A', 'V', 'O', 'I', 'J'],
-      ['P', 'R', 'O', 'P', 'O', 'S', 'I', 'T', 'O', 'S', 'K', 'L'],
-      ['A', 'L', 'A', 'B', 'A', 'N', 'Z', 'A', 'A', 'B', 'M', 'N'],
-      ['T', 'E', 'S', 'T', 'I', 'G', 'O', 'D', 'E', 'F', 'O', 'P'],
-      ['E', 'J', 'É', 'R', 'C', 'I', 'T', 'O', 'N', 'H', 'Q', 'R'],
-      ['D', 'E', 'F', 'E', 'N', 'S', 'O', 'R', 'I', 'S', 'T', 'U'],
-      ['U', 'N', 'I', 'D', 'A', 'D', 'P', 'J', 'K', 'L', 'U', 'V'],
-      ['E', 'S', 'C', 'U', 'D', 'O', 'F', 'E', 'O', 'P', 'W', 'X']
-    ]
+  dificil: {
+    gridSize: 11, // Cuadrícula 11x11 (Figura compleja en forma de cruz entrelazada grande, 8 palabras avanzadas)
+    isActiveCell: (r: number, c: number) => {
+      return (
+        (c === 5 && r >= 0 && r <= 10) || // NABUCODONOSOR / MELQUISEDEC (Vertical grande)
+        (r === 3 && c >= 1 && c <= 9)  || // APOCALIPSIS (Horizontal larga)
+        (r === 7 && c >= 0 && c <= 10) || // MATUSALEN (Horizontal larga)
+        (c === 2 && r >= 2 && r <= 8)  || // EZEQUIAS (Vertical)
+        (c === 8 && r >= 2 && r <= 8)  || // JOSAFAT (Vertical)
+        (r === 1 && c >= 3 && c <= 7)  || // AGEO (Horizontal corta)
+        (r === 9 && c >= 3 && c <= 7)     // NAHUM (Horizontal corta)
+      );
+    },
+    getCellNum: (r: number, c: number) => {
+      if (r === 0 && c === 5) return "1";
+      if (r === 3 && c === 1) return "2";
+      if (r === 7 && c === 0) return "3";
+      if (r === 2 && c === 2) return "4";
+      if (r === 2 && c === 8) return "5";
+      if (r === 1 && c === 3) return "6";
+      if (r === 9 && c === 3) return "7";
+      return null;
+    },
+    clues: {
+      horizontales: [
+        { id: 2, text: "2. Último libro profético del Nuevo Testamento (11 letras)" },
+        { id: 3, text: "3. Personaje bíblico considerado el más anciano (9 letras)" },
+        { id: 6, text: "6. Profeta menor autor de breve libro (4 letras)" },
+        { id: 7, text: "7. Profeta del Antiguo Testamento de Elkosh (5 letras)" }
+      ],
+      verticales: [
+        { id: 1, text: "1. Rey babilonio o Sacerdote rey de Salem (11/13 letras)" },
+        { id: 4, text: "4. Piadoso rey de Judá reformador (8 letras)" },
+        { id: 5, text: "5. Rey de Judá hijo de Asa (7 letras)" }
+      ]
+    }
   }
-];
+};
 
-const coloresCelebracion = [
-  "bg-emerald-500 text-white border-emerald-500 shadow-emerald-500/30",
-  "bg-fuchsia-500 text-white border-fuchsia-500 shadow-fuchsia-500/30",
-  "bg-amber-500 text-white border-amber-500 shadow-amber-500/30",
-  "bg-violet-500 text-white border-violet-500 shadow-violet-500/30",
-  "bg-cyan-500 text-white border-cyan-500 shadow-cyan-500/30",
-  "bg-rose-500 text-white border-rose-500 shadow-rose-500/30",
-  "bg-indigo-500 text-white border-indigo-500 shadow-indigo-500/30",
-  "bg-teal-500 text-white border-teal-500 shadow-teal-500/30",
-];
-
-export default function WordSearchGame({ titulo, descripcion }: SopaLetrasProps) {
-  const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+export default function GameHub() {
+  const [activeTab, setActiveTab] = useState<"sopa" | "crucigrama">("sopa");
+  const [difficulty, setDifficulty] = useState<"facil" | "medio" | "dificil">("facil");
   const [foundWords, setFoundWords] = useState<string[]>([]);
-  const [selectedCells, setSelectedCells] = useState<string[]>([]);
-  const [lastFoundEffect, setLastFoundEffect] = useState<string | null>(null);
+  const [selectedCells, setSelectedCells] = useState<{r: number, c: number}[]>([]);
+  const [message, setMessage] = useState("Selecciona las letras en orden para hallar las palabras.");
+  const [effectType, setEffectType] = useState<"success" | "error" | null>(null);
 
-  const nivelActual = niveles[currentLevelIndex];
+  // Estados para el crucigrama dinámico
+  const [crosswordGrid, setCrosswordGrid] = useState<{[key: string]: string}>({});
 
-  // Si mandan un título personalizado lo usamos, si no, usamos el del nivel
-  const tituloMostrado = titulo || nivelActual.titulo;
-  const descripcionMostrada = descripcion || nivelActual.descripcion;
+  const currentWords = difficulty === "facil" ? WORDS_FACIL : difficulty === "medio" ? WORDS_MEDIO : WORDS_DIFICIL;
+  const currentGrid = GRIDS_SOPA[difficulty];
+  const currentCrossword = CROSSWORDS_CONFIG[difficulty];
 
-  const handleCellClick = (rowIndex: number, colIndex: number) => {
-    const cellId = `${rowIndex}-${colIndex}`;
-    setSelectedCells(prev => 
-      prev.includes(cellId) ? prev.filter(id => id !== cellId) : [...prev, cellId]
-    );
-  };
+  // Manejo Sopa de Letras
+  const handleCellClick = (r: number, c: number) => {
+    const newSelected = [...selectedCells, {r, c}];
+    setSelectedCells(newSelected);
+    const formedWord = newSelected.map(cell => currentGrid[cell.r][cell.c]).join("");
 
-  const toggleWordFound = (word: string) => {
-    let newFoundWords: string[];
-    if (foundWords.includes(word)) {
-      newFoundWords = foundWords.filter(w => w !== word);
-    } else {
-      newFoundWords = [...foundWords, word];
-      setLastFoundEffect(word);
-      setTimeout(() => setLastFoundEffect(null), 1000);
-    }
-    setFoundWords(newFoundWords);
-
-    if (newFoundWords.length === nivelActual.palabras.length) {
-      setTimeout(() => {
-        if (currentLevelIndex < niveles.length - 1) {
-          setCurrentLevelIndex(prev => prev + 1);
-          setFoundWords([]);
-          setSelectedCells([]);
-        }
-      }, 1000);
+    if (currentWords.includes(formedWord) && !foundWords.includes(formedWord)) {
+      const updatedFound = [...foundWords, formedWord];
+      setFoundWords(updatedFound);
+      setMessage(`✨ ¡Correcto! Encontraste: ${formedWord} (${updatedFound.length}/${currentWords.length})`);
+      setEffectType("success");
+      setSelectedCells([]);
+      setTimeout(() => setEffectType(null), 1500);
+    } else if (formedWord.length >= 8) {
+      setMessage("❌ Selección incorrecta.");
+      setEffectType("error");
+      setSelectedCells([]);
+      setTimeout(() => setEffectType(null), 1500);
     }
   };
 
-  const reiniciarNivel = () => {
-    setFoundWords([]);
-    setSelectedCells([]);
+  const handleCrosswordInput = (r: number, c: number, val: string) => {
+    const key = `${r}-${c}`;
+    setCrosswordGrid({ ...crosswordGrid, [key]: val.toUpperCase() });
   };
-
-  const esCompleto = foundWords.length === nivelActual.palabras.length;
 
   return (
-    <div className="bg-slate-50 border border-slate-200 p-6 md:p-12 rounded-[2.5rem] shadow-sm my-10 max-w-5xl mx-auto transition-all duration-500">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 pb-6 border-b border-slate-200">
-        <div>
-          <span className="bg-orange-100 text-orange-600 text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-widest">
-            Sopa de Letras Gigante • Modo Aventura
-          </span>
-          <h3 className="text-2xl md:text-3xl font-black text-slate-900 uppercase mt-2">
-            {tituloMostrado}
-          </h3>
-          <p className="text-slate-600 text-sm mt-1">{descripcionMostrada}</p>
-        </div>
-
-        <div className="flex gap-3">
-          {niveles.map((n, idx) => (
-            <div
-              key={n.nivel}
-              className={`w-11 h-11 rounded-2xl flex items-center justify-center font-black text-sm transition-all shadow-sm ${
-                idx === currentLevelIndex
-                  ? 'bg-blue-600 text-white shadow-blue-600/30 scale-110 ring-4 ring-blue-100'
-                  : idx < currentLevelIndex
-                  ? 'bg-emerald-500 text-white'
-                  : 'bg-slate-200 text-slate-400'
-              }`}
-            >
-              0{n.nivel}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex justify-center mb-8 overflow-x-auto p-2">
-        <div className="grid grid-cols-12 gap-1.5 md:gap-2 bg-white p-6 rounded-3xl shadow-inner border border-slate-100">
-          {nivelActual.grid.map((row, rowIndex) =>
-            row.map((letter, colIndex) => {
-              const cellId = `${rowIndex}-${colIndex}`;
-              const isSelected = selectedCells.includes(cellId);
-              return (
-                <button
-                  key={cellId}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl font-black text-xs sm:text-sm md:text-base flex items-center justify-center transition-all duration-300 select-none ${
-                    isSelected
-                      ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30 scale-105'
-                      : 'bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-blue-600'
-                  }`}
-                >
-                  {letter}
-                </button>
-              );
-            })
-          )}
-        </div>
-      </div>
-
-      <div className="text-center">
-        {esCompleto ? (
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-6 rounded-3xl mb-6 shadow-xl shadow-emerald-500/20 animate-bounce">
-            <h4 className="text-xl font-black uppercase">¡Nivel Superado con Éxito! 🎉</h4>
-            <p className="text-xs font-semibold mt-1 uppercase tracking-wider">
-              {currentLevelIndex < niveles.length - 1 ? "Cargando siguiente nivel..." : "¡Increíble! ¡Completaste toda la aventura!"}
-            </p>
-          </div>
-        ) : (
-          <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">
-            Haz clic en las palabras encontradas para marcarlas ({foundWords.length}/{nivelActual.palabras.length}):
-          </p>
-        )}
-
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {nivelActual.palabras.map((word, index) => {
-            const isFound = foundWords.includes(word);
-            const colorClass = coloresCelebracion[index % coloresCelebracion.length];
-            const isJustFound = lastFoundEffect === word;
-
-            return (
-              <span
-                key={index}
-                onClick={() => toggleWordFound(word)}
-                className={`cursor-pointer px-5 py-2.5 rounded-2xl text-xs font-black tracking-widest uppercase transition-all duration-300 border shadow-sm ${
-                  isFound
-                    ? `${colorClass} line-through scale-95 shadow-md ${isJustFound ? 'animate-ping scale-110' : ''}`
-                    : 'bg-white text-slate-700 border-slate-200 hover:border-orange-500 hover:text-orange-600'
-                }`}
-              >
-                {word} {isFound && '✨'}
-              </span>
-            );
-          })}
-        </div>
-
+    <div className="max-w-5xl mx-auto p-6 bg-white rounded-3xl shadow-2xl border border-slate-100 my-8 font-sans">
+      
+      {/* Botones de Navegación entre Juegos */}
+      <div className="flex justify-center gap-4 mb-8">
         <button
-          onClick={reiniciarNivel}
-          className="text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest underline transition-colors"
+          onClick={() => { setActiveTab("sopa"); setFoundWords([]); setSelectedCells([]); }}
+          className={`px-6 py-3 rounded-2xl font-black text-sm transition-all shadow-md ${
+            activeTab === "sopa" ? "bg-[#00338d] text-white scale-105" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          }`}
         >
-          Reiniciar este nivel
+          🧩 Sopa de Letras Bíblica
+        </button>
+        <button
+          onClick={() => setActiveTab("crucigrama")}
+          className={`px-6 py-3 rounded-2xl font-black text-sm transition-all shadow-md ${
+            activeTab === "crucigrama" ? "bg-[#00338d] text-white scale-105" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+          }`}
+        >
+          📝 Crucigrama Cruzado Clásico
         </button>
       </div>
+
+      {/* Retroalimentación Visual */}
+      {message && (
+        <div className={`p-4 mb-6 rounded-2xl text-center font-bold text-sm transition-all duration-300 ${
+          effectType === "success" ? "bg-green-100 text-green-700 scale-102 border-2 border-green-300 shadow-md" :
+          effectType === "error" ? "bg-red-100 text-red-700 border-2 border-red-300 shadow-md" :
+          "bg-blue-50 text-[#00338d] border border-blue-100"
+        }`}>
+          {message}
+        </div>
+      )}
+
+      {/* Selector de Dificultad */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 bg-slate-50 p-4 rounded-2xl">
+        <div>
+          <h2 className="text-xl font-black text-slate-800">
+            {activeTab === "sopa" ? "Sopa de Letras" : "Crucigrama Estructurado"} - Nivel <span className="uppercase text-[#00338d]">{difficulty}</span>
+          </h2>
+          <p className="text-xs text-slate-500">
+            {difficulty === "facil" && "Figura compacta cruzada de nivel inicial."}
+            {difficulty === "medio" && "Figura de bloques medianos con mayor cantidad de cruces."}
+            {difficulty === "dificil" && "Figura geométrica avanzada con múltiples interconexiones complejas."}
+          </p>
+        </div>
+        
+        <div className="flex gap-1 bg-white p-1.5 rounded-xl shadow-sm border border-slate-200 text-xs font-bold">
+          <button 
+            onClick={() => { setDifficulty("facil"); setFoundWords([]); setSelectedCells([]); }}
+            className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "facil" ? "bg-[#00338d] text-white" : "text-slate-600"}`}
+          >
+            Fácil
+          </button>
+          <button 
+            onClick={() => { setDifficulty("medio"); setFoundWords([]); setSelectedCells([]); }}
+            className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "medio" ? "bg-[#00338d] text-white" : "text-slate-600"}`}
+          >
+            Medio
+          </button>
+          <button 
+            onClick={() => { setDifficulty("dificil"); setFoundWords([]); setSelectedCells([]); }}
+            className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "dificil" ? "bg-amber-600 text-white" : "text-slate-600"}`}
+          >
+            Difícil ↗️
+          </button>
+        </div>
+      </div>
+
+      {/* VISTA 1: SOPA DE LETRAS */}
+      {activeTab === "sopa" && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center overflow-x-auto shadow-inner">
+            <div className="grid grid-cols-14 gap-1.5">
+              {currentGrid.map((row, rIndex) =>
+                row.map((letter, cIndex) => {
+                  const isSelected = selectedCells.some(cell => cell.r === rIndex && cell.c === cIndex);
+                  return (
+                    <button
+                      key={`${rIndex}-${cIndex}`}
+                      onClick={() => handleCellClick(rIndex, cIndex)}
+                      className={`w-8 h-8 md:w-9 md:h-9 rounded-lg font-black text-xs md:text-sm flex items-center justify-center transition-all ${
+                        isSelected ? "bg-amber-400 text-slate-900 scale-110 shadow-lg" : "bg-slate-800 text-white hover:bg-slate-700"
+                      }`}
+                    >
+                      {letter}
+                    </button>
+                  );
+                })
+              )}
+            </div>
+            <button onClick={() => setSelectedCells([])} className="mt-4 text-xs font-bold text-slate-400 hover:text-white underline">
+              Limpiar selección
+            </button>
+          </div>
+
+          <div className="bg-slate-50 p-5 rounded-3xl border border-slate-200">
+            <h3 className="text-xs font-black uppercase text-slate-500 mb-3 tracking-wider">
+              Palabras ({foundWords.length}/{currentWords.length})
+            </h3>
+            <div className="flex flex-wrap gap-2 max-h-72 overflow-y-auto pr-1">
+              {currentWords.map((word) => {
+                const isFound = foundWords.includes(word);
+                return (
+                  <span key={word} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${isFound ? "bg-green-500 text-white line-through shadow-sm" : "bg-white text-slate-700 border border-slate-200"}`}>
+                    {word} {isFound && "✨"}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* VISTA 2: CRUCIGRAMA DINÁMICO CON FIGURAS DIFERENCIADAS */}
+      {activeTab === "crucigrama" && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* TABLERO CON LA FIGURA GEOMÉTRICA DEL NIVEL */}
+          <div className="lg:col-span-2 bg-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center overflow-x-auto shadow-inner">
+            <p className="text-xs text-amber-400 font-bold mb-4 uppercase tracking-wider">
+              ✨ Figura de Crucigrama: Nivel {difficulty}
+            </p>
+            
+            <div 
+              className="grid gap-1 bg-slate-800 p-3 rounded-2xl"
+              style={{ gridTemplateColumns: `repeat(${currentCrossword.gridSize}, minmax(0, 1fr))` }}
+            >
+              {Array.from({ length: currentCrossword.gridSize }).map((_, r) =>
+                Array.from({ length: currentCrossword.gridSize }).map((_, c) => {
+                  const isActive = currentCrossword.isActiveCell(r, c);
+
+                  if (!isActive) {
+                    return <div key={`empty-${r}-${c}`} className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-900 rounded-md opacity-25" />;
+                  }
+
+                  const cellKey = `${r}-${c}`;
+                  const numLabel = currentCrossword.getCellNum(r, c);
+
+                  return (
+                    <div key={cellKey} className="relative">
+                      {numLabel && (
+                        <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] font-black text-amber-400 z-10">{numLabel}</span>
+                      )}
+                      <input
+                        type="text"
+                        maxLength={1}
+                        value={crosswordGrid[cellKey] || ""}
+                        onChange={(e) => handleCrosswordInput(r, c, e.target.value)}
+                        className="w-7 h-7 sm:w-8 sm:h-8 text-center font-black uppercase text-slate-900 bg-white rounded-md border border-slate-300 focus:ring-2 focus:ring-amber-400 focus:outline-none text-xs"
+                      />
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            <span className="text-[10px] text-slate-400 mt-3 text-center">Las casillas negras bloquean espacios; rellena los bloques blancos interconectados.</span>
+          </div>
+
+          {/* LISTADO DE PISTAS POR NIVEL */}
+          <div className="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-4">
+            <h3 className="text-xs font-black uppercase text-slate-500 tracking-wider">
+              Pistas - Nivel <span className="text-[#00338d]">{difficulty}</span>
+            </h3>
+            
+            <div className="space-y-3 text-xs">
+              <div>
+                <h4 className="font-black text-[#00338d] mb-1.5 uppercase tracking-wide">Horizontales</h4>
+                {currentCrossword.clues.horizontales.map((item, idx) => (
+                  <div key={idx} className="p-2.5 mb-1.5 bg-white rounded-2xl border border-slate-200 shadow-sm text-slate-700">
+                    {item.text}
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <h4 className="font-black text-[#00338d] mb-1.5 uppercase tracking-wide">Verticales</h4>
+                {currentCrossword.clues.verticales.map((item, idx) => (
+                  <div key={idx} className="p-2.5 mb-1.5 bg-white rounded-2xl border border-slate-200 shadow-sm text-slate-700">
+                    {item.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
 }

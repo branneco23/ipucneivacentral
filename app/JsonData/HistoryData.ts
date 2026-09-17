@@ -62,12 +62,48 @@ export const HISTORY_DATA = {
     },
     {
       id: 11,
+      nombre: "Jorge Blanco",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "1986 - 1988"
+    },
+    {
+      id: 12,
+      nombre: "Alonso Galindo",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "1988 - 1994"
+    },
+    {
+      id: 13,
+      nombre: "Dilberto Ortiz",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "1994 - 1995"
+    },
+    {
+      id: 14,
+      nombre: "Victoriano Verdugo",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "1995 - 1999"
+    },
+    {
+      id: 15,
+      nombre: "Camilo Ninco",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "2001 - 2002"
+    },
+    {
+      id: 15,
+      nombre: "Jorney Lopéz",
+      detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
+      periodo: "2002 - 2007"
+    },
+    {
+      id: 16,
       nombre: "Arbey Bustamante y Amparo Garzón - Jefferson Jimenez y Astrid Gómez",
       detalle: "Amor y Respeto al Servicio a Dios.",
       periodo: "2019-2025"
     },
     {
-      id: 12,
+      id: 17,
       nombre: "Esteban Zúñiga y Edith Poveda",
       detalle: "Pastor actual liderando la celebración de los 70 años.",
       periodo: "Actualidad"
