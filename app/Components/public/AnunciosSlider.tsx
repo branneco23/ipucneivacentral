@@ -3,11 +3,11 @@
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PARALEX_DATA } from '@/app/JsonData/AnunciosData';
+// Ya no importamos PARALEX_DATA estático si se carga desde Firebase
 import { Clock, Calendar, X, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface AnuncioItem {
-  id: number;
+export interface AnuncioItem {
+  id: string | number; // Soportamos string o number para evitar conflictos con los IDs de Firebase
   bg: string;
   tag: string;
   title: string;
@@ -15,15 +15,20 @@ interface AnuncioItem {
   year: string;
 }
 
-export default function AnunciosSlider() {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+interface AnunciosSliderProps {
+  anuncios?: AnuncioItem[]; // Recopila los anuncios desde Firebase como propiedad opcional o haz tu llamada aquí
+}
+
+export default function AnunciosSlider({ anuncios = [] }: AnunciosSliderProps) {
+  const [selectedId, setSelectedId] = useState<string | number | null>(null);
   const [mounted, setMounted] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => { setMounted(true); }, []);
 
-  const data = useMemo(() => (PARALEX_DATA as unknown) as AnuncioItem[], []);
+  // Usamos los anuncios pasados por props (Firebase)
+  const data = useMemo(() => anuncios, [anuncios]);
   const selectedItem = useMemo(() => data.find(item => item.id === selectedId), [selectedId, data]);
 
   const handleAddToCalendar = (item: AnuncioItem) => {
@@ -57,6 +62,11 @@ export default function AnunciosSlider() {
   };
 
   if (!mounted) return null;
+
+  // Si no hay datos aún, puedes retornar null o un placeholder de carga
+  if (!data || data.length === 0) {
+    return null; 
+  }
 
   return (
     <section className="relative py-12 overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#020617] to-black rounded-[3rem] border border-white/5 mx-6">
@@ -137,7 +147,7 @@ export default function AnunciosSlider() {
                   <p className="text-white/60 text-xs leading-relaxed">Acompáñanos de manera presencial o conéctate en tiempo real desde nuestras plataformas digitales.</p>
                 </div>
                 <div className="pt-4 mt-4 border-t border-white/10 flex gap-3">
-                  <button onClick={() => handleAddToCalendar(selectedItem)} className="flex-1 bg-[#00338d] hover:bg-[#002260] text-white font-bold py-3 px-4 rounded-xl text-xs transition-all uppercase tracking-wider">Agendar Evento</button>
+                  <button onClick={() => handleAddToCalendar(selectedItem)} className="flex-1 bg-[#00338d] hover:bg-[#002260] text-white font-bold py-3 px-4 rounded-xl text-xs transition-all uppercase tracking-wider">Agendar Evento</button> {/* Modificado si usas botón */}
                   <button className="bg-white/5 hover:bg-white/10 text-white p-3 rounded-xl transition-all"><Share2 size={16} /></button>
                 </div>
               </div>

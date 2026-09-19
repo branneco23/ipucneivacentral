@@ -11,7 +11,7 @@ interface Evento {
   id: string | number;
   tipo: 'imagen' | 'video' | 'youtube';
   imagen: string;
-  titulo: string;
+  titulo?: string;
 }
 
 interface Integrante {

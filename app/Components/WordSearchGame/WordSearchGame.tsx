@@ -3,6 +3,15 @@
 import React, { useState } from "react";
 
 // ==========================================
+// TIPADO DE PROPIEDADES DEL COMPONENTE
+// ==========================================
+interface SopaLetrasProps {
+  titulo?: string;
+  descripcion?: string;
+  palabras?: string[];
+}
+
+// ==========================================
 // BANCOS DE PALABRAS PARA LA SOPA DE LETRAS
 // ==========================================
 const WORDS_FACIL = ["ADAN", "NOE", "ABRAHAM", "ISAAC", "JACOB", "JOSE", "MOISES", "JOSUE", "DAVID", "SALOMON", "ELIAS", "ELISEO", "ISAIAS", "DANIEL", "MARIA"];
@@ -62,30 +71,19 @@ interface WordConfig {
   clue: string;
 }
 
-// DEFINICIÓN DE CRUCIGRAMAS VALIDADA Y VERIFICADA LETRA POR LETRA
 const CROSSWORDS_DATA: { [key: string]: { size: number; words: WordConfig[] } } = {
   facil: {
     size: 10,
     words: [
-      // 1. DAVID (Horiz: 0,0..0,4) -> D-A-V-I-D
       { num: 1, word: "DAVID", row: 0, col: 0, dir: "H", clue: "Rey de Israel que venció a Goliat (5 letras)" },
-      // 1. DANIEL (Vert: 0,0..5,0) -> D-A-N-I-E-L
       { num: 1, word: "DANIEL", row: 0, col: 0, dir: "V", clue: "Profeta arrojado al foso de los leones (6 letras)" },
-      // 2. ISAAC (Vert: 0,3..4,3) -> I-S-A-A-C
       { num: 2, word: "ISAAC", row: 0, col: 3, dir: "V", clue: "Hijo de la promesa de Abraham e Sara (5 letras)" },
-      // 3. ADAN (Horiz: 2,3..2,6) -> A-D-A-N (Cruza A con ISAAC en 2,3)
       { num: 3, word: "ADAN", row: 2, col: 3, dir: "H", clue: "Primer hombre creado por Dios (4 letras)" },
-      // 4. NOE (Vert: 2,6..4,6) -> N-O-E (Cruza N con ADAN en 2,6)
       { num: 4, word: "NOE", row: 2, col: 6, dir: "V", clue: "Constructor del Arca en el diluvio (3 letras)" },
-      // 5. MOISES (Horiz: 4,0..4,5) -> M-O-I-S-E-S (Cruza E con DANIEL en 4,0 y S con ISAAC en 4,3)
       { num: 5, word: "MOISES", row: 4, col: 0, dir: "H", clue: "Líder que sacó al pueblo de Egipto (6 letras)" },
-      // 6. ELIAS (Vert: 4,4..8,4) -> E-L-I-A-S (Cruza E con MOISES en 4,4)
       { num: 6, word: "ELIAS", row: 4, col: 4, dir: "V", clue: "Profeta llevado al cielo en carro de fuego (5 letras)" },
-      // 7. JOSE (Horiz: 6,2..6,5) -> J-O-S-E (Cruza S con ELIAS en 6,4)
       { num: 7, word: "JOSE", row: 6, col: 2, dir: "H", clue: "Hijo de Jacob con túnica de colores (4 letras)" },
-      // 8. JOSUE (Vert: 6,2..10,2) -> J-O-S-U-E (Cruza J con JOSE en 6,2)
       { num: 8, word: "JOSUE", row: 6, col: 2, dir: "V", clue: "Sucesor de Moisés que conquistó Jericó (5 letras)" },
-      // 9. RUT (Horiz: 8,2..8,4) -> R-U-T (Cruza U con JOSUE en 8,2 y T)
       { num: 9, word: "RUT", row: 8, col: 2, dir: "H", clue: "Joven moabita fiel antecesora de David (3 letras)" },
     ]
   },
@@ -133,7 +131,7 @@ const CROSSWORDS_DATA: { [key: string]: { size: number; words: WordConfig[] } } 
   }
 };
 
-export default function GameHub() {
+export default function GameHub({ titulo, descripcion, palabras }: SopaLetrasProps) {
   const [activeTab, setActiveTab] = useState<"sopa" | "crucigrama">("sopa");
   const [difficulty, setDifficulty] = useState<"facil" | "medio" | "dificil">("facil");
   const [foundWords, setFoundWords] = useState<string[]>([]);
@@ -146,7 +144,6 @@ export default function GameHub() {
   const currentWords = difficulty === "facil" ? WORDS_FACIL : difficulty === "medio" ? WORDS_MEDIO : WORDS_DIFICIL;
   const currentGrid = GRIDS_SOPA[difficulty];
 
-  // MONTAJE DINÁMICO DE CASILLAS
   const levelData = CROSSWORDS_DATA[difficulty];
   const gridCells: { [key: string]: { char: string; num?: number } } = {};
 
@@ -196,6 +193,14 @@ export default function GameHub() {
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white rounded-3xl shadow-2xl border border-slate-100 my-8 font-sans">
       
+      {/* Si deseas renderizar las props opcionales que te mandan desde fuera */}
+      {(titulo || descripcion) && (
+        <div className="mb-6 text-center">
+          {titulo && <h2 className="text-2xl font-black text-slate-800">{titulo}</h2>}
+          {descripcion && <p className="text-sm text-slate-600 mt-1">{descripcion}</p>}
+        </div>
+      )}
+
       {/* Botones de Navegación entre Juegos */}
       <div className="flex justify-center gap-4 mb-8">
         <button
@@ -322,7 +327,7 @@ export default function GameHub() {
         </div>
       )}
 
-      {/* VISTA 2: CRUCIGRAMA MATEADO PERFECTAMENTE */}
+      {/* VISTA 2: CRUCIGRAMA */}
       {activeTab === "crucigrama" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center overflow-x-auto shadow-inner">
