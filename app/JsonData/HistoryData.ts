@@ -91,19 +91,19 @@ export const HISTORY_DATA = {
       periodo: "2001 - 2002"
     },
     {
-      id: 15,
+      id: 16,
       nombre: "Jorney Lopéz",
       detalle: "Época de gran avivamiento juvenil y semanas de renovación.",
       periodo: "2002 - 2007"
     },
     {
-      id: 16,
+      id: 17,
       nombre: "Arbey Bustamante y Amparo Garzón - Jefferson Jimenez y Astrid Gómez",
       detalle: "Amor y Respeto al Servicio a Dios.",
       periodo: "2019-2025"
     },
     {
-      id: 17,
+      id: 18,
       nombre: "Esteban Zúñiga y Edith Poveda",
       detalle: "Pastor actual liderando la celebración de los 70 años.",
       periodo: "Actualidad"

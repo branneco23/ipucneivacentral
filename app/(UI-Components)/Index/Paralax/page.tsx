@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "@/lib/firebase"; // Ajusta esta ruta según tu estructura
+import { db } from "@/lib/firebase";
 
 interface AnuncioItem {
   id: string;
@@ -20,6 +20,9 @@ export default function AnunciosSlider() {
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  
+  // Referencia para controlar el scroll con botones
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -48,19 +51,57 @@ export default function AnunciosSlider() {
     return () => unsubscribe();
   }, []);
 
+  // Función para mover el carrusel con los botones de flecha
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, clientWidth } = scrollContainerRef.current;
+      const scrollAmount = clientWidth * 0.75; // Se desplaza un 75% de la vista actual
+      scrollContainerRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   if (!mounted) return null;
 
   const selectedAnuncio = anuncios.find((item) => item.id === selectedId);
 
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-slate-950">
-      <div className="px-6 md:px-16 lg:px-[12%] mb-12">
-        <h2 className="text-white text-3xl md:text-5xl font-bold">
-          Anuncios <span className="text-gray-400 font-normal italic font-serif">&amp;</span> Actividades
-        </h2>
+      <div className="px-6 md:px-16 lg:px-[12%] mb-8 flex justify-between items-end">
+        <div>
+          <h2 className="text-white text-3xl md:text-5xl font-bold">
+            Anuncios <span className="text-gray-400 font-normal italic font-serif">&amp;</span> Actividades
+          </h2>
+        </div>
+
+        {/* Botones de navegación lateral (Opcional pero muy útil para escritorio) */}
+        {!loading && anuncios.length > 0 && (
+          <div className="hidden md:flex gap-3">
+            <button 
+              onClick={() => scroll('left')}
+              className="bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 w-12 h-12 rounded-full flex items-center justify-center transition shadow-lg active:scale-95"
+              aria-label="Anterior"
+            >
+              ←
+            </button>
+            <button 
+              onClick={() => scroll('right')}
+              className="bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 w-12 h-12 rounded-full flex items-center justify-center transition shadow-lg active:scale-95"
+              aria-label="Siguiente"
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="flex gap-6 overflow-x-auto pb-8 px-6 md:px-16 lg:px-[12%] scrollbar-thin scrollbar-thumb-slate-800">
+      {/* Contenedor del Slider con scroll limpio (Sin barra visible) */}
+      <div 
+        ref={scrollContainerRef}
+        className="flex gap-6 overflow-x-auto pb-6 px-6 md:px-16 lg:px-[12%] scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
         {loading ? (
           <div className="text-slate-400 text-sm">Cargando anuncios...</div>
         ) : anuncios.length === 0 ? (
@@ -96,7 +137,7 @@ export default function AnunciosSlider() {
         )}
       </div>
 
-      {/* MODAL / VISTA AMPLIADA CON FRAMER MOTION */}
+      {/* MODAL / VISTA AMPLIADA LIMPIA */}
       <AnimatePresence>
         {selectedAnuncio && (
           <motion.div
@@ -104,36 +145,35 @@ export default function AnunciosSlider() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedId(null)}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-2xl w-full bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl"
+              className="relative w-auto max-w-3xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto"
             >
               <button
                 onClick={() => setSelectedId(null)}
-                className="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition font-bold"
+                className="absolute top-3 right-3 z-30 bg-black/70 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center transition font-bold shadow-lg"
               >
                 ✕
               </button>
 
-              <div className="relative h-72 md:h-96 w-full">
+              <div className="relative w-full bg-black flex items-center justify-center overflow-hidden">
                 <img
                   src={selectedAnuncio.bg}
                   alt={selectedAnuncio.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-auto h-auto max-w-full max-h-[72vh] object-contain block mx-auto"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
               </div>
 
-              <div className="p-6 md:p-8 space-y-4">
-                <span className="text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
+              <div className="p-5 md:p-6 space-y-2 bg-slate-900 border-t border-slate-800">
+                <span className="inline-block text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-wider">
                   {selectedAnuncio.tag}
                 </span>
-                <h3 className="text-white text-2xl md:text-3xl font-bold">{selectedAnuncio.title}</h3>
+                <h3 className="text-white text-xl md:text-2xl font-bold">{selectedAnuncio.title}</h3>
                 <p className="text-slate-300 text-sm md:text-base font-medium">
                   Fecha y Hora: <span className="text-white font-bold">{selectedAnuncio.fecha} — {selectedAnuncio.hora}</span>
                 </p>

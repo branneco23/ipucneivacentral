@@ -24,7 +24,7 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   { label: "Inicio", href: "/" },
-  { label: "Servicios", href: "/Pages/Services" },
+  { label: "Servicios", href: "/servicios" },
   {
     label: "Comités",
     href: "/Comites",
@@ -46,7 +46,7 @@ const navLinks: NavLink[] = [
   },
   { label: "Doctrina IPUC", href: "/Blogs" },
   { label: "Transmisiones", href: "/transmision" },
-  { label: "Peticiones", href: "/Pages/Peticiones" },
+  { label: "Peticiones", href: "/Peticiones" },
 ];
 
 export default function RootLayout() {

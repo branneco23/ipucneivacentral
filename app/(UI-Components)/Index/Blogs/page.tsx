@@ -1,23 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BLOG_DATA, BlogPost } from "@/app/JsonData/BlogsData";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-export default function BlogPage() {
-  // Estado para controlar cuántos bloques de 4 posts mostramos
+export default function BlogSection() {
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [visibleBlocks, setVisibleBlocks] = useState(1);
   const postsPerBlock = 4;
 
+  // Cargar publicaciones desde Firebase ordenadas por fecha (o título)
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        // Ordenamos por createdAt de forma descendente (los más nuevos primero)
+        // O puedes cambiar a orderBy("titulo", "asc") si prefieres orden alfabético estricto
+        const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        const lista: any[] = [];
+        
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          lista.push({
+            id: doc.id,
+            title: data.titulo || "Sin título",
+            desc: data.contenido || "",
+            image: data.portadaUrl || data.imagenUrl || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=800",
+            tag: data.tag || "Estudio Bíblico",
+            postby: data.autor || "IPUC Sede Central Neiva",
+            date: data.fecha || "Reciente",
+          });
+        });
+        setPosts(lista);
+      } catch (error) {
+        console.error("Error al obtener los blogs de Firebase:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   // Función para agrupar los datos en arrays de 4
   const chunkedPosts = [];
-  for (let i = 0; i < BLOG_DATA.length; i += postsPerBlock) {
-    chunkedPosts.push(BLOG_DATA.slice(i, i + postsPerBlock));
+  for (let i = 0; i < posts.length; i += postsPerBlock) {
+    chunkedPosts.push(posts.slice(i, i + postsPerBlock));
   }
 
-  // Solo mostramos los bloques según el estado
   const displayedBlocks = chunkedPosts.slice(0, visibleBlocks);
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center text-slate-500 font-medium">
+        Cargando publicaciones...
+      </div>
+    );
+  }
+
+  if (posts.length === 0) {
+    return null;
+  }
 
   return (
     <main className="px-[8%] lg:px-[12%] py-20 bg-white">
@@ -40,11 +86,11 @@ export default function BlogPage() {
         {displayedBlocks.map((group, groupIndex) => (
           <div key={groupIndex} className="flex flex-col lg:flex-row gap-12">
             
-            {/* 1 GRANDE A LA IZQUIERDA (Primer elemento del grupo) */}
+            {/* 1 GRANDE A LA IZQUIERDA */}
             <article className="w-full lg:w-1/2">
               {group[0] && (
-                <Link href={`Blogs/${group[0].id}`} className="group block">
-                  <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl">
+                <Link href={`/Blogs/${group[0].id}`} className="group block">
+                  <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl bg-slate-200">
                     <Image
                       src={group[0].image}
                       alt={group[0].title}
@@ -62,18 +108,20 @@ export default function BlogPage() {
                     <h2 className="text-3xl md:text-4xl CalSans my-5 group-hover:text-[#00338d] transition-colors leading-tight">
                       {group[0].title}
                     </h2>
-                    <p className="text-gray-500 line-clamp-3 text-lg">{group[0].desc}</p>
+                    <p className="text-gray-500 line-clamp-3 text-lg">
+                      {group[0].desc.replace(/<[^>]*>?/gm, '')}
+                    </p>
                   </div>
                 </Link>
               )}
             </article>
 
-            {/* 3 PEQUEÑOS A LA DERECHA (Resto del grupo) */}
+            {/* 3 PEQUEÑOS A LA DERECHA */}
             <aside className="w-full lg:w-1/2 flex flex-col gap-8">
-              {group.slice(1, 4).map((blog: BlogPost) => (
+              {group.slice(1, 4).map((blog: any) => (
                 <article key={blog.id}>
-                  <Link href={`Blogs/${blog.id}`} className="group flex flex-col md:flex-row gap-5">
-                    <div className="w-full md:w-1/3 relative aspect-video md:aspect-square rounded-2xl overflow-hidden shadow-md flex-shrink-0">
+                  <Link href={`/Blogs/${blog.id}`} className="group flex flex-col md:flex-row gap-5">
+                    <div className="w-full md:w-1/3 relative aspect-video md:aspect-square rounded-2xl overflow-hidden shadow-md flex-shrink-0 bg-slate-200">
                       <Image
                         src={blog.image}
                         alt={blog.title}
@@ -88,7 +136,9 @@ export default function BlogPage() {
                       <h3 className="text-xl CalSans my-2 group-hover:text-[#00338d] transition-colors leading-snug">
                         {blog.title}
                       </h3>
-                      <p className="text-gray-500 text-sm line-clamp-2">{blog.desc}</p>
+                      <p className="text-gray-500 text-sm line-clamp-2">
+                        {blog.desc.replace(/<[^>]*>?/gm, '')}
+                      </p>
                     </div>
                   </Link>
                 </article>
@@ -101,7 +151,7 @@ export default function BlogPage() {
       {/* --- BOTÓN VER MÁS --- */}
       {visibleBlocks < chunkedPosts.length && (
         <div className="mt-20 flex justify-center">
-          <button
+        <button
             onClick={() => setVisibleBlocks(prev => prev + 1)}
             className="bg-[#00338d] text-white px-10 py-4 rounded-full font-bold hover:bg-blue-900 transition-all shadow-lg"
           >

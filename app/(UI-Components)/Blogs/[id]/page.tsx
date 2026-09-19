@@ -1,155 +1,168 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { doc, getDoc, collection, getDocs, limit, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useParams } from "next/navigation";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { BLOG_DATA } from "@/app/JsonData/BlogsData";
-import Newsletter from '@/app/Components/Newsletter/Newsletter';
 
-export async function generateStaticParams() {
-  return BLOG_DATA.map((post) => ({
-    id: post.id.toString(),
-  }));
-}
+export default function DetalleBlog() {
+  const params = useParams();
+  const id = params?.id as string;
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
+  const [articulo, setArticulo] = useState<any>(null);
+  const [otrosTemas, setOtrosTemas] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-  const post = BLOG_DATA.find((p) => p.id.toString() === id);
+  useEffect(() => {
+    if (!id) return;
+    const fetchData = async () => {
+      try {
+        // Obtener el artículo actual de Firebase
+        const docRef = doc(db, "blogs", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setArticulo(docSnap.data());
+        }
 
-  if (!post) {
-    notFound();
+        // Obtener otros artículos para la barra lateral "Otros Temas"
+        const q = query(collection(db, "blogs"), limit(3));
+        const querySnapshot = await getDocs(q);
+        const lista: any[] = [];
+        querySnapshot.forEach((docItem) => {
+          if (docItem.id !== id) {
+            lista.push({ id: docItem.id, ...docItem.data() });
+          }
+        });
+        setOtrosTemas(lista);
+      } catch (error) {
+        console.error("Error al obtener detalle del blog:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-40 text-center text-slate-500 font-medium">
+        Cargando contenido...
+      </div>
+    );
+  }
+
+  if (!articulo) {
+    return (
+      <div className="min-h-screen pt-40 text-center text-slate-600">
+        <h2 className="text-2xl font-bold mb-4">Artículo no encontrado</h2>
+        <Link href="/Blogs" className="text-blue-600 font-bold hover:underline">
+          ← Volver a todos los artículos
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <article className="min-h-screen bg-slate-50/50 selection:bg-[#00338d] selection:text-white overflow-hidden">
+    <main className="min-h-screen bg-slate-50 text-slate-900 pt-32 pb-24 px-4 md:px-12 lg:px-20">
       
-      {/* HEADER CINEMATOGRÁFICO RESPONSIVO */}
-      <header className="relative w-full h-[55vh] md:h-[65vh] min-h-[400px] bg-slate-950 flex flex-col justify-end">
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            className="object-cover opacity-75 scale-105 transition-transform duration-[10s] ease-out"
-            priority
-          />
-        </div>
-        
-        {/* Degradado multicapa */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
-        
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 md:pb-16>">
-          
-          {/* BOTÓN VOLVER ATRÁS COMPLETAMENTE RESPONSIVO */}
-          <div className="mb-4 md:mb-6">
-            <Link
-              href="/Blogs"
-              className="inline-flex items-center gap-2 
-                         /* Móvil: Diseño tipo cápsula interactiva con fondo */
-                         px-4 py-2 rounded-full bg-white/10 border border-white/10 text-white text-xs backdrop-blur-md shadow-lg
-                         /* Escritorio: Se vuelve texto limpio integrado al flujo */
-                         md:bg-transparent md:border-transparent md:px-0 md:py-0 md:text-sm md:text-white/80 md:shadow-none md:backdrop-blur-none
-                         hover:bg-white/20 md:hover:bg-transparent md:hover:text-white
-                         font-semibold tracking-wide group transition-all duration-300"
-            >
-              <i className="ri-arrow-left-line text-sm md:text-base group-hover:-translate-x-1 transition-transform"></i> 
-              <span>Volver a Doctrina</span>
-            </Link>
-          </div>
-          
-          <span className="inline-block bg-[#00338d] border border-blue-400/20 text-white px-3 py-1 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest mb-3 shadow-md">
-            {post.tag}
-          </span>
-
-          <h1 className="text-white text-2xl sm:text-3xl md:text-6xl font-black CalSans leading-[1.15] md:leading-[1.1] max-w-4xl tracking-tight">
-            {post.title}
-          </h1>
-          
-          <div className="flex items-center gap-3 md:gap-4 text-white/80 mt-4 md:mt-6 text-xs md:text-sm font-medium">
-            <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-xs shrink-0">
-              {post.postby.charAt(0)}
-            </div>
-            <p className="GolosText truncate">
-              Por <span className="text-white font-bold">{post.postby}</span> &bull; <span className="text-slate-300 font-medium">{post.date}</span>
-            </p>
-          </div>
-        </div>
-      </header>
-
-      {/* CONTENIDO PRINCIPAL ADAPTATIVO */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-        
-        <main className="lg:col-span-8 flex flex-col gap-8 md:gap-12 order-1">
-          {post.videoUrl && (
-            <section className="bg-white p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-[2rem] border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)]">
-              <h3 className="text-lg md:text-2xl font-black CalSans text-slate-950 mb-4 md:mb-6 flex items-center gap-2.5">
-                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
-                  <i className="ri-video-line text-[#00338d] text-base md:text-xl"></i>
-                </div>
-                Enseñanaza en Video
-              </h3>
-              <div className="relative rounded-xl md:rounded-2xl overflow-hidden shadow-lg bg-slate-950 aspect-video group">
-                <video
-                  src={post.videoUrl}
-                  controls
-                  preload="metadata"
-                  className="w-full h-full object-cover opacity-95"
-                />
-              </div>
-            </section>
-          )}
-
-          <article className="bg-white p-5 sm:p-8 md:p-12 rounded-2xl md:rounded-[2rem] border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)] prose prose-slate max-w-none">
-            <div className="GolosText text-slate-800 leading-[1.7] md:leading-[1.8] text-base md:text-lg font-normal tracking-normal whitespace-pre-line">
-              {post.desc}
-            </div>
-          </article>
-        </main>
-
-        <aside className="lg:col-span-4 order-2">
-          <div className="bg-white p-6 md:p-8 rounded-2xl md:rounded-[2rem] border border-slate-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)] lg:sticky lg:top-32">
-            <h4 className="CalSans text-xl md:text-2xl font-black text-slate-950 mb-5 pb-3 border-b border-slate-100">
-              Otros Temas
-            </h4>
-
-            <div className="flex flex-col gap-4 md:gap-5">
-              {BLOG_DATA
-                .filter((p) => p.id.toString() !== id)
-                .slice(0, 3)
-                .map((other) => (
-                  <Link
-                    key={other.id}
-                    href={`/Blogs/${other.id}`}
-                    className="group flex gap-3 md:gap-4 p-2 md:p-3 rounded-xl md:rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-100/70 transition-all duration-300"
-                  >
-                    <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-lg md:rounded-xl overflow-hidden bg-slate-100 shrink-0">
-                      <Image 
-                        src={other.image} 
-                        alt="" 
-                        fill 
-                        className="object-cover group-hover:scale-105 transition-transform duration-300" 
-                      />
-                    </div>
-
-                    <div className="flex flex-col justify-center overflow-hidden">
-                      <span className="text-[9px] md:text-[10px] font-black text-[#00338d] uppercase tracking-widest mb-0.5 block">
-                        {other.tag}
-                      </span>
-                      <h5 className="font-extrabold text-xs md:text-sm text-slate-900 group-hover:text-[#00338d] transition-colors line-clamp-2 leading-snug">
-                        {other.title}
-                      </h5>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </div>
-        </aside>
+      {/* Enlace de retorno */}
+      <div className="max-w-7xl mx-auto mb-6">
+        <Link href="/Blogs" className="inline-block text-xs font-bold text-blue-600 hover:underline">
+          ← Volver a Blogs
+        </Link>
       </div>
 
-      <Newsletter />     
-    </article>
+      {/* Título Principal Arriba (como en la captura) */}
+      <div className="max-w-7xl mx-auto mb-8">
+        <span className="text-xs font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full uppercase">
+          {articulo.tag || "Estudio Bíblico"}
+        </span>
+        <h1 className="text-3xl md:text-5xl font-black mt-3 mb-2 text-slate-900 leading-tight">
+          {articulo.titulo}
+        </h1>
+        {articulo.autor && (
+          <p className="text-sm text-slate-500 font-medium">por {articulo.autor}</p>
+        )}
+      </div>
+
+      {/* CONTENEDOR DE DOS COLUMNAS (Estilo exacto de la captura) */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        {/* COLUMNA IZQUIERDA (Ancha): Multimedia + Texto Largo del Artículo */}
+        <div className="lg:col-span-2 space-y-8">
+          
+          {/* Recurso multimedia (Video de YouTube o Imagen de Portada) */}
+          {articulo.videoUrl ? (
+            <div className="w-full aspect-video rounded-3xl overflow-hidden bg-black shadow-lg">
+              <iframe
+                src={articulo.videoUrl}
+                title={articulo.titulo}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : articulo.portadaUrl || articulo.imagenUrl ? (
+            <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-sm bg-slate-200">
+              <img
+                src={articulo.portadaUrl || articulo.imagenUrl}
+                alt={articulo.titulo}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : null}
+
+          {/* Contenido (HTML o texto) */}
+          <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 prose prose-slate max-w-none text-slate-700 leading-relaxed text-base md:text-lg">
+            {articulo.contenido?.includes("<") ? (
+              <div dangerouslySetInnerHTML={{ __html: articulo.contenido }} />
+            ) : (
+              <p className="whitespace-pre-line">{articulo.contenido}</p>
+            )}
+          </div>
+
+        </div>
+
+        {/* COLUMNA DERECHA (Angosta): Sección "Otros Temas" */}
+        <aside className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 sticky top-28">
+          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">
+            Otros Temas
+          </h3>
+
+          <div className="space-y-4">
+            {otrosTemas.length > 0 ? (
+              otrosTemas.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/Blogs/${item.id}`}
+                  className="flex items-center gap-3 group p-2 rounded-2xl hover:bg-slate-50 transition"
+                >
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-200 flex-shrink-0">
+                    <img
+                      src={item.portadaUrl || item.imagenUrl || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=200"}
+                      alt={item.titulo}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-blue-600 uppercase">
+                      {item.tag || "Estudio"}
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-800 line-clamp-2 group-hover:text-blue-600 transition">
+                      {item.titulo}
+                    </h4>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p className="text-xs text-slate-400">No hay más artículos disponibles.</p>
+            )}
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
   );
 }

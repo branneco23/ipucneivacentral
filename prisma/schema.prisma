@@ -11,3 +11,15 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  desc      String   @db.Text
+  image     String
+  tag       String
+  postby    String
+  date      String
+  videoUrl  String?
+  createdAt DateTime @default(now())
+}

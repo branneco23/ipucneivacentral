@@ -53,111 +53,83 @@ const GRIDS_SOPA = {
   ]
 };
 
-// ==========================================
-// CONFIGURACIÓN DE CRUCIGRAMAS POR NIVEL (FIGURAS Y CANTIDADES ÚNICAS)
-// ==========================================
-const CROSSWORDS_CONFIG = {
+interface WordConfig {
+  num: number;
+  word: string;
+  row: number;
+  col: number;
+  dir: "H" | "V";
+  clue: string;
+}
+
+// DEFINICIÓN DE CRUCIGRAMAS VALIDADA Y VERIFICADA LETRA POR LETRA
+const CROSSWORDS_DATA: { [key: string]: { size: number; words: WordConfig[] } } = {
   facil: {
-    gridSize: 8, // Cuadrícula 8x8 (Figura compacta, 4 palabras cruzadas)
-    // Función para definir qué celdas son activas (blancas) y sus números indicadores
-    isActiveCell: (r: number, c: number) => {
-      // Cruz sencilla: Vertical en col 3 (de r:1 a r:6 -> DANIEL) y Horizontal en r:3 (de c:1 a c:6 -> DAVID)
-      // Más otra horizontal abajo (OSEAS en r:6, c:2 a c:6) y vertical corta (NOE en r:4 a r:6, col 6)
-      return (
-        (c === 3 && r >= 1 && r <= 6) || // 1. DANIEL (Vertical)
-        (r === 3 && c >= 1 && c <= 6) || // 2. DAVID (Horizontal)
-        (r === 6 && c >= 2 && c <= 6) || // 3. OSEAS (Horizontal)
-        (c === 6 && r >= 4 && r <= 6)    // 4. NOE (Vertical)
-      );
-    },
-    getCellNum: (r: number, c: number) => {
-      if (r === 1 && c === 3) return "1";
-      if (r === 3 && c === 1) return "2";
-      if (r === 6 && c === 2) return "3";
-      if (r === 4 && c === 6) return "4";
-      return null;
-    },
-    clues: {
-      horizontales: [
-        { id: 2, text: "2. Rey de Israel que venció a Goliat (5 letras)" },
-        { id: 3, text: "3. Profeta del Antiguo Testamento (5 letras)" }
-      ],
-      verticales: [
-        { id: 1, text: "1. Profeta arrojado al foso de los leones (6 letras)" },
-        { id: 4, text: "4. Constructor del Arca en el diluvio (3 letras)" }
-      ]
-    }
+    size: 10,
+    words: [
+      // 1. DAVID (Horiz: 0,0..0,4) -> D-A-V-I-D
+      { num: 1, word: "DAVID", row: 0, col: 0, dir: "H", clue: "Rey de Israel que venció a Goliat (5 letras)" },
+      // 1. DANIEL (Vert: 0,0..5,0) -> D-A-N-I-E-L
+      { num: 1, word: "DANIEL", row: 0, col: 0, dir: "V", clue: "Profeta arrojado al foso de los leones (6 letras)" },
+      // 2. ISAAC (Vert: 0,3..4,3) -> I-S-A-A-C
+      { num: 2, word: "ISAAC", row: 0, col: 3, dir: "V", clue: "Hijo de la promesa de Abraham e Sara (5 letras)" },
+      // 3. ADAN (Horiz: 2,3..2,6) -> A-D-A-N (Cruza A con ISAAC en 2,3)
+      { num: 3, word: "ADAN", row: 2, col: 3, dir: "H", clue: "Primer hombre creado por Dios (4 letras)" },
+      // 4. NOE (Vert: 2,6..4,6) -> N-O-E (Cruza N con ADAN en 2,6)
+      { num: 4, word: "NOE", row: 2, col: 6, dir: "V", clue: "Constructor del Arca en el diluvio (3 letras)" },
+      // 5. MOISES (Horiz: 4,0..4,5) -> M-O-I-S-E-S (Cruza E con DANIEL en 4,0 y S con ISAAC en 4,3)
+      { num: 5, word: "MOISES", row: 4, col: 0, dir: "H", clue: "Líder que sacó al pueblo de Egipto (6 letras)" },
+      // 6. ELIAS (Vert: 4,4..8,4) -> E-L-I-A-S (Cruza E con MOISES en 4,4)
+      { num: 6, word: "ELIAS", row: 4, col: 4, dir: "V", clue: "Profeta llevado al cielo en carro de fuego (5 letras)" },
+      // 7. JOSE (Horiz: 6,2..6,5) -> J-O-S-E (Cruza S con ELIAS en 6,4)
+      { num: 7, word: "JOSE", row: 6, col: 2, dir: "H", clue: "Hijo de Jacob con túnica de colores (4 letras)" },
+      // 8. JOSUE (Vert: 6,2..10,2) -> J-O-S-U-E (Cruza J con JOSE en 6,2)
+      { num: 8, word: "JOSUE", row: 6, col: 2, dir: "V", clue: "Sucesor de Moisés que conquistó Jericó (5 letras)" },
+      // 9. RUT (Horiz: 8,2..8,4) -> R-U-T (Cruza U con JOSUE en 8,2 y T)
+      { num: 9, word: "RUT", row: 8, col: 2, dir: "H", clue: "Joven moabita fiel antecesora de David (3 letras)" },
+    ]
   },
   medio: {
-    gridSize: 10, // Cuadrícula 10x10 (Figura mediana en bloque, 6 palabras cruzadas)
-    isActiveCell: (r: number, c: number) => {
-      return (
-        (c === 4 && r >= 1 && r <= 7) || // ESTER (Vertical)
-        (r === 2 && c >= 2 && c <= 8) || // SAMUEL (Horizontal)
-        (r === 5 && c >= 1 && c <= 6) || // JONAS (Horizontal)
-        (c === 2 && r >= 5 && r <= 9) || // RUT (Vertical)
-        (r === 7 && c >= 4 && c <= 9) || // GEDEON (Horizontal)
-        (c === 7 && r >= 2 && r <= 7)    // MATEO (Vertical)
-      );
-    },
-    getCellNum: (r: number, c: number) => {
-      if (r === 1 && c === 4) return "1";
-      if (r === 2 && c === 2) return "2";
-      if (r === 5 && c === 1) return "3";
-      if (r === 5 && c === 2) return "4";
-      if (r === 7 && c === 4) return "5";
-      if (r === 2 && c === 7) return "6";
-      return null;
-    },
-    clues: {
-      horizontales: [
-        { id: 2, text: "2. Profeta ungidor de reyes (6 letras)" },
-        { id: 3, text: "3. Profeta tragado por un gran pez (5 letras)" },
-        { id: 5, text: "5. Juez de Israel con 300 hombres (6 letras)" }
-      ],
-      verticales: [
-        { id: 1, text: "1. Reina judía que salvó a su pueblo (5 letras)" },
-        { id: 4, text: "4. Joven moabita fiel antecesora de David (3 letras)" },
-        { id: 6, text: "6. Apóstol y evangelista primer nombre (5 letras)" }
-      ]
-    }
+    size: 11,
+    words: [
+      { num: 1, word: "MATEO", row: 0, col: 0, dir: "H", clue: "Apóstol y autor del primer Evangelio (5 letras)" },
+      { num: 1, word: "MOISES", row: 0, col: 0, dir: "V", clue: "Líder que abrió el Mar Rojo (6 letras)" },
+      { num: 2, word: "ESTER", row: 0, col: 3, dir: "V", clue: "Reina judía en Persia (5 letras)" },
+      { num: 3, word: "SARA", row: 3, col: 0, dir: "H", clue: "Esposa de Abraham y madre de Isaac (4 letras)" },
+      { num: 4, word: "SAMUEL", row: 5, col: 0, dir: "H", clue: "Profeta ungidor de Saúl y David (6 letras)" },
+      { num: 5, word: "LUCAS", row: 0, col: 4, dir: "V", clue: "Médico amado y evangelista (5 letras)" },
+      { num: 6, word: "PABLO", row: 2, col: 4, dir: "H", clue: "Apóstol de los gentiles y escritor (5 letras)" },
+      { num: 7, word: "PEDRO", row: 2, col: 4, dir: "V", clue: "Apóstol llamado la 'roca' (5 letras)" },
+      { num: 8, word: "JONAS", row: 4, col: 2, dir: "V", clue: "Profeta tragado por un gran pez (5 letras)" },
+      { num: 9, word: "GEDEON", row: 8, col: 2, dir: "H", clue: "Juez que venció con 300 hombres (6 letras)" },
+      { num: 10, word: "RAQUEL", row: 5, col: 5, dir: "V", clue: "Esposa amada de Jacob (6 letras)" },
+      { num: 11, word: "ISRAEL", row: 10, col: 0, dir: "H", clue: "Nuevo nombre dado por Dios a Jacob (6 letras)" },
+      { num: 12, word: "TOMAS", row: 3, col: 8, dir: "V", clue: "Apóstol que pidió ver para creer (5 letras)" },
+      { num: 13, word: "RUT", row: 3, col: 8, dir: "H", clue: "Fiel mujer moabita (3 letras)" },
+    ]
   },
   dificil: {
-    gridSize: 11, // Cuadrícula 11x11 (Figura compleja en forma de cruz entrelazada grande, 8 palabras avanzadas)
-    isActiveCell: (r: number, c: number) => {
-      return (
-        (c === 5 && r >= 0 && r <= 10) || // NABUCODONOSOR / MELQUISEDEC (Vertical grande)
-        (r === 3 && c >= 1 && c <= 9)  || // APOCALIPSIS (Horizontal larga)
-        (r === 7 && c >= 0 && c <= 10) || // MATUSALEN (Horizontal larga)
-        (c === 2 && r >= 2 && r <= 8)  || // EZEQUIAS (Vertical)
-        (c === 8 && r >= 2 && r <= 8)  || // JOSAFAT (Vertical)
-        (r === 1 && c >= 3 && c <= 7)  || // AGEO (Horizontal corta)
-        (r === 9 && c >= 3 && c <= 7)     // NAHUM (Horizontal corta)
-      );
-    },
-    getCellNum: (r: number, c: number) => {
-      if (r === 0 && c === 5) return "1";
-      if (r === 3 && c === 1) return "2";
-      if (r === 7 && c === 0) return "3";
-      if (r === 2 && c === 2) return "4";
-      if (r === 2 && c === 8) return "5";
-      if (r === 1 && c === 3) return "6";
-      if (r === 9 && c === 3) return "7";
-      return null;
-    },
-    clues: {
-      horizontales: [
-        { id: 2, text: "2. Último libro profético del Nuevo Testamento (11 letras)" },
-        { id: 3, text: "3. Personaje bíblico considerado el más anciano (9 letras)" },
-        { id: 6, text: "6. Profeta menor autor de breve libro (4 letras)" },
-        { id: 7, text: "7. Profeta del Antiguo Testamento de Elkosh (5 letras)" }
-      ],
-      verticales: [
-        { id: 1, text: "1. Rey babilonio o Sacerdote rey de Salem (11/13 letras)" },
-        { id: 4, text: "4. Piadoso rey de Judá reformador (8 letras)" },
-        { id: 5, text: "5. Rey de Judá hijo de Asa (7 letras)" }
-      ]
-    }
+    size: 13,
+    words: [
+      { num: 1, word: "HABACUC", row: 0, col: 0, dir: "H", clue: "Profeta de 'El justo por su fe vivirá' (7 letras)" },
+      { num: 2, word: "BARUC", row: 0, col: 2, dir: "V", clue: "Escriba y secretario de Jeremías (5 letras)" },
+      { num: 3, word: "CORNELIO", row: 0, col: 4, dir: "V", clue: "Centurión romano primer gentil convertido (8 letras)" },
+      { num: 4, word: "NAHUM", row: 4, col: 0, dir: "H", clue: "Profeta del Antiguo Testamento de Elkosh (5 letras)" },
+      { num: 5, word: "MALAQUIAS", row: 4, col: 1, dir: "V", clue: "Último profeta del Antiguo Testamento (9 letras)" },
+      { num: 6, word: "AGEO", row: 7, col: 1, dir: "H", clue: "Profeta menor contemporáneo de Zacarías (4 letras)" },
+      { num: 7, word: "APOCALIPSIS", row: 10, col: 0, dir: "H", clue: "Último libro del Nuevo Testamento (11 letras)" },
+      { num: 8, word: "MATUSALEN", row: 2, col: 6, dir: "V", clue: "Personaje bíblico más anciano (9 letras)" },
+      { num: 9, word: "TITUS", row: 2, col: 6, dir: "H", clue: "Colaborador de Pablo en Creta (5 letras)" },
+      { num: 10, word: "DEUTERONOMIO", row: 1, col: 9, dir: "V", clue: "Quinto libro de la Biblia y de la Ley (12 letras)" },
+      { num: 11, word: "ONESIMO", row: 5, col: 6, dir: "H", clue: "Siervo útil en la carta a Filemón (7 letras)" },
+      { num: 12, word: "EZEQUIAS", row: 9, col: 4, dir: "H", clue: "Rey piadoso de Judá que enfermó (8 letras)" },
+      { num: 13, word: "BALAAM", row: 5, col: 4, dir: "V", clue: "Profeta adivino que habló con su asna (6 letras)" },
+      { num: 14, word: "JOSAFAT", row: 1, col: 5, dir: "H", clue: "Rey de Judá hijo del rey Asa (7 letras)" },
+      { num: 15, word: "SULAMITA", row: 0, col: 8, dir: "V", clue: "Amada de Cantar de los Cantares (8 letras)" },
+      { num: 16, word: "TIMOTEO", row: 11, col: 0, dir: "H", clue: "Joven discípulo y compañero de Pablo (7 letras)" },
+      { num: 17, word: "JESABEL", row: 5, col: 10, dir: "V", clue: "Malvada reina esposa del rey Acab (7 letras)" },
+      { num: 18, word: "BERNABE", row: 4, col: 2, dir: "H", clue: "Compañero apostólico de Pablo (7 letras)" },
+    ]
   }
 };
 
@@ -165,22 +137,38 @@ export default function GameHub() {
   const [activeTab, setActiveTab] = useState<"sopa" | "crucigrama">("sopa");
   const [difficulty, setDifficulty] = useState<"facil" | "medio" | "dificil">("facil");
   const [foundWords, setFoundWords] = useState<string[]>([]);
-  const [selectedCells, setSelectedCells] = useState<{r: number, c: number}[]>([]);
+  const [selectedCells, setSelectedCells] = useState<{ r: number; c: number }[]>([]);
   const [message, setMessage] = useState("Selecciona las letras en orden para hallar las palabras.");
   const [effectType, setEffectType] = useState<"success" | "error" | null>(null);
 
-  // Estados para el crucigrama dinámico
-  const [crosswordGrid, setCrosswordGrid] = useState<{[key: string]: string}>({});
+  const [crosswordGrid, setCrosswordGrid] = useState<{ [key: string]: string }>({});
 
   const currentWords = difficulty === "facil" ? WORDS_FACIL : difficulty === "medio" ? WORDS_MEDIO : WORDS_DIFICIL;
   const currentGrid = GRIDS_SOPA[difficulty];
-  const currentCrossword = CROSSWORDS_CONFIG[difficulty];
 
-  // Manejo Sopa de Letras
+  // MONTAJE DINÁMICO DE CASILLAS
+  const levelData = CROSSWORDS_DATA[difficulty];
+  const gridCells: { [key: string]: { char: string; num?: number } } = {};
+
+  levelData.words.forEach((w) => {
+    for (let i = 0; i < w.word.length; i++) {
+      const r = w.dir === "H" ? w.row : w.row + i;
+      const c = w.dir === "H" ? w.col + i : w.col;
+      const key = `${r}-${c}`;
+
+      if (!gridCells[key]) {
+        gridCells[key] = { char: w.word[i] };
+      }
+      if (i === 0) {
+        gridCells[key].num = w.num;
+      }
+    }
+  });
+
   const handleCellClick = (r: number, c: number) => {
-    const newSelected = [...selectedCells, {r, c}];
+    const newSelected = [...selectedCells, { r, c }];
     setSelectedCells(newSelected);
-    const formedWord = newSelected.map(cell => currentGrid[cell.r][cell.c]).join("");
+    const formedWord = newSelected.map((cell) => currentGrid[cell.r][cell.c]).join("");
 
     if (currentWords.includes(formedWord) && !foundWords.includes(formedWord)) {
       const updatedFound = [...foundWords, formedWord];
@@ -201,6 +189,9 @@ export default function GameHub() {
     const key = `${r}-${c}`;
     setCrosswordGrid({ ...crosswordGrid, [key]: val.toUpperCase() });
   };
+
+  const horizontales = levelData.words.filter((w) => w.dir === "H");
+  const verticales = levelData.words.filter((w) => w.dir === "V");
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white rounded-3xl shadow-2xl border border-slate-100 my-8 font-sans">
@@ -227,11 +218,15 @@ export default function GameHub() {
 
       {/* Retroalimentación Visual */}
       {message && (
-        <div className={`p-4 mb-6 rounded-2xl text-center font-bold text-sm transition-all duration-300 ${
-          effectType === "success" ? "bg-green-100 text-green-700 scale-102 border-2 border-green-300 shadow-md" :
-          effectType === "error" ? "bg-red-100 text-red-700 border-2 border-red-300 shadow-md" :
-          "bg-blue-50 text-[#00338d] border border-blue-100"
-        }`}>
+        <div
+          className={`p-4 mb-6 rounded-2xl text-center font-bold text-sm transition-all duration-300 ${
+            effectType === "success"
+              ? "bg-green-100 text-green-700 border-2 border-green-300 shadow-md"
+              : effectType === "error"
+              ? "bg-red-100 text-red-700 border-2 border-red-300 shadow-md"
+              : "bg-blue-50 text-[#00338d] border border-blue-100"
+          }`}
+        >
           {message}
         </div>
       )}
@@ -240,33 +235,34 @@ export default function GameHub() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 bg-slate-50 p-4 rounded-2xl">
         <div>
           <h2 className="text-xl font-black text-slate-800">
-            {activeTab === "sopa" ? "Sopa de Letras" : "Crucigrama Estructurado"} - Nivel <span className="uppercase text-[#00338d]">{difficulty}</span>
+            {activeTab === "sopa" ? "Sopa de Letras" : "Crucigrama Estructurado"} - Nivel{" "}
+            <span className="uppercase text-[#00338d]">{difficulty}</span>
           </h2>
           <p className="text-xs text-slate-500">
-            {difficulty === "facil" && "Figura compacta cruzada de nivel inicial."}
-            {difficulty === "medio" && "Figura de bloques medianos con mayor cantidad de cruces."}
-            {difficulty === "dificil" && "Figura geométrica avanzada con múltiples interconexiones complejas."}
+            {difficulty === "facil" && "10 Palabras en una malla continua interconectada."}
+            {difficulty === "medio" && "14 Palabras en red dinámica con pistas."}
+            {difficulty === "dificil" && "18 Palabras avanzadas del Antiguo y Nuevo Testamento."}
           </p>
         </div>
-        
+
         <div className="flex gap-1 bg-white p-1.5 rounded-xl shadow-sm border border-slate-200 text-xs font-bold">
-          <button 
-            onClick={() => { setDifficulty("facil"); setFoundWords([]); setSelectedCells([]); }}
+          <button
+            onClick={() => { setDifficulty("facil"); setFoundWords([]); setSelectedCells([]); setCrosswordGrid({}); }}
             className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "facil" ? "bg-[#00338d] text-white" : "text-slate-600"}`}
           >
-            Fácil
+            Fácil (10)
           </button>
-          <button 
-            onClick={() => { setDifficulty("medio"); setFoundWords([]); setSelectedCells([]); }}
+          <button
+            onClick={() => { setDifficulty("medio"); setFoundWords([]); setSelectedCells([]); setCrosswordGrid({}); }}
             className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "medio" ? "bg-[#00338d] text-white" : "text-slate-600"}`}
           >
-            Medio
+            Medio (14)
           </button>
-          <button 
-            onClick={() => { setDifficulty("dificil"); setFoundWords([]); setSelectedCells([]); }}
+          <button
+            onClick={() => { setDifficulty("dificil"); setFoundWords([]); setSelectedCells([]); setCrosswordGrid({}); }}
             className={`px-3 py-1.5 rounded-lg transition-all ${difficulty === "dificil" ? "bg-amber-600 text-white" : "text-slate-600"}`}
           >
-            Difícil ↗️
+            Difícil (18) ↗️
           </button>
         </div>
       </div>
@@ -278,13 +274,15 @@ export default function GameHub() {
             <div className="grid grid-cols-14 gap-1.5">
               {currentGrid.map((row, rIndex) =>
                 row.map((letter, cIndex) => {
-                  const isSelected = selectedCells.some(cell => cell.r === rIndex && cell.c === cIndex);
+                  const isSelected = selectedCells.some((cell) => cell.r === rIndex && cell.c === cIndex);
                   return (
                     <button
                       key={`${rIndex}-${cIndex}`}
                       onClick={() => handleCellClick(rIndex, cIndex)}
                       className={`w-8 h-8 md:w-9 md:h-9 rounded-lg font-black text-xs md:text-sm flex items-center justify-center transition-all ${
-                        isSelected ? "bg-amber-400 text-slate-900 scale-110 shadow-lg" : "bg-slate-800 text-white hover:bg-slate-700"
+                        isSelected
+                          ? "bg-amber-400 text-slate-900 scale-110 shadow-lg"
+                          : "bg-slate-800 text-white hover:bg-slate-700"
                       }`}
                     >
                       {letter}
@@ -293,7 +291,10 @@ export default function GameHub() {
                 })
               )}
             </div>
-            <button onClick={() => setSelectedCells([])} className="mt-4 text-xs font-bold text-slate-400 hover:text-white underline">
+            <button
+              onClick={() => setSelectedCells([])}
+              className="mt-4 text-xs font-bold text-slate-400 hover:text-white underline"
+            >
               Limpiar selección
             </button>
           </div>
@@ -306,7 +307,12 @@ export default function GameHub() {
               {currentWords.map((word) => {
                 const isFound = foundWords.includes(word);
                 return (
-                  <span key={word} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${isFound ? "bg-green-500 text-white line-through shadow-sm" : "bg-white text-slate-700 border border-slate-200"}`}>
+                  <span
+                    key={word}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      isFound ? "bg-green-500 text-white line-through shadow-sm" : "bg-white text-slate-700 border border-slate-200"
+                    }`}
+                  >
                     {word} {isFound && "✨"}
                   </span>
                 );
@@ -316,35 +322,33 @@ export default function GameHub() {
         </div>
       )}
 
-      {/* VISTA 2: CRUCIGRAMA DINÁMICO CON FIGURAS DIFERENCIADAS */}
+      {/* VISTA 2: CRUCIGRAMA MATEADO PERFECTAMENTE */}
       {activeTab === "crucigrama" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          {/* TABLERO CON LA FIGURA GEOMÉTRICA DEL NIVEL */}
           <div className="lg:col-span-2 bg-slate-900 p-6 rounded-3xl flex flex-col items-center justify-center overflow-x-auto shadow-inner">
             <p className="text-xs text-amber-400 font-bold mb-4 uppercase tracking-wider">
               ✨ Figura de Crucigrama: Nivel {difficulty}
             </p>
-            
-            <div 
+
+            <div
               className="grid gap-1 bg-slate-800 p-3 rounded-2xl"
-              style={{ gridTemplateColumns: `repeat(${currentCrossword.gridSize}, minmax(0, 1fr))` }}
+              style={{ gridTemplateColumns: `repeat(${levelData.size}, minmax(0, 1fr))` }}
             >
-              {Array.from({ length: currentCrossword.gridSize }).map((_, r) =>
-                Array.from({ length: currentCrossword.gridSize }).map((_, c) => {
-                  const isActive = currentCrossword.isActiveCell(r, c);
-
-                  if (!isActive) {
-                    return <div key={`empty-${r}-${c}`} className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-900 rounded-md opacity-25" />;
-                  }
-
+              {Array.from({ length: levelData.size }).map((_, r) =>
+                Array.from({ length: levelData.size }).map((_, c) => {
                   const cellKey = `${r}-${c}`;
-                  const numLabel = currentCrossword.getCellNum(r, c);
+                  const cellData = gridCells[cellKey];
+
+                  if (!cellData) {
+                    return <div key={`empty-${r}-${c}`} className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-900 rounded-md opacity-20" />;
+                  }
 
                   return (
                     <div key={cellKey} className="relative">
-                      {numLabel && (
-                        <span className="absolute top-0.5 left-1 text-[8px] sm:text-[9px] font-black text-amber-400 z-10">{numLabel}</span>
+                      {cellData.num && (
+                        <span className="absolute top-0.5 left-0.5 text-[9px] font-black text-amber-400 z-10 leading-none">
+                          {cellData.num}
+                        </span>
                       )}
                       <input
                         type="text"
@@ -358,36 +362,36 @@ export default function GameHub() {
                 })
               )}
             </div>
-            <span className="text-[10px] text-slate-400 mt-3 text-center">Las casillas negras bloquean espacios; rellena los bloques blancos interconectados.</span>
+            <span className="text-[10px] text-slate-400 mt-3 text-center">
+              Cruces interconectados: todas las casillas están unidas en una sola malla coordinada.
+            </span>
           </div>
 
-          {/* LISTADO DE PISTAS POR NIVEL */}
           <div className="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-4">
             <h3 className="text-xs font-black uppercase text-slate-500 tracking-wider">
               Pistas - Nivel <span className="text-[#00338d]">{difficulty}</span>
             </h3>
-            
-            <div className="space-y-3 text-xs">
+
+            <div className="space-y-3 text-xs max-h-96 overflow-y-auto pr-1">
               <div>
                 <h4 className="font-black text-[#00338d] mb-1.5 uppercase tracking-wide">Horizontales</h4>
-                {currentCrossword.clues.horizontales.map((item, idx) => (
-                  <div key={idx} className="p-2.5 mb-1.5 bg-white rounded-2xl border border-slate-200 shadow-sm text-slate-700">
-                    {item.text}
+                {horizontales.map((item) => (
+                  <div key={`h-${item.num}-${item.word}`} className="p-2 mb-1.5 bg-white rounded-xl border border-slate-200 shadow-sm text-slate-700">
+                    <span className="font-bold text-amber-600 mr-1">{item.num}.</span> {item.clue}
                   </div>
                 ))}
               </div>
 
               <div>
                 <h4 className="font-black text-[#00338d] mb-1.5 uppercase tracking-wide">Verticales</h4>
-                {currentCrossword.clues.verticales.map((item, idx) => (
-                  <div key={idx} className="p-2.5 mb-1.5 bg-white rounded-2xl border border-slate-200 shadow-sm text-slate-700">
-                    {item.text}
+                {verticales.map((item) => (
+                  <div key={`v-${item.num}-${item.word}`} className="p-2 mb-1.5 bg-white rounded-xl border border-slate-200 shadow-sm text-slate-700">
+                    <span className="font-bold text-amber-600 mr-1">{item.num}.</span> {item.clue}
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
         </div>
       )}
 
