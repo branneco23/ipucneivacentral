@@ -1,7 +1,7 @@
 export const categoriasOficialesComites = [
   "Directiva Local",
-  "Directiva de Jóvenes",
-  "Directiva de Damas (Dorcas)",
+  "Directiva de Jovenes",
+  "Directiva de Damas Dorcas",
   "Directiva de Escuela Dominical",
   "Directiva de Misiones y Evangelismo",
   "Directiva de Alabanza",

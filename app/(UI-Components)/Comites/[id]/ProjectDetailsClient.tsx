@@ -7,6 +7,18 @@ import { doc, onSnapshot } from "firebase/firestore";
 import RevistaLibro from '@/app/Components/MagazineBook/MagazineBook';
 import SopaLetras from '@/app/Components/WordSearchGame/WordSearchGame';
 
+import { categoriasOficialesComites } from "@/constants/comitesConstants";
+
+// Función auxiliar para transformar cualquier texto a slug estandarizado
+const generarSlug = (texto: string) => {
+  return texto
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remueve tildes
+    .replace(/\s+/g, "-");             // Reemplaza espacios por guiones
+};
+
 interface Evento {
   id: string | number;
   tipo: 'imagen' | 'video' | 'youtube';
@@ -50,24 +62,40 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
+  // 1. Resolver el slug real cruzando el ID de la URL con las categorias oficiales de constantes
+  const resolverDocId = (paramId: string) => {
+    if (!paramId) return "";
+    const decodedId = decodeURIComponent(paramId).toLowerCase().trim();
+
+    // Buscar si alguna categoría oficial contiene o coincide con el parámetro de la URL
+    const categoriaEncontrada = categoriasOficialesComites.find(cat => {
+      const slugCat = generarSlug(cat);
+      return slugCat === decodedId || slugCat.includes(decodedId) || decodedId.includes(slugCat);
+    });
+
+    if (categoriaEncontrada) {
+      return generarSlug(categoriaEncontrada);
+    }
+
+    // Fallback por si acaso llega limpio o con formato personalizado
+    return generarSlug(paramId);
+  };
+
+  const docIdFinal = resolverDocId(id);
+
   useEffect(() => {
-    if (!id) return;
+    if (!docIdFinal) return;
 
-    const docId = id.trim().toLowerCase();
+    console.log("👉 1. ID original recibido por props:", id);
+    console.log("👉 2. ID real resuelto buscando en Firebase:", docIdFinal);
 
-    const unsub = onSnapshot(doc(db, "comites_detalles", docId), (docSnap) => {
+    const unsub = onSnapshot(doc(db, "comites_detalles", docIdFinal), (docSnap) => {
       if (docSnap.exists()) {
+        console.log("✅ ¡Encontrado exitosamente en Firebase!");
         setData(docSnap.data() as ComitéData);
       } else {
-        const unsubFallback = onSnapshot(doc(db, "comites_detalles", id), (fallbackSnap) => {
-          if (fallbackSnap.exists()) {
-            setData(fallbackSnap.data() as ComitéData);
-          } else {
-            setData(null);
-          }
-          setLoading(false);
-        });
-        return () => unsubFallback();
+        console.log("❌ No existe en Firebase con este ID:", docIdFinal);
+        setData(null);
       }
       setLoading(false);
     }, (error) => {
@@ -76,7 +104,7 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
     });
 
     return () => unsub();
-  }, [id]);
+  }, [docIdFinal, id]);
 
   const nextImage = () => {
     if (data?.eventos && selectedImageIndex !== null) {
@@ -133,7 +161,7 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
 
   return (
     <main className="bg-white min-h-screen selection:bg-blue-100 pt-[90px] lg:pt-[120px]">
-      
+
       {/* MODAL VIDEO */}
       {selectedVideo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -142,12 +170,12 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
             <button onClick={() => setSelectedVideo(null)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-red-600 text-white rounded-full flex items-center justify-center font-bold">
               ✕
             </button>
-            <iframe 
-              width="100%" 
-              height="100%" 
-              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`} 
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
               className="border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           </div>
@@ -247,12 +275,12 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
                 <div key={persona.id || index} className="group bg-white border border-slate-100 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all relative h-[480px]">
                   <div className="absolute inset-0 w-full h-full bg-slate-100">
                     {persona.foto ? (
-                      <img 
-                        src={persona.foto} 
-                        alt={persona.nombre} 
+                      <img
+                        src={persona.foto}
+                        alt={persona.nombre}
                         className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-700"
-                        onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { 
-                          e.currentTarget.src = "/img/placeholder.jpg"; 
+                        onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                          e.currentTarget.src = "/img/placeholder.jpg";
                         }}
                       />
                     ) : (
@@ -333,8 +361,8 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
           </section>
         )}
 
-        {/* SOPA DE LETRAS INTERACTIVA */}
-        {id === "escuela-dominical" && (
+        {/* SOPA DE LETRAS INTERACTIVA (Solo para Escuela Dominical) */}
+        {docIdFinal.includes("escuela-dominical") && (
           <section className="max-w-[1400px] mx-auto px-6 mb-32">
             <SopaLetras
               titulo="Sopa de Letras: Un Corazón Conforme a Dios"

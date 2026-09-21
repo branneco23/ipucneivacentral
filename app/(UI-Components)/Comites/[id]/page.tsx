@@ -6,7 +6,8 @@ export async function generateStaticParams() {
   return Object.keys(ComitesData).map((id) => ({ id }));
 }
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  return <ProjectDetailsClient id={id} />;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = params; // "jovenes"
+
+  return <ProjectDetailsClient initialSlug={id} />;
 }

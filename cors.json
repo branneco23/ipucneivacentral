@@ -1,8 +1,8 @@
 [
   {
-    "origin": ["http://localhost:3000", "https://ipuc-neiva-central-77b89.web.app", "https://ipuc-neiva-central-77b89.firebaseapp.com"],
-    "method": ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
+    "origin": ["http://localhost:3000", "http://localhost:3001"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
     "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin", "Authorization", "x-goog-resumable"]
+    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin", "Authorization"]
   }
 ]

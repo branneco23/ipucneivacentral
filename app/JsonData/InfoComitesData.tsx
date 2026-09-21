@@ -309,7 +309,7 @@ El carácter de un joven se forja cuando aprende a decir "No" a lo malo y "Sí" 
     mision: "Fomentar el crecimiento espíritual y la labor social de la mujer cristiana.",
     vision: "Mujeres sabias que edifican su casa y su iglesia.",
     fotoGrupal: "/img/comites/portada-local.jpg",
-    youtubeIds: ["MZlF3DfTMnc", "RS9iAxIRqXo", "ay-pB_oSPMc", "6_DJyUIhzoo", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
+    youtubeIds: ["-ZVOXrUlv4I", "MZlF3DfTMnc", "RS9iAxIRqXo", "ay-pB_oSPMc", "6_DJyUIhzoo", "EV7kNcaclNI", "txKKhJm-Yh8", "5iOe2oHhiTs"],
     integrantes: [
       { id: 1, nombre: "Edith Poveda", cargo: "PRESIDENTE(A)", foto: "https://res.cloudinary.com/dbbzk99pj/image/upload/v1773068002/ChatGPT_Image_9_mar_2026_09_51_25_ah0j7g.png" },
       { id: 2, nombre: "Marlen Mantilla", cargo: "VICEPRESIDENTE(A)", foto: "/img/comites/ever.png" },

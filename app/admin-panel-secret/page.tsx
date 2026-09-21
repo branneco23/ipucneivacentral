@@ -13,6 +13,13 @@ import { Color } from "@tiptap/extension-color";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase";
+
+// Función utilitaria para generar slugs limpios
+const generarSlug = (texto: string) => {
+  return texto.toLowerCase().replace(/ /g, "-").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
 
 const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) return null;
@@ -79,16 +86,10 @@ export default function AdminPanelPage() {
   const [linkMeet, setLinkMeet] = useState("");
   const [uploadingDevocional, setUploadingDevocional] = useState(false);
 
-  // Estados Formulario Comités (Miembros Integrantes)
-  const [nombreMiembro, setNombreMiembro] = useState("");
-  const [cargoMiembro, setCargoMiembro] = useState("");
-  const [tipoMiembro, setTipoMiembro] = useState(categoriasOficialesComites[0] || "Comité");
-  const [fotoMiembroFile, setFotoMiembroFile] = useState<File | null>(null);
-  const [uploadingMiembro, setUploadingMiembro] = useState(false);
-
-  // SECCIÓN INDEPENDIENTE: Páginas de Comités (Información completa)
-  const [selectedComiteSlug, setSelectedComiteSlug] = useState<string>("escuela-dominical");
-  const [comiteNombre, setComiteNombre] = useState("");
+  // SECCIÓN INDEPENDIENTE: Páginas de Comités
+  const initialSlug = categoriasOficialesComites.length > 0 ? generarSlug(categoriasOficialesComites[0]) : "directiva-de-escuela-dominical";
+  const [selectedComiteSlug, setSelectedComiteSlug] = useState<string>(initialSlug);
+  const [comiteNombre, setComiteNombre] = useState(categoriasOficialesComites[0] || "");
   const [comiteVersiculo, setComiteVersiculo] = useState("");
   const [comiteMision, setComiteMision] = useState("");
   const [comiteVision, setComiteVision] = useState("");
@@ -97,11 +98,12 @@ export default function AdminPanelPage() {
   const [fotoGrupalFile, setFotoGrupalFile] = useState<File | null>(null);
   const [fotoGrupalPreview, setFotoGrupalPreview] = useState("");
 
+  // Estados actuales de eventos que ya tienes en tu componente:
   const [eventos, setEventos] = useState<any[]>([]);
   const [newTituloEvt, setNewTituloEvt] = useState("");
-  const [newTipoEvt, setNewTipoEvt] = useState<"imagen" | "video" | "youtube">("imagen");
-  const [newImagenEvtFile, setNewImagenEvtFile] = useState<File | null>(null);
-  const [newYoutubeEvtUrl, setNewYoutubeEvtUrl] = useState("");
+  const [newTipoEvt, setNewTipoEvt] = useState<"imagen" | "video">("imagen");
+  const [newArchivoEvtFile, setNewArchivoEvtFile] = useState<File | null>(null);
+  const [uploadingEvt, setUploadingEvt] = useState(false);
 
   const [savingComitePagina, setSavingComitePagina] = useState(false);
 
@@ -177,12 +179,17 @@ export default function AdminPanelPage() {
   useEffect(() => {
     if (!user || activeTab !== "paginasComites") return;
 
+    // Encontrar el nombre original basado en el slug seleccionado
+    const categoriaOriginal = categoriasOficialesComites.find(
+      (cat) => generarSlug(cat) === selectedComiteSlug
+    ) || selectedComiteSlug;
+
     const loadComitePageData = async () => {
       const docRef = doc(db, "comites_detalles", selectedComiteSlug);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const d = docSnap.data();
-        setComiteNombre(d.nombre || "");
+        setComiteNombre(d.nombre || categoriaOriginal);
         setComiteVersiculo(d.versiculo || "");
         setComiteMision(d.mision || "");
         setComiteVision(d.vision || "");
@@ -191,7 +198,7 @@ export default function AdminPanelPage() {
         setFotoGrupalPreview(d.fotoGrupal || "");
         setEventos(d.eventos || []);
       } else {
-        setComiteNombre("");
+        setComiteNombre(categoriaOriginal);
         setComiteVersiculo("");
         setComiteMision("");
         setComiteVision("");
@@ -291,57 +298,115 @@ export default function AdminPanelPage() {
     }
   };
 
-  // AGREGAR EVENTO A LA GALERÍA DE PÁGINA
+  // Función mejorada para subir imagen o video localmente desde la PC
   const handleAddEvento = async () => {
-    if (!newTituloEvt) return;
-    let srcUrl = "";
-    if (newTipoEvt === "youtube") {
-      srcUrl = newYoutubeEvtUrl;
-    } else if (newImagenEvtFile) {
-      srcUrl = await convertirImagenABase64WebP(newImagenEvtFile, 0.8);
+    if (!newTituloEvt.trim()) {
+      alert("Por favor ingresa un título para el elemento.");
+      return;
+    }
+    if (!newArchivoEvtFile) {
+      alert("Por favor selecciona un archivo desde tu PC.");
+      return;
     }
 
-    setEventos([...eventos, { id: Date.now().toString(), titulo: newTituloEvt, tipo: newTipoEvt, imagen: srcUrl }]);
-    setNewTituloEvt("");
-    setNewImagenEvtFile(null);
-    setNewYoutubeEvtUrl("");
+    setUploadingEvt(true);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    try {
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+      const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+      if (!cloudName || !uploadPreset) {
+        alert("Faltan las variables de entorno de Cloudinary en el archivo .env.local");
+        setUploadingEvt(false);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", newArchivoEvtFile);
+      formData.append("upload_preset", uploadPreset);
+
+      // Cloudinary detecta automáticamente si es imagen o video con "auto/upload"
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (!data.secure_url) {
+        throw new Error(data.error?.message || "Error al subir el archivo a Cloudinary");
+      }
+
+      // Guardamos la URL pública que nos devuelve Cloudinary
+      setEventos([
+        ...eventos,
+        {
+          id: Date.now().toString(),
+          titulo: newTituloEvt,
+          tipo: newTipoEvt,
+          imagen: data.secure_url // URL directa y optimizada de Cloudinary
+        }
+      ]);
+
+      setNewTituloEvt("");
+      setNewArchivoEvtFile(null);
+      alert("¡Archivo multimedia subido con éxito a Cloudinary!");
+    } catch (err: any) {
+      console.error("Error al subir a Cloudinary:", err);
+      alert(`No se pudo subir el archivo: ${err.message}`);
+    } finally {
+      setUploadingEvt(false);
+    }
   };
 
   const handleRemoveEvento = (id: string) => {
     setEventos(eventos.filter(e => e.id !== id));
   };
 
-  // GUARDAR INFORMACIÓN DE LA PÁGINA DEL COMITÉ
   const handleSaveComitePagina = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingComitePagina(true);
     setStatusMsg("Guardando información de la página del comité...");
 
     try {
-      let bannerFinalUrl = comiteBannerUrl;
+      let bannerFinalUrl = comiteBannerUrl || "";
       if (fotoGrupalFile) {
         bannerFinalUrl = await convertirImagenABase64WebP(fotoGrupalFile, 0.8);
       }
 
-      const youtubeArray = comiteYoutubeIds.split(",").map(idStr => idStr.trim()).filter(Boolean);
+      const youtubeArray = (comiteYoutubeIds || "")
+        .split(",")
+        .map((idStr) => String(idStr).trim())
+        .filter((idStr) => idStr.length > 0);
+
+      const eventosLimpios = (eventos || []).map((evt) => ({
+        id: String(evt.id || Date.now()),
+        titulo: String(evt.titulo || ""),
+        tipo: String(evt.tipo || "imagen"),
+        imagen: String(evt.imagen || ""),
+      }));
 
       const comiteData = {
-        nombre: comiteNombre || "Directiva",
-        versiculo: comiteVersiculo || "",
-        mision: comiteMision || "",
-        vision: comiteVision || "",
-        bannerUrl: bannerFinalUrl || "",
-        fotoGrupal: bannerFinalUrl || "",
+        nombre: String(comiteNombre || "Directiva"),
+        versiculo: String(comiteVersiculo || ""),
+        mision: String(comiteMision || ""),
+        vision: String(comiteVision || ""),
+        bannerUrl: String(bannerFinalUrl),
+        fotoGrupal: String(bannerFinalUrl),
         youtubeIds: youtubeArray,
-        eventos: eventos || [],
+        eventos: eventosLimpios,
         updatedAt: serverTimestamp(),
       };
 
       await setDoc(doc(db, "comites_detalles", selectedComiteSlug), comiteData, { merge: true });
       setStatusMsg("¡Página del comité actualizada correctamente!");
-    } catch (err) {
-      console.error(err);
-      setStatusMsg("Error al guardar la página del comité.");
+    } catch (err: any) {
+      console.error("Error detallado al guardar en Firestore:", err);
+      setStatusMsg(`Error al guardar: ${err.message || "Revisa la consola"}`);
     } finally {
       setSavingComitePagina(false);
     }
@@ -592,7 +657,7 @@ export default function AdminPanelPage() {
                 className="bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm font-bold text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
               >
                 {categoriasOficialesComites.map((cat, idx) => {
-                  const slugVal = cat.toLowerCase().replace(/ /g, "-").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  const slugVal = generarSlug(cat);
                   return (
                     <option key={idx} value={slugVal}>
                       {cat}
@@ -641,9 +706,7 @@ export default function AdminPanelPage() {
                 <input
                   type="file"
                   accept="image/*"
-                  // Si estuvieras usando value, se vería así (aunque para file se suele omitir value):
-                  // value={miEstado ?? ""}
-                  onChange={(e) => setNewImagenEvtFile(e.target.files ? e.target.files[0] : null)}
+                  onChange={(e) => setFotoGrupalFile(e.target.files ? e.target.files[0] : null)}
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-slate-300"
                 />
               </div>
@@ -681,55 +744,83 @@ export default function AdminPanelPage() {
               />
             </div>
 
-            {/* Gestión de Galería / Eventos */}
+            {/* SECCIÓN DE GALERÍA / EVIDENCIAS (FOTOS Y VIDEOS DESDE LA PC) */}
             <div className="border-t border-slate-800 pt-6 space-y-4">
-              <h3 className="font-bold text-sm text-yellow-400">Galería / Eventos del Comité</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-800">
-                <input
-                  type="text"
-                  placeholder="Título del evento"
-                  value={newTituloEvt}
-                  onChange={(e) => setNewTituloEvt(e.target.value)}
-                  className="bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs"
-                />
-                <select
-                  value={newTipoEvt}
-                  onChange={(e: any) => setNewTipoEvt(e.target.value)}
-                  className="bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs"
-                >
-                  <option value="imagen">Imagen</option>
-                  <option value="youtube">YouTube</option>
-                </select>
-                {newTipoEvt === "youtube" ? (
+              <h3 className="text-lg font-bold">Galería de Evidencias (Fotos y Videos)</h3>
+              <p className="text-xs text-slate-400">Sube archivos multimedia directamente desde el explorador de archivos de tu PC.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                {/* Columna 1: Título */}
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Título del Elemento</label>
                   <input
                     type="text"
-                    placeholder="URL de YouTube"
-                    value={newYoutubeEvtUrl}
-                    onChange={(e) => setNewYoutubeEvtUrl(e.target.value)}
-                    className="bg-slate-800 border border-slate-700 rounded-xl p-2.5 text-xs"
+                    value={newTituloEvt}
+                    onChange={(e) => setNewTituloEvt(e.target.value)}
+                    placeholder="Ej: Actividad Juvenil"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
                   />
-                ) : (
+                </div>
+
+                {/* Columna 2: Tipo de Evidencia */}
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Tipo de Evidencia</label>
+                  <select
+                    value={newTipoEvt}
+                    onChange={(e) => {
+                      setNewTipoEvt(e.target.value as "imagen" | "video");
+                      setNewArchivoEvtFile(null); // Limpiar archivo al cambiar de tipo
+                    }}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+                  >
+                    <option value="imagen">📸 Foto (Desde la PC)</option>
+                    <option value="video">🎥 Video (Desde la PC)</option>
+                  </select>
+                </div>
+
+                {/* Columna 3: Explorador de archivos dinámico (Foto o Video) */}
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">
+                    {newTipoEvt === "imagen" ? "Seleccionar Imagen (PC)" : "Seleccionar Video MP4 (PC)"}
+                  </label>
                   <input
                     type="file"
-                    accept="image/*"
-                    onChange={(e) => setNewImagenEvtFile(e.target.files ? e.target.files[0] : null)}
-                    className="bg-slate-800 border border-slate-700 rounded-xl p-1.5 text-xs text-slate-300"
+                    accept={newTipoEvt === "imagen" ? "image/*" : "video/mp4,video/webm,video/quicktime"}
+                    onChange={(e) => setNewArchivoEvtFile(e.target.files ? e.target.files[0] : null)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-slate-300 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer"
                   />
-                )}
-                <button
-                  type="button"
-                  onClick={handleAddEvento}
-                  className="md:col-span-3 bg-slate-700 hover:bg-slate-600 text-xs font-bold py-2 rounded-xl transition"
-                >
-                  + Agregar Elemento a la Galería
-                </button>
+                </div>
               </div>
 
-              <div className="space-y-2 max-h-48 overflow-y-auto">
-                {eventos.map((ev) => (
-                  <div key={ev.id} className="flex justify-between items-center bg-slate-800 px-4 py-2 rounded-xl text-xs">
-                    <span>{ev.titulo} ({ev.tipo})</span>
-                    <button type="button" onClick={() => handleRemoveEvento(ev.id)} className="text-red-400 hover:underline">Eliminar</button>
+              <button
+                type="button"
+                onClick={handleAddEvento}
+                disabled={uploadingEvt}
+                className={`font-bold px-4 py-2.5 rounded-xl text-xs transition text-white ${uploadingEvt ? "bg-slate-600 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700"
+                  }`}
+              >
+                {uploadingEvt ? "Procesando archivo local..." : "+ Añadir a la lista"}
+              </button>
+
+              {/* Listado previo de elementos agregados */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {eventos.map((evt) => (
+                  <div key={evt.id} className="bg-slate-800 border border-slate-700 p-3 rounded-xl relative space-y-2">
+                    {evt.tipo === "imagen" ? (
+                      <img src={evt.imagen} alt={evt.titulo} className="w-full h-32 object-cover rounded-lg" />
+                    ) : (
+                      <video src={evt.imagen} controls className="w-full h-32 object-cover rounded-lg" />
+                    )}
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-bold truncate text-white">{evt.titulo}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveEvento(evt.id)}
+                        className="text-red-400 hover:text-red-300 text-xs bg-red-500/10 px-2 py-1 rounded"
+                      >
+                        Quitar
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -738,79 +829,67 @@ export default function AdminPanelPage() {
             <button
               type="submit"
               disabled={savingComitePagina}
-              className="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-sm transition disabled:opacity-50"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-sm transition"
             >
-              {savingComitePagina ? "Guardando cambios..." : "Guardar Página del Comité"}
+              {savingComitePagina ? "Guardando cambios..." : "Guardar Todos los Cambios del Comité"}
             </button>
           </form>
         )}
 
-        {/* PESTAÑA BLOGS */}
+        {/* PESTAÑA GESTIÓN DE BLOGS */}
         {activeTab === "blogs" && (
-          <div className="space-y-8">
-            <form onSubmit={handleSaveBlog} className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6">
-              <h2 className="text-xl font-bold">{editingBlogId ? "Editar Blog o Enseñanza" : "Crear Nuevo Blog o Enseñanza"}</h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6">
+            <h2 className="text-xl font-bold">Gestión de Blogs y Enseñanzas</h2>
+            <form onSubmit={handleSaveBlog} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs mb-1 font-semibold">Título</label>
+                  <label className="block text-xs mb-1">Título del Blog</label>
                   <input type="text" required value={tituloBlog} onChange={(e) => setTituloBlog(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" placeholder="Título..." />
                 </div>
                 <div>
-                  <label className="block text-xs mb-1 font-semibold">Autor</label>
+                  <label className="block text-xs mb-1">Autor</label>
                   <input type="text" value={autorBlog} onChange={(e) => setAutorBlog(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
                 </div>
                 <div>
-                  <label className="block text-xs mb-1 font-semibold">Categoría / Tag</label>
+                  <label className="block text-xs mb-1">Categoría / Tag</label>
                   <input type="text" value={tagBlog} onChange={(e) => setTagBlog(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs mb-1 font-semibold">Imagen de Portada</label>
+                  <label className="block text-xs mb-1">Imagen de Portada (Archivo)</label>
                   <input type="file" accept="image/*" onChange={(e) => setPortadaBlogFile(e.target.files ? e.target.files[0] : null)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-slate-300" />
                 </div>
                 <div>
-                  <label className="block text-xs mb-1 font-semibold">URL de Video de YouTube (Opcional)</label>
+                  <label className="block text-xs mb-1">Video Relacionado (URL YouTube opcional)</label>
                   <input type="text" value={videoBlogUrl} onChange={(e) => setVideoBlogUrl(e.target.value)} placeholder="https://www.youtube.com/watch?v=..." className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs mb-2 font-semibold">Contenido del Blog</label>
-                <div className="border border-slate-700 rounded-xl overflow-hidden">
+                <label className="block text-xs mb-1 font-semibold">Contenido del Artículo</label>
+                <div className="bg-slate-900 border border-slate-700 rounded-xl overflow-hidden text-white">
                   <MenuBar editor={editor} />
-                  <EditorContent editor={editor} className="p-4 bg-slate-900 min-h-[200px] text-white focus:outline-none" />
+                  <EditorContent editor={editor} className="p-4 min-h-[200px] prose prose-invert max-w-none focus:outline-none" />
                 </div>
               </div>
 
               <button type="submit" disabled={savingBlog} className="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-sm transition">
-                {savingBlog ? "Guardando..." : editingBlogId ? "Actualizar Blog" : "Publicar Blog"}
+                {savingBlog ? "Guardando Blog..." : (editingBlogId ? "Actualizar Blog" : "Publicar Blog")}
               </button>
             </form>
 
-            <div className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-4">
-              <h2 className="text-lg font-bold">Blogs Publicados ({blogsList.length})</h2>
+            <div className="border-t border-slate-800 pt-6 space-y-4">
+              <h3 className="font-bold text-sm">Blogs Publicados ({blogsList.length})</h3>
               <div className="space-y-3">
                 {blogsList.map((blog) => (
                   <div key={blog.id} className="flex items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700">
                     <div>
                       <h4 className="font-bold text-sm text-white">{blog.titulo}</h4>
-                      <p className="text-[11px] text-slate-400">Por {blog.autor} | Tag: {blog.tag}</p>
+                      <p className="text-xs text-slate-400">Por {blog.autor} • {blog.tag}</p>
                     </div>
-                    <div className="flex gap-2">
-                      <button onClick={() => {
-                        setEditingBlogId(blog.id);
-                        setTituloBlog(blog.titulo || "");
-                        setAutorBlog(blog.autor || "Pastor Principal");
-                        setTagBlog(blog.tag || "Estudio Bíblico");
-                        setVideoBlogUrl(blog.videoUrl || "");
-                        if (editor) editor.commands.setContent(blog.contenido || "");
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }} className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-xs hover:bg-blue-500/20">Editar</button>
-                      <button onClick={() => handleDelete("blogs", blog.id)} className="bg-red-500/10 text-red-400 px-3 py-1 rounded-lg text-xs hover:bg-red-500/20">Eliminar</button>
-                    </div>
+                    <button onClick={() => handleDelete("blogs", blog.id)} className="bg-red-500/10 text-red-400 px-3 py-1 rounded-lg text-xs hover:bg-red-500/20">Eliminar</button>
                   </div>
                 ))}
               </div>
