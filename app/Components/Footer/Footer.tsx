@@ -48,11 +48,11 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {[
                 { label: "Inicio", href: "/" },
-                { label: "Servicios", href: "/Pages/Services" },
+                { label: "Servicios", href: "/servicios" },
                 { label: "Directivas", href: "/Comites" },
                 { label: "Doctrina IPUC", href: "/Blogs" },
                 { label: "Transmisiones", href: "/transmision" },
-                { label: "Peticiones", href: "/Pages/Peticiones" },
+                { label: "Peticiones", href: "/Peticiones" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link 
