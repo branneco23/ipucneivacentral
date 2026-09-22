@@ -86,15 +86,10 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
   useEffect(() => {
     if (!docIdFinal) return;
 
-    console.log("👉 1. ID original recibido por props:", id);
-    console.log("👉 2. ID real resuelto buscando en Firebase:", docIdFinal);
-
     const unsub = onSnapshot(doc(db, "comites_detalles", docIdFinal), (docSnap) => {
       if (docSnap.exists()) {
-        console.log("✅ ¡Encontrado exitosamente en Firebase!");
         setData(docSnap.data() as ComitéData);
       } else {
-        console.log("❌ No existe en Firebase con este ID:", docIdFinal);
         setData(null);
       }
       setLoading(false);
@@ -241,29 +236,7 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
           )}
         </div>
 
-        {/* MULTIMEDIA (YOUTUBE) */}
-        {videoPrincipal && (
-          <section className="max-w-[1400px] mx-auto px-6 mb-40">
-            <div className="flex items-end justify-between mb-12 border-b border-slate-100 pb-8">
-              <div>
-                <p className="text-red-600 font-black uppercase text-sm tracking-widest mb-2">YouTube Channel</p>
-                <h2 className="text-4xl font-black text-slate-900 uppercase">Contenido Multimedia</h2>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-10">
-              <VideoThumbnail videoId={videoPrincipal} isMain={true} onClick={() => setSelectedVideo(videoPrincipal)} />
-              {videosSecundarios.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-                  {videosSecundarios.map((vId, index) => (
-                    <VideoThumbnail key={index} videoId={vId} isMain={false} onClick={() => setSelectedVideo(vId)} />
-                  ))}
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
-        {/* INTEGRANTES */}
+        {/* INTEGRANTES DEL COMITÉ (Sección conectada dinámicamente) */}
         {data.integrantes && data.integrantes.length > 0 && (
           <section className="max-w-[1600px] mx-auto px-6 mb-40">
             <div className="text-center mb-20">
@@ -296,6 +269,28 @@ export default function ProjectDetailsClient({ id }: ProjectDetailsProps) {
                   </div>
                 </div>
               ))}
+            </div>
+          </section>
+        )}
+
+        {/* MULTIMEDIA (YOUTUBE) */}
+        {videoPrincipal && (
+          <section className="max-w-[1400px] mx-auto px-6 mb-40">
+            <div className="flex items-end justify-between mb-12 border-b border-slate-100 pb-8">
+              <div>
+                <p className="text-red-600 font-black uppercase text-sm tracking-widest mb-2">YouTube Channel</p>
+                <h2 className="text-4xl font-black text-slate-900 uppercase">Contenido Multimedia</h2>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-10">
+              <VideoThumbnail videoId={videoPrincipal} isMain={true} onClick={() => setSelectedVideo(videoPrincipal)} />
+              {videosSecundarios.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+                  {videosSecundarios.map((vId, index) => (
+                    <VideoThumbnail key={index} videoId={vId} isMain={false} onClick={() => setSelectedVideo(vId)} />
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         )}

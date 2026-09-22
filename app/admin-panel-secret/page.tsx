@@ -13,8 +13,6 @@ import { Color } from "@tiptap/extension-color";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase";
 
 // Función utilitaria para generar slugs limpios
 const generarSlug = (texto: string) => {
@@ -98,7 +96,14 @@ export default function AdminPanelPage() {
   const [fotoGrupalFile, setFotoGrupalFile] = useState<File | null>(null);
   const [fotoGrupalPreview, setFotoGrupalPreview] = useState("");
 
-  // Estados actuales de eventos que ya tienes en tu componente:
+  // Nuevos estados para Integrantes del Comité
+  const [integrantes, setIntegrantes] = useState<any[]>([]);
+  const [newNombreIntegrante, setNewNombreIntegrante] = useState("");
+  const [newCargoIntegrante, setNewCargoIntegrante] = useState("");
+  const [newFotoIntegranteFile, setNewFotoIntegranteFile] = useState<File | null>(null);
+  const [uploadingIntegrante, setUploadingIntegrante] = useState(false);
+
+  // Estados actuales de eventos
   const [eventos, setEventos] = useState<any[]>([]);
   const [newTituloEvt, setNewTituloEvt] = useState("");
   const [newTipoEvt, setNewTipoEvt] = useState<"imagen" | "video">("imagen");
@@ -107,7 +112,7 @@ export default function AdminPanelPage() {
 
   const [savingComitePagina, setSavingComitePagina] = useState(false);
 
-  // Estados Formulario Blogs y Videos de Enseñanza
+  // Estados Formulario Blogs
   const [editingBlogId, setEditingBlogId] = useState<string | null>(null);
   const [tituloBlog, setTituloBlog] = useState("");
   const [autorBlog, setAutorBlog] = useState("Pastor Principal");
@@ -179,7 +184,6 @@ export default function AdminPanelPage() {
   useEffect(() => {
     if (!user || activeTab !== "paginasComites") return;
 
-    // Encontrar el nombre original basado en el slug seleccionado
     const categoriaOriginal = categoriasOficialesComites.find(
       (cat) => generarSlug(cat) === selectedComiteSlug
     ) || selectedComiteSlug;
@@ -196,6 +200,7 @@ export default function AdminPanelPage() {
         setComiteYoutubeIds((d.youtubeIds || []).join(", "));
         setComiteBannerUrl(d.bannerUrl || d.fotoGrupal || "");
         setFotoGrupalPreview(d.fotoGrupal || "");
+        setIntegrantes(d.integrantes || []);
         setEventos(d.eventos || []);
       } else {
         setComiteNombre(categoriaOriginal);
@@ -205,6 +210,7 @@ export default function AdminPanelPage() {
         setComiteYoutubeIds("");
         setComiteBannerUrl("");
         setFotoGrupalPreview("");
+        setIntegrantes([]);
         setEventos([]);
       }
     };
@@ -298,7 +304,73 @@ export default function AdminPanelPage() {
     }
   };
 
-  // Función mejorada para subir imagen o video localmente desde la PC
+  // Función para subir integrante a Cloudinary
+  const handleAddIntegrante = async () => {
+    if (!newNombreIntegrante.trim()) {
+      alert("Por favor ingresa el nombre del integrante.");
+      return;
+    }
+    if (!newFotoIntegranteFile) {
+      alert("Por favor selecciona una foto para el integrante desde tu PC.");
+      return;
+    }
+
+    setUploadingIntegrante(true);
+    try {
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+      const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+      if (!cloudName || !uploadPreset) {
+        alert("Faltan las variables de entorno de Cloudinary en el archivo .env.local");
+        setUploadingIntegrante(false);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", newFotoIntegranteFile);
+      formData.append("upload_preset", uploadPreset);
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (!data.secure_url) {
+        throw new Error(data.error?.message || "Error al subir la foto a Cloudinary");
+      }
+
+      setIntegrantes([
+        ...integrantes,
+        {
+          id: Date.now().toString(),
+          nombre: newNombreIntegrante,
+          cargo: newCargoIntegrante,
+          foto: data.secure_url
+        }
+      ]);
+
+      setNewNombreIntegrante("");
+      setNewCargoIntegrante("");
+      setNewFotoIntegranteFile(null);
+      alert("¡Integrante agregado con éxito!");
+    } catch (err: any) {
+      console.error("Error al subir imagen de integrante:", err);
+      alert(`No se pudo subir la foto: ${err.message}`);
+    } finally {
+      setUploadingIntegrante(false);
+    }
+  };
+
+  const handleRemoveIntegrante = (id: string) => {
+    setIntegrantes(integrantes.filter(i => i.id !== id));
+  };
+
+  // Función para subir eventos/multimedia a Cloudinary
   const handleAddEvento = async () => {
     if (!newTituloEvt.trim()) {
       alert("Por favor ingresa un título para el elemento.");
@@ -310,8 +382,6 @@ export default function AdminPanelPage() {
     }
 
     setUploadingEvt(true);
-    await new Promise((resolve) => setTimeout(resolve, 50));
-
     try {
       const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
       const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
@@ -326,7 +396,6 @@ export default function AdminPanelPage() {
       formData.append("file", newArchivoEvtFile);
       formData.append("upload_preset", uploadPreset);
 
-      // Cloudinary detecta automáticamente si es imagen o video con "auto/upload"
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
         {
@@ -341,14 +410,13 @@ export default function AdminPanelPage() {
         throw new Error(data.error?.message || "Error al subir el archivo a Cloudinary");
       }
 
-      // Guardamos la URL pública que nos devuelve Cloudinary
       setEventos([
         ...eventos,
         {
           id: Date.now().toString(),
           titulo: newTituloEvt,
           tipo: newTipoEvt,
-          imagen: data.secure_url // URL directa y optimizada de Cloudinary
+          imagen: data.secure_url
         }
       ]);
 
@@ -383,6 +451,13 @@ export default function AdminPanelPage() {
         .map((idStr) => String(idStr).trim())
         .filter((idStr) => idStr.length > 0);
 
+      const integrantesLimpios = (integrantes || []).map((int) => ({
+        id: String(int.id || Date.now()),
+        nombre: String(int.nombre || ""),
+        cargo: String(int.cargo || ""),
+        foto: String(int.foto || ""),
+      }));
+
       const eventosLimpios = (eventos || []).map((evt) => ({
         id: String(evt.id || Date.now()),
         titulo: String(evt.titulo || ""),
@@ -398,6 +473,7 @@ export default function AdminPanelPage() {
         bannerUrl: String(bannerFinalUrl),
         fotoGrupal: String(bannerFinalUrl),
         youtubeIds: youtubeArray,
+        integrantes: integrantesLimpios,
         eventos: eventosLimpios,
         updatedAt: serverTimestamp(),
       };
@@ -649,7 +725,7 @@ export default function AdminPanelPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
               <div>
                 <h2 className="text-xl font-bold">Configuración de Páginas de Comités</h2>
-                <p className="text-xs text-slate-400">Edita el Banner, Misión, Visión, Videos de YouTube y detalles de cada comité.</p>
+                <p className="text-xs text-slate-400">Edita el Banner, Misión, Visión, Integrantes y Galería de cada comité.</p>
               </div>
               <select
                 value={selectedComiteSlug}
@@ -733,6 +809,73 @@ export default function AdminPanelPage() {
               </div>
             </div>
 
+            {/* SECCIÓN NUEVA: INTEGRANTES DEL COMITÉ (FOTOS DESDE LA PC) */}
+            <div className="border-t border-slate-800 pt-6 space-y-4">
+              <h3 className="text-lg font-bold">👥 Integrantes del Comité</h3>
+              <p className="text-xs text-slate-400">Agrega las fotos, nombres y cargos de los integrantes del comité directamente desde tu PC.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Nombre del Integrante</label>
+                  <input
+                    type="text"
+                    value={newNombreIntegrante}
+                    onChange={(e) => setNewNombreIntegrante(e.target.value)}
+                    placeholder="Ej: Juan Pérez"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Cargo</label>
+                  <input
+                    type="text"
+                    value={newCargoIntegrante}
+                    onChange={(e) => setNewCargoIntegrante(e.target.value)}
+                    placeholder="Ej: Director / Tesorero"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Foto (Desde la PC)</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setNewFotoIntegranteFile(e.target.files ? e.target.files[0] : null)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-slate-300 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleAddIntegrante}
+                disabled={uploadingIntegrante}
+                className={`font-bold px-4 py-2.5 rounded-xl text-xs transition text-white ${uploadingIntegrante ? "bg-slate-600 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+              >
+                {uploadingIntegrante ? "Subiendo foto..." : "+ Añadir Integrante"}
+              </button>
+
+              {/* Listado previo de integrantes */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {integrantes.map((int) => (
+                  <div key={int.id} className="flex items-center gap-3 bg-slate-800 border border-slate-700 p-3 rounded-xl relative">
+                    <img src={int.foto} alt={int.nombre} className="w-14 h-14 object-cover rounded-full border border-slate-600" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-xs text-white truncate">{int.nombre}</h4>
+                      <p className="text-[11px] text-yellow-400 truncate">{int.cargo || "Integrante"}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveIntegrante(int.id)}
+                      className="text-red-400 hover:text-red-300 text-xs bg-red-500/10 px-2 py-1 rounded"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs mb-1 font-semibold">IDs de Videos de YouTube (separados por comas)</label>
               <input
@@ -750,7 +893,6 @@ export default function AdminPanelPage() {
               <p className="text-xs text-slate-400">Sube archivos multimedia directamente desde el explorador de archivos de tu PC.</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                {/* Columna 1: Título */}
                 <div>
                   <label className="block text-xs mb-1 font-semibold">Título del Elemento</label>
                   <input
@@ -762,14 +904,13 @@ export default function AdminPanelPage() {
                   />
                 </div>
 
-                {/* Columna 2: Tipo de Evidencia */}
                 <div>
                   <label className="block text-xs mb-1 font-semibold">Tipo de Evidencia</label>
                   <select
                     value={newTipoEvt}
                     onChange={(e) => {
                       setNewTipoEvt(e.target.value as "imagen" | "video");
-                      setNewArchivoEvtFile(null); // Limpiar archivo al cambiar de tipo
+                      setNewArchivoEvtFile(null);
                     }}
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
                   >
@@ -778,7 +919,6 @@ export default function AdminPanelPage() {
                   </select>
                 </div>
 
-                {/* Columna 3: Explorador de archivos dinámico (Foto o Video) */}
                 <div>
                   <label className="block text-xs mb-1 font-semibold">
                     {newTipoEvt === "imagen" ? "Seleccionar Imagen (PC)" : "Seleccionar Video MP4 (PC)"}
@@ -796,13 +936,11 @@ export default function AdminPanelPage() {
                 type="button"
                 onClick={handleAddEvento}
                 disabled={uploadingEvt}
-                className={`font-bold px-4 py-2.5 rounded-xl text-xs transition text-white ${uploadingEvt ? "bg-slate-600 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700"
-                  }`}
+                className={`font-bold px-4 py-2.5 rounded-xl text-xs transition text-white ${uploadingEvt ? "bg-slate-600 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700"}`}
               >
                 {uploadingEvt ? "Procesando archivo local..." : "+ Añadir a la lista"}
               </button>
 
-              {/* Listado previo de elementos agregados */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                 {eventos.map((evt) => (
                   <div key={evt.id} className="bg-slate-800 border border-slate-700 p-3 rounded-xl relative space-y-2">
