@@ -14,7 +14,6 @@ import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 
-// Función utilitaria para generar slugs limpios
 const generarSlug = (texto: string) => {
   return texto.toLowerCase().replace(/ /g, "-").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
@@ -52,20 +51,29 @@ const MenuBar = ({ editor }: { editor: any }) => {
 export default function AdminPanelPage() {
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"anuncios" | "envivos" | "devocionales" | "comites" | "paginasComites" | "blogs">("anuncios");
+  const [activeTab, setActiveTab] = useState<"anuncios" | "envivos" | "devocionales" | "comites" | "paginasComites" | "blogs" | "eventosCalendario">("anuncios");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
-  // Listas de Firebase
   const [anuncios, setAnuncios] = useState<any[]>([]);
   const [devocionales, setDevocionales] = useState<any[]>([]);
   const [comitesList, setComitesList] = useState<any[]>([]);
   const [blogsList, setBlogsList] = useState<any[]>([]);
+  const [eventosCalendarioList, setEventosCalendarioList] = useState<any[]>([]);
 
-  // Estados Formulario Anuncios
+  // Estados para el formulario de Eventos del Calendario
+  const [tituloEvtCal, setTituloEvtCal] = useState("");
+  const [descEvtCal, setDescEvtCal] = useState("");
+  const [fechaEvtCal, setFechaEvtCal] = useState("");
+  const [horaEvtCal, setHoraEvtCal] = useState("");
+  const [comiteEvtCal, setComiteEvtCal] = useState("Directiva Local");
+  const [colorEvtCal, setColorEvtCal] = useState("bg-purple-600");
+  const [savingEvtCal, setSavingEvtCal] = useState(false);
+  const [editingEvtCalId, setEditingEvtCalId] = useState<string | null>(null);
+
   const [tituloAnuncio, setTituloAnuncio] = useState("");
   const [tagAnuncio, setTagAnuncio] = useState("ANUNCIO");
   const [fechaAnuncio, setFechaAnuncio] = useState("");
@@ -73,18 +81,15 @@ export default function AdminPanelPage() {
   const [imagenAnuncioFile, setImagenAnuncioFile] = useState<File | null>(null);
   const [uploadingAnuncio, setUploadingAnuncio] = useState(false);
 
-  // Estados Formulario En Vivos
   const [liveUrl, setLiveUrl] = useState("");
   const [liveTitle, setLiveTitle] = useState("");
   const [isLiveActive, setIsLiveActive] = useState(false);
   const [savingLive, setSavingLive] = useState(false);
 
-  // Estados Formulario Devocionales
   const [tituloDevocional, setTituloDevocional] = useState("");
   const [linkMeet, setLinkMeet] = useState("");
   const [uploadingDevocional, setUploadingDevocional] = useState(false);
 
-  // SECCIÓN INDEPENDIENTE: Páginas de Comités
   const initialSlug = categoriasOficialesComites.length > 0 ? generarSlug(categoriasOficialesComites[0]) : "directiva-de-escuela-dominical";
   const [selectedComiteSlug, setSelectedComiteSlug] = useState<string>(initialSlug);
   const [comiteNombre, setComiteNombre] = useState(categoriasOficialesComites[0] || "");
@@ -96,14 +101,12 @@ export default function AdminPanelPage() {
   const [fotoGrupalFile, setFotoGrupalFile] = useState<File | null>(null);
   const [fotoGrupalPreview, setFotoGrupalPreview] = useState("");
 
-  // Nuevos estados para Integrantes del Comité
   const [integrantes, setIntegrantes] = useState<any[]>([]);
   const [newNombreIntegrante, setNewNombreIntegrante] = useState("");
   const [newCargoIntegrante, setNewCargoIntegrante] = useState("");
   const [newFotoIntegranteFile, setNewFotoIntegranteFile] = useState<File | null>(null);
   const [uploadingIntegrante, setUploadingIntegrante] = useState(false);
 
-  // Estados actuales de eventos
   const [eventos, setEventos] = useState<any[]>([]);
   const [newTituloEvt, setNewTituloEvt] = useState("");
   const [newTipoEvt, setNewTipoEvt] = useState<"imagen" | "video">("imagen");
@@ -112,7 +115,6 @@ export default function AdminPanelPage() {
 
   const [savingComitePagina, setSavingComitePagina] = useState(false);
 
-  // Estados Formulario Blogs
   const [editingBlogId, setEditingBlogId] = useState<string | null>(null);
   const [tituloBlog, setTituloBlog] = useState("");
   const [autorBlog, setAutorBlog] = useState("Pastor Principal");
@@ -121,7 +123,106 @@ export default function AdminPanelPage() {
   const [videoBlogUrl, setVideoBlogUrl] = useState("");
   const [savingBlog, setSavingBlog] = useState(false);
 
-  // Editor Tiptap
+  const [editingMiembroId, setEditingMiembroId] = useState<string | null>(null);
+
+  const handleSaveMiembroComite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNombreIntegrante.trim()) {
+      alert("El nombre es obligatorio");
+      return;
+    }
+
+    setUploadingIntegrante(true);
+    try {
+      let fotoUrlFinal = "";
+
+      if (newFotoIntegranteFile) {
+        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+        const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+        const formData = new FormData();
+        formData.append("file", newFotoIntegranteFile);
+        formData.append("upload_preset", uploadPreset!);
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (!data.secure_url) throw new Error("Error al subir la imagen");
+        fotoUrlFinal = data.secure_url;
+      }
+
+      const categoriaActual = categoriasOficialesComites.find(
+        (cat) => generarSlug(cat) === selectedComiteSlug
+      ) || "Directiva Local";
+
+      if (editingMiembroId) {
+        const updateData: any = {
+          nombre: newNombreIntegrante,
+          cargo: newCargoIntegrante,
+          tipo: categoriaActual,
+        };
+        if (fotoUrlFinal) {
+          updateData.fotoUrl = fotoUrlFinal;
+        }
+
+        await updateDoc(doc(db, "comites", editingMiembroId), updateData);
+        alert("Miembro actualizado con éxito.");
+      } else {
+        if (!fotoUrlFinal) {
+          alert("Por favor selecciona una foto para el nuevo miembro.");
+          setUploadingIntegrante(false);
+          return;
+        }
+
+        await addDoc(collection(db, "comites"), {
+          nombre: newNombreIntegrante,
+          cargo: newCargoIntegrante,
+          tipo: categoriaActual,
+          fotoUrl: fotoUrlFinal,
+          orden: 1,
+          createdAt: serverTimestamp(),
+        });
+        alert("Miembro añadido con éxito.");
+      }
+
+      setNewNombreIntegrante("");
+      setNewCargoIntegrante("");
+      setNewFotoIntegranteFile(null);
+      setEditingMiembroId(null);
+    } catch (error: any) {
+      console.error("Error al guardar miembro:", error);
+      alert(`Error: ${error.message}`);
+    } finally {
+      setUploadingIntegrante(false);
+    }
+  };
+
+  const handleStartEditMiembro = (miembro: any) => {
+    setEditingMiembroId(miembro.id);
+    setNewNombreIntegrante(miembro.nombre);
+    setNewCargoIntegrante(miembro.cargo);
+    setNewFotoIntegranteFile(null);
+  };
+
+  const handleDeleteMiembro = async (id: string) => {
+    if (confirm("¿Estás seguro de eliminar este integrante permanentemente?")) {
+      try {
+        await deleteDoc(doc(db, "comites", id));
+        if (editingMiembroId === id) {
+          setEditingMiembroId(null);
+          setNewNombreIntegrante("");
+          setNewCargoIntegrante("");
+        }
+      } catch (error) {
+        console.error("Error al eliminar:", error);
+        alert("No se pudo eliminar el registro.");
+      }
+    }
+  };
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -171,16 +272,20 @@ export default function AdminPanelPage() {
       setBlogsList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     });
 
+    const unsubEventosCal = onSnapshot(query(collection(db, "eventos_calendario"), orderBy("createdAt", "desc")), (snap) => {
+      setEventosCalendarioList(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+
     return () => {
       unsubAnuncios();
       unsubLive();
       unsubDevocionales();
       unsubComites();
       unsubBlogs();
+      unsubEventosCal();
     };
   }, [user]);
 
-  // Cargar datos de la página del comité cuando cambia la selección
   useEffect(() => {
     if (!user || activeTab !== "paginasComites") return;
 
@@ -234,6 +339,58 @@ export default function AdminPanelPage() {
     if (confirm("¿Deseas eliminar este registro?")) {
       await deleteDoc(doc(db, coll, id));
     }
+  };
+
+  const handleSaveEventoCalendario = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingEvtCal(true);
+    try {
+      if (editingEvtCalId) {
+        await updateDoc(doc(db, "eventos_calendario", editingEvtCalId), {
+          titulo: tituloEvtCal,
+          descripcion: descEvtCal,
+          fecha: fechaEvtCal,
+          hora: horaEvtCal,
+          comite: comiteEvtCal,
+          color: colorEvtCal,
+          updatedAt: serverTimestamp(),
+        });
+        setStatusMsg("Evento de calendario actualizado con éxito.");
+      } else {
+        await addDoc(collection(db, "eventos_calendario"), {
+          titulo: tituloEvtCal,
+          descripcion: descEvtCal,
+          fecha: fechaEvtCal,
+          hora: horaEvtCal,
+          comite: comiteEvtCal,
+          color: colorEvtCal,
+          createdAt: serverTimestamp(),
+        });
+        setStatusMsg("Evento de calendario creado con éxito.");
+      }
+      setTituloEvtCal("");
+      setDescEvtCal("");
+      setFechaEvtCal("");
+      setHoraEvtCal("");
+      setComiteEvtCal("Directiva Local");
+      setColorEvtCal("bg-purple-600");
+      setEditingEvtCalId(null);
+    } catch (err) {
+      console.error(err);
+      setStatusMsg("Error al guardar el evento en el calendario.");
+    } finally {
+      setSavingEvtCal(false);
+    }
+  };
+
+  const handleStartEditEventoCal = (evt: any) => {
+    setEditingEvtCalId(evt.id);
+    setTituloEvtCal(evt.titulo || "");
+    setDescEvtCal(evt.descripcion || "");
+    setFechaEvtCal(evt.fecha || "");
+    setHoraEvtCal(evt.hora || "");
+    setComiteEvtCal(evt.comite || "Directiva Local");
+    setColorEvtCal(evt.color || "bg-purple-600");
   };
 
   const handleCreateAnuncio = async (e: React.FormEvent) => {
@@ -304,7 +461,6 @@ export default function AdminPanelPage() {
     }
   };
 
-  // Función para subir integrante a Cloudinary
   const handleAddIntegrante = async () => {
     if (!newNombreIntegrante.trim()) {
       alert("Por favor ingresa el nombre del integrante.");
@@ -370,7 +526,6 @@ export default function AdminPanelPage() {
     setIntegrantes(integrantes.filter(i => i.id !== id));
   };
 
-  // Función para subir eventos/multimedia a Cloudinary
   const handleAddEvento = async () => {
     if (!newTituloEvt.trim()) {
       alert("Por favor ingresa un título para el elemento.");
@@ -595,6 +750,7 @@ export default function AdminPanelPage() {
             { id: "devocionales", label: "Devocionales" },
             { id: "paginasComites", label: "🏛️ Páginas de Comités" },
             { id: "blogs", label: "✍️ Gestión de Blogs" },
+            { id: "eventosCalendario", label: "🗓️ Calendario de Eventos" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -606,7 +762,6 @@ export default function AdminPanelPage() {
           ))}
         </div>
 
-        {/* PESTAÑA ANUNCIOS */}
         {activeTab === "anuncios" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <form onSubmit={handleCreateAnuncio} className="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
@@ -660,7 +815,6 @@ export default function AdminPanelPage() {
           </div>
         )}
 
-        {/* PESTAÑA EN VIVOS */}
         {activeTab === "envivos" && (
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl max-w-xl mx-auto">
             <form onSubmit={handleSaveLive} className="space-y-4">
@@ -684,7 +838,6 @@ export default function AdminPanelPage() {
           </div>
         )}
 
-        {/* PESTAÑA DEVOCIONALES */}
         {activeTab === "devocionales" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <form onSubmit={handleCreateDevocional} className="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
@@ -719,7 +872,98 @@ export default function AdminPanelPage() {
           </div>
         )}
 
-        {/* PESTAÑA PÁGINAS DE COMITÉS */}
+        {activeTab === "eventosCalendario" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <form onSubmit={handleSaveEventoCalendario} className="lg:col-span-5 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-lg font-bold">{editingEvtCalId ? "Editar Evento" : "Nuevo Evento de Calendario"}</h2>
+                {editingEvtCalId && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingEvtCalId(null);
+                      setTituloEvtCal("");
+                      setDescEvtCal("");
+                      setFechaEvtCal("");
+                      setHoraEvtCal("");
+                    }}
+                    className="text-xs text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded"
+                  >
+                    Cancelar
+                  </button>
+                )}
+              </div>
+              <div>
+                <label className="block text-xs mb-1">Título del Evento</label>
+                <input type="text" required value={tituloEvtCal} onChange={(e) => setTituloEvtCal(e.target.value)} placeholder="Ej: Obra Social / Culto" className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
+              </div>
+              <div>
+                <label className="block text-xs mb-1">Descripción / Subtítulo</label>
+                <input type="text" value={descEvtCal} onChange={(e) => setDescEvtCal(e.target.value)} placeholder="Ej: Marcha de Mercado" className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs mb-1">Fecha</label>
+                  <input type="date" required value={fechaEvtCal} onChange={(e) => setFechaEvtCal(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs mb-1">Hora</label>
+                  <input type="text" required value={horaEvtCal} onChange={(e) => setHoraEvtCal(e.target.value)} placeholder="Ej: 09:00 - 12:00" className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs mb-1">Comité / Ministerio</label>
+                  <select value={comiteEvtCal} onChange={(e) => setComiteEvtCal(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white">
+                    <option value="Directiva Local">Directiva Local</option>
+                    <option value="Damas Dorcas">Damas Dorcas</option>
+                    <option value="Misiones">Misiones</option>
+                    <option value="Comunicaciones">Comunicaciones</option>
+                    <option value="Jóvenes">Jóvenes</option>
+                    <option value="Escuela Dominical">Escuela Dominical</option>
+                    <option value="Alabanza">Alabanza</option>
+                    <option value="Obra Social">Obra Social</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs mb-1">Color del Recuadro</label>
+                  <select value={colorEvtCal} onChange={(e) => setColorEvtCal(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white">
+                    <option value="bg-purple-600">Púrpura</option>
+                    <option value="bg-red-600">Rojo</option>
+                    <option value="bg-blue-600">Azul</option>
+                    <option value="bg-orange-500">Naranja</option>
+                    <option value="bg-emerald-600">Verde</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" disabled={savingEvtCal} className="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-xs transition">
+                {savingEvtCal ? "Guardando..." : (editingEvtCalId ? "Actualizar Evento" : "Guardar Evento en Calendario")}
+              </button>
+            </form>
+
+            <div className="lg:col-span-7 bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+              <h2 className="text-lg font-bold">Eventos Programados ({eventosCalendarioList.length})</h2>
+              <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                {eventosCalendarioList.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-4 h-10 rounded ${item.color || 'bg-purple-600'}`} />
+                      <div>
+                        <h4 className="font-bold text-sm text-white">{item.titulo}</h4>
+                        <p className="text-[11px] text-yellow-400">{item.comite} • {item.fecha} ({item.hora})</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={() => handleStartEditEventoCal(item)} className="bg-yellow-500/10 text-yellow-400 px-3 py-1 rounded-lg text-xs hover:bg-yellow-500/20">Editar</button>
+                      <button onClick={() => handleDelete("eventos_calendario", item.id)} className="bg-red-500/10 text-red-400 px-3 py-1 rounded-lg text-xs hover:bg-red-500/20">Eliminar</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === "paginasComites" && (
           <form onSubmit={handleSaveComitePagina} className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
@@ -809,7 +1053,6 @@ export default function AdminPanelPage() {
               </div>
             </div>
 
-            {/* SECCIÓN NUEVA: INTEGRANTES DEL COMITÉ (FOTOS DESDE LA PC) */}
             <div className="border-t border-slate-800 pt-6 space-y-4">
               <h3 className="text-lg font-bold">👥 Integrantes del Comité</h3>
               <p className="text-xs text-slate-400">Agrega las fotos, nombres y cargos de los integrantes del comité directamente desde tu PC.</p>
@@ -855,7 +1098,6 @@ export default function AdminPanelPage() {
                 {uploadingIntegrante ? "Subiendo foto..." : "+ Añadir Integrante"}
               </button>
 
-              {/* Listado previo de integrantes */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                 {integrantes.map((int) => (
                   <div key={int.id} className="flex items-center gap-3 bg-slate-800 border border-slate-700 p-3 rounded-xl relative">
@@ -876,6 +1118,110 @@ export default function AdminPanelPage() {
               </div>
             </div>
 
+            <div className="border-t border-slate-800 pt-6 space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-bold">👥 Integrantes del Comité ({selectedComiteSlug})</h3>
+                  <p className="text-xs text-slate-400">Gestiona los miembros que aparecerán directamente en la página pública.</p>
+                </div>
+                {editingMiembroId && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingMiembroId(null);
+                      setNewNombreIntegrante("");
+                      setNewCargoIntegrante("");
+                    }}
+                    className="text-xs text-yellow-400 bg-yellow-500/10 px-3 py-1.5 rounded-xl border border-yellow-500/20"
+                  >
+                    Cancelar Edición
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Nombre del Integrante</label>
+                  <input
+                    type="text"
+                    value={newNombreIntegrante}
+                    onChange={(e) => setNewNombreIntegrante(e.target.value)}
+                    placeholder="Ej: Juan Pérez"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">Cargo</label>
+                  <input
+                    type="text"
+                    value={newCargoIntegrante}
+                    onChange={(e) => setNewCargoIntegrante(e.target.value)}
+                    placeholder="Ej: Director / Tesorero"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs mb-1 font-semibold">
+                    {editingMiembroId ? "Reemplazar Foto (Opcional)" : "Foto (Desde la PC)"}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setNewFotoIntegranteFile(e.target.files ? e.target.files[0] : null)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-slate-300 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleSaveMiembroComite}
+                disabled={uploadingIntegrante}
+                className={`font-bold px-5 py-2.5 rounded-xl text-xs transition text-white ${editingMiembroId ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+                  }`}
+              >
+                {uploadingIntegrante ? "Procesando..." : editingMiembroId ? "💾 Guardar Cambios del Miembro" : "+ Añadir Miembro a la Base de Datos"}
+              </button>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {comitesList
+                  .filter((m) => generarSlug(m.tipo) === selectedComiteSlug)
+                  .map((miembro) => (
+                    <div
+                      key={miembro.id}
+                      className={`flex items-center gap-3 bg-slate-800 border p-3 rounded-xl relative ${editingMiembroId === miembro.id ? "border-yellow-500 ring-2 ring-yellow-500/20" : "border-slate-700"
+                        }`}
+                    >
+                      <img
+                        src={miembro.fotoUrl || "https://via.placeholder.com/150"}
+                        alt={miembro.nombre}
+                        className="w-14 h-14 object-cover rounded-full border border-slate-600 shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-xs text-white truncate">{miembro.nombre}</h4>
+                        <p className="text-[11px] text-yellow-400 truncate">{miembro.cargo || "Integrante"}</p>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleStartEditMiembro(miembro)}
+                          className="text-yellow-400 text-[10px] bg-yellow-500/10 px-2 py-0.5 rounded hover:bg-yellow-500/20"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteMiembro(miembro.id)}
+                          className="text-red-400 text-[10px] bg-red-500/10 px-2 py-0.5 rounded hover:bg-red-500/20"
+                        >
+                          Borrar
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs mb-1 font-semibold">IDs de Videos de YouTube (separados por comas)</label>
               <input
@@ -887,7 +1233,6 @@ export default function AdminPanelPage() {
               />
             </div>
 
-            {/* SECCIÓN DE GALERÍA / EVIDENCIAS (FOTOS Y VIDEOS DESDE LA PC) */}
             <div className="border-t border-slate-800 pt-6 space-y-4">
               <h3 className="text-lg font-bold">Galería de Evidencias (Fotos y Videos)</h3>
               <p className="text-xs text-slate-400">Sube archivos multimedia directamente desde el explorador de archivos de tu PC.</p>
@@ -974,7 +1319,6 @@ export default function AdminPanelPage() {
           </form>
         )}
 
-        {/* PESTAÑA GESTIÓN DE BLOGS */}
         {activeTab === "blogs" && (
           <div className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6">
             <h2 className="text-xl font-bold">Gestión de Blogs y Enseñanzas</h2>

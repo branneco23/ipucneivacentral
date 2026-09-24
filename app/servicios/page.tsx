@@ -3,9 +3,14 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Accordion from "@/app/Components/Accordion/Accordion";
 import DevocionalBanner from "@/app/Components/DevocionalesBanner/DevocionalesBanner";
 import { CULTOS_ACORDEON, EVENTOS_ANUALES_2026 } from "@/app/JsonData/EventsData";
+import { db } from "@/lib/firebase"; // <--- Asegúrate de que esta ruta sea la correcta a tu configuración de Firebase
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function MainLanding() {
   const [fechaReferencia, setFechaReferencia] = useState<Date | null>(null);
+  
+  // Estado que combinará los eventos fijos del JSON + los de Firebase
+  const [listaEventos, setListaEventos] = useState(EVENTOS_ANUALES_2026);
 
   useEffect(() => {
     // CORRECCIÓN DE FECHA: Crear hoy sin horas para evitar saltos de día en producción
@@ -13,9 +18,38 @@ export default function MainLanding() {
     const hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
     
     const inicioSemana = new Date(hoy);
-    // Ajuste para que la semana empiece en Domingo
     inicioSemana.setDate(hoy.getDate() - hoy.getDay());
     setFechaReferencia(inicioSemana);
+
+    // CONEXIÓN A FIREBASE FIRESTORE EN TIEMPO REAL
+    const unsubscribe = onSnapshot(collection(db, "eventos_calendario"), (snapshot) => {
+      const eventosFirebase = snapshot.docs.map(doc => {
+        const data = doc.data();
+        
+        // Convertimos el color de Tailwind a un color Hexadecimal válido para el style, o usamos uno por defecto
+        let colorHex = '#00338d';
+        if (data.color?.includes('emerald')) colorHex = '#059669';
+        else if (data.color?.includes('purple') || data.color?.includes('púrpura')) colorHex = '#7c3aed';
+        else if (data.color?.includes('blue')) colorHex = '#2563eb';
+        else if (data.color?.includes('red')) colorHex = '#dc2626';
+
+        return {
+          id: doc.id,
+          titulo: data.titulo,
+          fecha: data.fecha,
+          inicio: data.hora || '00:00', // Mapeamos 'hora' de la DB a 'inicio'
+          fin: data.hora || '',         // Si no hay hora fin, usamos la misma
+          color: colorHex
+        };
+      });
+
+      // Unimos los eventos estáticos con los que vienen de Firebase
+      setListaEventos([...EVENTOS_ANUALES_2026, ...eventosFirebase]);
+    }, (error) => {
+      console.error("Error al cargar eventos de Firebase:", error);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const diasDeLaSemana = useMemo(() => {
@@ -41,7 +75,6 @@ export default function MainLanding() {
            date.getFullYear() === hoy.getFullYear();
   };
 
-  // Función para formatear fecha local a string YYYY-MM-DD sin usar UTC
   const formatFechaLocal = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -71,12 +104,12 @@ export default function MainLanding() {
         </div>
       </section>
 
-      {/* SECCIÓN DE DEVOCIONALES (Conectada a Firebase a través del componente) */}
+      {/* SECCIÓN DE DEVOCIONALES */}
       <div className="px-4 sm:px-10 md:px-[8%] max-w-screen-2xl mx-auto">
         <DevocionalBanner />
       </div>
 
-      {/* CALENDARIO SEMANAL (Justo abajo de los devocionales) */}
+      {/* CALENDARIO SEMANAL */}
       <section className="px-4 sm:px-10 md:px-[8%] py-12 max-w-screen-2xl mx-auto">
         <div className="max-w-7xl mx-auto">
           
@@ -123,7 +156,7 @@ export default function MainLanding() {
                   {diasDeLaSemana.map((dia, idx) => {
                     const fechaStr = formatFechaLocal(dia);
                     const checkHoy = esHoy(dia);
-                    const eventosDelDia = EVENTOS_ANUALES_2026.filter(e => {
+                    const eventosDelDia = listaEventos.filter(e => {
                       if (e.fechaFin) return fechaStr >= e.fecha && fechaStr <= e.fechaFin;
                       return e.fecha === fechaStr;
                     });
@@ -143,7 +176,7 @@ export default function MainLanding() {
                                  className="p-4 rounded-2xl text-white shadow-sm border border-black/5"
                                  style={{ backgroundColor: evento.color || '#00338d' }}>
                               <p className="text-[9px] font-black opacity-80 uppercase mb-1">
-                                {evento.inicio} - {evento.fin}
+                                {evento.inicio} {evento.fin && evento.fin !== evento.inicio ? `- ${evento.fin}` : ''}
                               </p>
                               <p className="text-[12px] font-bold leading-tight uppercase italic">
                                 {evento.titulo}
