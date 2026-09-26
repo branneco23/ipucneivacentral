@@ -2,55 +2,69 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import emailjs from "@emailjs/browser"; // Importación necesaria
-import { FAQ_DATA } from "@/app/JsonData/FaqData";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, query, where, addDoc, serverTimestamp } from "firebase/firestore";
 import faqBanner from "@/public/img/faq-banner.jpg";
 
 export default function Faqs() {
+  const [faqsList, setFaqsList] = useState<any[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // Estados para el formulario de contacto
+  // Estados para el formulario de contacto (enviar nueva pregunta)
   const [showInput, setShowInput] = useState(false);
   const [userQuestion, setUserQuestion] = useState("");
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    fetchPublicFaqs();
   }, []);
+
+  // Función para obtener las preguntas respondidas desde Firestore
+  const fetchPublicFaqs = async () => {
+    try {
+      const q = query(
+        collection(db, "faqs_consultas"),
+        where("respondido", "==", true)
+      );
+      const querySnapshot = await getDocs(q);
+      const items = querySnapshot.docs.map((doc, index) => ({
+        id: doc.id,
+        numero: index + 1,
+        ...doc.data(),
+      }));
+      setFaqsList(items);
+    } catch (error) {
+      console.error("Error al cargar las FAQs públicas:", error);
+    }
+  };
 
   const handleToggle = useCallback((index: number) => {
     setOpenIndex(prevIndex => (prevIndex === index ? null : index));
   }, []);
 
-  // Función para enviar a través de EmailJS
+  // Función para guardar la pregunta directamente en Firestore
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userQuestion.trim()) return;
 
     setIsSending(true);
 
-    // Definimos los parámetros que recibirá tu plantilla en EmailJS
-    const templateParams = {
-      intro_paterna: "Hola, se ha recibido una nueva consulta desde el Centro de Ayuda de IPUC Neiva Central:",
-      user_message: userQuestion, // Este nombre debe ser igual al que pusiste entre llaves {{ }}
-    };
-
     try {
-      // Reemplaza estos 3 valores con los de tu cuenta de EmailJS
-      await emailjs.send(
-        "service_430q00f",   // Ej: 'service_gmail123'
-        "template_carbdjj",  // Ej: 'template_faq_ipuc'
-        templateParams,
-        "Fz1SJhmYGExQrCUMh"    // Lo encuentras en Account > Public Key
-      );
+      await addDoc(collection(db, "faqs_consultas"), {
+        question: userQuestion.trim(),
+        answer: "",
+        respondido: false,
+        createdAt: serverTimestamp(),
+      });
 
-      alert("¡Tu mensaje ha sido enviado exitosamente!");
+      alert("¡Tu consulta ha sido enviada con éxito al panel de administración!");
       setUserQuestion("");
       setShowInput(false);
-    } catch (error) {
-      console.error("Error EmailJS:", error);
-      alert("Hubo un fallo al enviar el correo. Por favor, intenta más tarde.");
+    } catch (error: any) {
+      console.error("Error al guardar la consulta:", error);
+      alert("Hubo un fallo al enviar la pregunta. Por favor, intenta más tarde.");
     } finally {
       setIsSending(false);
     }
@@ -92,33 +106,38 @@ export default function Faqs() {
         {/* COLUMNA FAQ */}
         <div className="lg:col-span-7 w-full">
           <div className="divide-y divide-gray-300 border-t border-gray-300">
-            {FAQ_DATA.map((item, index) => (
-              <FAQItem
-                key={item.id}
-                item={item}
-                isOpen={openIndex === index}
-                onToggle={() => handleToggle(index)}
-              />
-            ))}
+            {faqsList.length === 0 ? (
+              <p className="py-8 text-gray-500 italic text-center">No hay preguntas respondidas todavía. ¡Sé el primero en escribir una duda!</p>
+            ) : (
+              faqsList.map((item, index) => (
+                <FAQItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  isOpen={openIndex === index}
+                  onToggle={() => handleToggle(index)}
+                />
+              ))
+            )}
           </div>
 
-          {/* FOOTER CON FORMULARIO EMAILJS */}
+          {/* FOOTER CON FORMULARIO */}
           <footer className="mt-12 p-8 rounded-3xl bg-white shadow-sm border border-gray-200">
             {!showInput ? (
               <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                 <p className="GolosText text-gray-600 italic">¿Tienes otra duda?</p>
                 <button
                   onClick={() => setShowInput(true)}
-                  className="px-8 py-3 bg-[#00338d] text-white font-bold rounded-2xl hover:bg-blue-800 transition-all shadow-lg active:scale-95"
+                  className="px-8 py-3 bg-[#00338d] text-white font-bold rounded-2xl hover:bg-blue-800 transition-all shadow-lg active:scale-95 cursor-pointer"
                 >
-                  Escribir al Correo
+                  Escribir Pregunta
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex justify-between items-center">
                   <p className="text-[#00338d] font-bold text-sm uppercase">Redactar Consulta</p>
-                  <button type="button" onClick={() => setShowInput(false)} className="text-gray-400 hover:text-red-500 text-xs font-bold">CANCELAR</button>
+                  <button type="button" onClick={() => setShowInput(false)} className="text-gray-400 hover:text-red-500 text-xs font-bold cursor-pointer">CANCELAR</button>
                 </div>
                 <div className="flex flex-col md:flex-row gap-3">
                   <input
@@ -133,9 +152,9 @@ export default function Faqs() {
                   <button
                     type="submit"
                     disabled={isSending}
-                    className="bg-[#00338d] text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-900 transition-all disabled:opacity-50"
+                    className="bg-[#00338d] text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-900 transition-all disabled:opacity-50 cursor-pointer"
                   >
-                    {isSending ? "Enviando..." : "Enviar a IPUC"}
+                    {isSending ? "Enviando..." : "Enviar al Panel"}
                   </button>
                 </div>
               </form>
@@ -147,17 +166,18 @@ export default function Faqs() {
   );
 }
 
-function FAQItem({ item, isOpen, onToggle }: { item: any, isOpen: boolean, onToggle: () => void }) {
+function FAQItem({ item, index, isOpen, onToggle }: { item: any, index: number, isOpen: boolean, onToggle: () => void }) {
+  const displayIndex = index + 1;
   return (
     <article className="transition-all duration-300">
       <button
-        className="w-full flex justify-between items-center py-8 text-left focus:outline-none group rounded-lg"
+        className="w-full flex justify-between items-center py-8 text-left focus:outline-none group rounded-lg cursor-pointer"
         onClick={onToggle}
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-6">
           <h3 className={`text-2xl font-bold ${isOpen ? "text-[#00338d]" : "text-[#00338d]/20"}`}>
-            {item.id < 10 ? `0${item.id}` : item.id}
+            {displayIndex < 10 ? `0${displayIndex}` : displayIndex}
           </h3>
           <span className={`text-lg md:text-xl GolosText font-semibold ${isOpen ? "text-[#00338d]" : "text-gray-800"}`}>
             {item.question}
@@ -171,9 +191,11 @@ function FAQItem({ item, isOpen, onToggle }: { item: any, isOpen: boolean, onTog
       <div className={`grid transition-all duration-500 ${isOpen ? "grid-rows-[1fr] opacity-100 pb-10" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
           <div className="pl-14 md:pl-16">
-            <p className="GolosText text-gray-600 text-lg leading-relaxed border-l-4 border-[#00338d]/20 pl-6 italic">
-              {item.answer}
-            </p>
+            {/* Contenedor adaptado para HTML Enriquecido */}
+            <div
+              className="GolosText text-gray-600 text-lg leading-relaxed border-l-4 border-[#00338d]/20 pl-6 space-y-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-bold [&_em]:italic [&_s]:line-through [&_u]:underline [&_img]:rounded-2xl [&_img]:my-4 [&_img]:max-w-full [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-gray-900 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-gray-800"
+              dangerouslySetInnerHTML={{ __html: item.answer }}
+            />
           </div>
         </div>
       </div>
