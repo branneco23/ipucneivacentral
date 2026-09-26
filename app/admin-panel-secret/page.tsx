@@ -11,7 +11,7 @@ import DevocionalesTab from "./components/DevocionalesTab";
 import EventosCalendarioTab from "./components/EventosCalendarioTab";
 import PaginasComitesTab from "./components/PaginasComitesTab";
 import BlogsTab from "./components/BlogsTab";
-import FaqsTab from "./components/FaqsTab"; // Asegúrate de que este archivo esté dentro de tu carpeta components/
+import FaqsTab from "./components/FaqsTab";
 
 export default function AdminPanelPage() {
   const [user, setUser] = useState(true); // Cambiar según tu lógica real de autenticación
@@ -25,7 +25,7 @@ export default function AdminPanelPage() {
   const [eventosList, setEventosList] = useState<any[]>([]);
   const [comitesList, setComitesList] = useState<any[]>([]);
   const [blogsList, setBlogsList] = useState<any[]>([]);
-  const [faqsList, setFaqsList] = useState<any[]>([]); // Estado añadido para las preguntas de los usuarios
+  const [faqsList, setFaqsList] = useState<any[]>([]);
 
   // Efecto para escuchar colecciones de Firestore en tiempo real
   useEffect(() => {
@@ -55,7 +55,6 @@ export default function AdminPanelPage() {
       setBlogsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 
-    // Escucha en tiempo real la colección de consultas / preguntas de los usuarios
     const unsubFaqs = onSnapshot(query(collection(db, "faqs_consultas"), orderBy("createdAt", "desc")), (snapshot) => {
       setFaqsList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
@@ -67,7 +66,7 @@ export default function AdminPanelPage() {
       unsubEventos();
       unsubComites();
       unsubBlogs();
-      unsubFaqs(); // Limpieza del listener
+      unsubFaqs();
     };
   }, [user]);
 
@@ -80,10 +79,9 @@ export default function AdminPanelPage() {
   }
 
   return (
-    /* Se añadió 'pt-24 md:pt-28' para evitar que el navbar superior tape el panel */
     <div className="min-h-screen bg-slate-950 text-slate-100 p-4 md:p-10 pt-24 md:pt-28">
       <div className="max-w-6xl mx-auto space-y-8">
-        
+
         {/* Cabecera del Panel */}
         <header className="flex justify-between items-center bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg">
           <div>
@@ -115,29 +113,29 @@ export default function AdminPanelPage() {
             { id: "eventos", label: "Eventos Calendario" },
             { id: "comites", label: "Páginas Comites" },
             { id: "blogs", label: "Blogs" },
-            { id: "faqs", label: "Centro de Ayuda" }, // Pestaña añadida para las preguntas
+            { id: "faqs", label: "Centro de Ayuda" },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${
-                activeTab === tab.id
+              className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer ${activeTab === tab.id
                   ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
+                }`}
             >
               {tab.label}
             </button>
           ))}
         </nav>
 
-        {/* Contenido Dinámico según la Pestaña Activa con sus Props Requeridas */}
+        {/* Contenido Dinámico con las props ajustadas correctamente a los tipos esperados */}
+        {/* Contenido Dinámico con las props corregidas */}
         <main className="transition-all">
-          {activeTab === "anuncios" && <AnunciosTab anunciosList={anunciosList} setStatusMsg={setStatusMsg} />}
+          {activeTab === "anuncios" && <AnunciosTab anuncios={anunciosList} setStatusMsg={setStatusMsg} />}
           {activeTab === "envivos" && <EnvivosTab envivosList={envivosList} setStatusMsg={setStatusMsg} />}
-          {activeTab === "devocionales" && <DevocionalesTab devocionalesList={devocionalesList} setStatusMsg={setStatusMsg} />}
+          {activeTab === "devocionales" && <DevocionalesTab setStatusMsg={setStatusMsg} />}
           {activeTab === "eventos" && <EventosCalendarioTab eventosList={eventosList} setStatusMsg={setStatusMsg} />}
-          {activeTab === "comites" && <PaginasComitesTab comitesList={comitesList} setStatusMsg={setStatusMsg} />}
+          {activeTab === "comites" && <PaginasComitesTab setStatusMsg={setStatusMsg} />}
           {activeTab === "blogs" && <BlogsTab blogsList={blogsList} setStatusMsg={setStatusMsg} />}
           {activeTab === "faqs" && <FaqsTab faqsList={faqsList} setFaqsList={setFaqsList} setStatusMsg={setStatusMsg} />}
         </main>
