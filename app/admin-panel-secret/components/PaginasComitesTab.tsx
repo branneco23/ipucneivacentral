@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { convertirImagenABase64WebP } from "@/utils/imageUtils";
 import { categoriasOficialesComites } from "@/constants/comitesConstants";
 
 const generarSlug = (texto: string) => {
@@ -22,6 +21,7 @@ export default function AdminComitesPage() {
   const [comiteYoutubeIds, setComiteYoutubeIds] = useState("");
   const [comiteBannerUrl, setComiteBannerUrl] = useState("");
   const [fotoGrupalFile, setFotoGrupalFile] = useState<File | null>(null);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
 
   // 1. Integrantes para la Página Interna (Medio cuerpo / Avatar)
   const [integrantesInternos, setIntegrantesInternos] = useState<any[]>([]);
@@ -86,7 +86,7 @@ export default function AdminComitesPage() {
     const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
     if (!cloudName || !uploadPreset) {
-      throw new Error("Faltan las variables de entorno de Cloudinary");
+      throw new Error("Faltan las variables de entorno de Cloudinary (Cloud Name o Upload Preset)");
     }
 
     const formData = new FormData();
@@ -180,8 +180,14 @@ export default function AdminComitesPage() {
 
     try {
       let bannerFinalUrl = comiteBannerUrl || "";
+      
+      // Corregido: Usamos Cloudinary en lugar de Base64 para evitar errores de tamaño en Firestore
       if (fotoGrupalFile) {
-        bannerFinalUrl = await convertirImagenABase64WebP(fotoGrupalFile, 0.8);
+        setUploadingBanner(true);
+        bannerFinalUrl = await subirACloudinary(fotoGrupalFile);
+        setComiteBannerUrl(bannerFinalUrl);
+        setFotoGrupalFile(null);
+        setUploadingBanner(false);
       }
 
       const youtubeArray = (comiteYoutubeIds || "")
@@ -210,6 +216,7 @@ export default function AdminComitesPage() {
       setStatusMsg(`Error al guardar: ${err.message}`);
     } finally {
       setSavingComitePagina(false);
+      setUploadingBanner(false);
     }
   };
 
@@ -302,7 +309,7 @@ export default function AdminComitesPage() {
             </div>
           </div>
 
-          {/* SECCIÓN 2: INTEGRANTES GENERALES (CUERPO COMPLETO - Listado con tarjetas altas y object-contain object-bottom) */}
+          {/* SECCIÓN 2: INTEGRANTES GENERALES (CUERPO COMPLETO) */}
           <div className="border-t border-slate-800 pt-6 space-y-4">
             <h3 className="text-lg font-bold">2️⃣ Integrantes (Página General - Cuerpo Completo)</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
@@ -387,8 +394,8 @@ export default function AdminComitesPage() {
             </div>
           </div>
 
-          <button type="submit" disabled={savingComitePagina} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-sm transition cursor-pointer">
-            {savingComitePagina ? "Guardando..." : "Guardar Todos los Cambios del Comité"}
+          <button type="submit" disabled={savingComitePagina || uploadingBanner} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-sm transition cursor-pointer">
+            {savingComitePagina || uploadingBanner ? "Guardando..." : "Guardar Todos los Cambios del Comité"}
           </button>
         </form>
       </div>
