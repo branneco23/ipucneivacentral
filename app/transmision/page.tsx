@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
 
 export default function TransmisionPage() {
   const [isReady, setIsReady] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
-  const [isLiveActive, setIsLiveActive] = useState<boolean>(true);
+  const [activeTitle, setActiveTitle] = useState<string>("Transmisión en Vivo");
   const [domain, setDomain] = useState<string>("");
 
-  const YOUTUBE_CHANNEL_ID = "UCr5SX280UbD1R2fNDsFIUdg";
   const FALLBACK_VIDEO_ID = "XGNJoRzIMV0";
 
   const extractYouTubeId = (input: any): string | null => {
@@ -28,52 +27,27 @@ export default function TransmisionPage() {
       setDomain(window.location.hostname);
     }
 
-    const liveDocRef = doc(db, "envivos", "main");
+    // Consultar la transmisión más reciente de la colección "envivos" en tiempo real
+    const q = query(collection(db, "envivos"), orderBy("createdAt", "desc"), limit(1));
 
-    const unsubscribe = onSnapshot(liveDocRef, async (docSnap) => {
-      let foundValidVideo = false;
-      let manualActiveState = true;
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        manualActiveState = Boolean(data.activo);
-        const extractedId = extractYouTubeId(data.url);
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) {
+        const docData = snapshot.docs[0].data();
+        const extractedId = extractYouTubeId(docData.url);
 
         if (extractedId) {
           setActiveVideoId(extractedId);
-          setIsLiveActive(manualActiveState);
-          foundValidVideo = true;
+          setActiveTitle(docData.titulo || "Transmisión en Vivo");
+        } else {
+          setActiveVideoId(FALLBACK_VIDEO_ID);
         }
-      }
-
-      // Si no hay video manual o queremos asegurar que consulte el directo real del canal si está activo
-      try {
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`)}`);
-        const rssData = await response.json();
-
-        if (rssData && rssData.items && rssData.items.length > 0) {
-          const latestItem = rssData.items[0];
-          const videoId = extractYouTubeId(latestItem.link);
-          const titleLower = latestItem.title.toLowerCase();
-          
-          // Detectamos si el video más reciente del canal es un directo activo
-          const isRssLive = titleLower.includes("en vivo") || titleLower.includes("directo") || titleLower.includes("live");
-
-          if (isRssLive && videoId) {
-            setActiveVideoId(videoId);
-            setIsLiveActive(true);
-            foundValidVideo = true;
-          }
-        }
-      } catch (e) {
-        console.error("Error al consultar RSS de YouTube", e);
-      }
-
-      if (!foundValidVideo) {
+      } else {
         setActiveVideoId(FALLBACK_VIDEO_ID);
-        setIsLiveActive(false);
       }
-
+      setIsReady(true);
+    }, (error) => {
+      console.error("Error al escuchar transmisiones:", error);
+      setActiveVideoId(FALLBACK_VIDEO_ID);
       setIsReady(true);
     });
 
@@ -83,24 +57,18 @@ export default function TransmisionPage() {
   if (!isReady) return <div className="min-h-screen bg-[#f4f4f5]" />;
 
   const videoToShow = activeVideoId || FALLBACK_VIDEO_ID;
-  
-  // Parámetros agregados para forzar el menor consumo de datos posibles:
-  // -vq=small o calidad baja por defecto (manejado mediante suggestQuality o controles embebidos)
-  // - autoplay=1, playsinline=1, controls=1
   const embedUrl = `https://www.youtube.com/embed/${videoToShow}?autoplay=1&enablejsapi=1&playsinline=1&vq=small`;
 
-  // El chat se habilita correctamente si la transmisión está activa y el dominio está detectado
-  const chatUrl =
-    isLiveActive && domain
-      ? `https://www.youtube.com/live_chat?v=${videoToShow}&embed_domain=${domain}`
-      : null;
+  // El chat se habilita automáticamente con el video actual si el dominio está detectado
+  const chatUrl = domain ? `https://www.youtube.com/live_chat?v=${videoToShow}&embed_domain=${domain}` : null;
 
   return (
     <main className="min-h-screen bg-[#f4f4f5] pt-40 pb-20 px-[4%]">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          {isLiveActive ? "Transmisión en Vivo" : "Última Transmisión / Culto Grabado"}
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          {activeTitle}
         </h1>
+        <p className="text-sm text-gray-500 mb-6">Disfruta de la programación en directo desde nuestra plataforma.</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Reproductor de Video */}
@@ -108,7 +76,7 @@ export default function TransmisionPage() {
             <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
               <iframe
                 src={embedUrl}
-                title="Transmisión IPUC Central Neiva"
+                title={activeTitle}
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -127,9 +95,9 @@ export default function TransmisionPage() {
                 ></iframe>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-gray-500 text-sm p-6 text-center">
-                  <p className="font-bold text-gray-800 text-base mb-2">Chat no activo</p>
+                  <p className="font-bold text-gray-800 text-base mb-2">Chat no disponible</p>
                   <p className="text-xs text-gray-500 leading-relaxed">
-                    Estás viendo la <strong>última grabación disponible</strong> del canal. El chat en vivo se activará automáticamente cuando comience la próxima transmisión.
+                    El chat se conectará en cuanto cargue el reproductor.
                   </p>
                 </div>
               )}
@@ -138,9 +106,7 @@ export default function TransmisionPage() {
         </div>
 
         <p className="text-gray-500 text-sm mt-6 text-center">
-          {isLiveActive
-            ? "Inicia sesión con tu cuenta de Google dentro del chat para comentar y reaccionar en tiempo real."
-            : "Conéctate en los horarios de culto para participar en la transmisión en directo."}
+          Inicia sesión con tu cuenta de Google dentro del chat para comentar y reaccionar en tiempo real.
         </p>
       </div>
     </main>

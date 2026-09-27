@@ -13,49 +13,68 @@ export default function EnvivosTab({ envivosList = [], setStatusMsg }: EnvivosTa
   const [editingEnvivoId, setEditingEnvivoId] = useState<string | null>(null);
   const [tituloEnvivo, setTituloEnvivo] = useState("");
   const [urlEnvivo, setUrlEnvivo] = useState("");
-  const [estadoEnvivo, setEstadoEnvivo] = useState("Programado");
   const [savingEnvivo, setSavingEnvivo] = useState(false);
+
+  const obtenerYoutubeEmbedUrl = (url: string) => {
+    let cleanUrl = url.trim();
+    let videoId = "";
+
+    try {
+      if (cleanUrl.includes("/embed/")) {
+        return cleanUrl;
+      } else if (cleanUrl.includes("youtu.be/")) {
+        videoId = cleanUrl.split("youtu.be/")[1]?.split("?")[0]?.split("&")[0];
+      } else if (cleanUrl.includes("watch?v=")) {
+        videoId = cleanUrl.split("watch?v=")[1]?.split("&")[0];
+      } else if (cleanUrl.includes("/live/")) {
+        videoId = cleanUrl.split("/live/")[1]?.split("?")[0]?.split("&")[0];
+      }
+
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+    } catch (e) {
+      console.error("Error parseando URL de YouTube", e);
+    }
+
+    return cleanUrl;
+  };
 
   const handleSaveEnvivo = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!tituloEnvivo.trim() || !urlEnvivo.trim()) {
+      setStatusMsg("Por favor completa todos los campos.");
+      return;
+    }
+
     setSavingEnvivo(true);
     setStatusMsg("Guardando transmisión...");
 
     try {
-      let formattedUrl = urlEnvivo.trim();
-      if (formattedUrl.includes("watch?v=")) {
-        const idStr = formattedUrl.split("v=")[1].split("&")[0];
-        formattedUrl = `https://www.youtube.com/embed/${idStr}`;
-      } else if (formattedUrl.includes("youtu.be/")) {
-        const idStr = formattedUrl.split("youtu.be/")[1].split("?")[0];
-        formattedUrl = `https://www.youtube.com/embed/${idStr}`;
-      }
+      const formattedUrl = obtenerYoutubeEmbedUrl(urlEnvivo);
 
       if (editingEnvivoId) {
         await updateDoc(doc(db, "envivos", editingEnvivoId), {
-          titulo: tituloEnvivo,
+          titulo: tituloEnvivo.trim(),
           url: formattedUrl,
-          estado: estadoEnvivo,
           updatedAt: serverTimestamp(),
         });
-        setStatusMsg("Transmisión actualizada con éxito.");
+        setStatusMsg("¡Transmisión actualizada con éxito!");
       } else {
         await addDoc(collection(db, "envivos"), {
-          titulo: tituloEnvivo,
+          titulo: tituloEnvivo.trim(),
           url: formattedUrl,
-          estado: estadoEnvivo,
           createdAt: serverTimestamp(),
         });
-        setStatusMsg("Transmisión creada con éxito.");
+        setStatusMsg("¡Transmisión creada con éxito!");
       }
 
       setTituloEnvivo("");
       setUrlEnvivo("");
-      setEstadoEnvivo("Programado");
       setEditingEnvivoId(null);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setStatusMsg("Error al guardar la transmisión.");
+      setStatusMsg(`Error al guardar: ${err.message}`);
     } finally {
       setSavingEnvivo(false);
     }
@@ -65,21 +84,24 @@ export default function EnvivosTab({ envivosList = [], setStatusMsg }: EnvivosTa
     setEditingEnvivoId(envivo.id);
     setTituloEnvivo(envivo.titulo || "");
     setUrlEnvivo(envivo.url || "");
-    setEstadoEnvivo(envivo.estado || "Programado");
     setStatusMsg(`Editando transmisión: ${envivo.titulo}`);
   };
 
   const handleDeleteEnvivo = async (id: string) => {
     if (confirm("¿Deseas eliminar esta transmisión?")) {
-      await deleteDoc(doc(db, "envivos", id));
-      setStatusMsg("Transmisión eliminada.");
+      try {
+        await deleteDoc(doc(db, "envivos", id));
+        setStatusMsg("Transmisión eliminada correctamente.");
+      } catch (err) {
+        setStatusMsg("Error al eliminar la transmisión.");
+      }
     }
   };
 
   return (
     <div className="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl space-y-6 text-slate-100">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">{editingEnvivoId ? "Editar Transmisión" : "Gestión de Transmisiones en Vivo"}</h2>
+        <h2 className="text-xl font-bold">{editingEnvivoId ? "Editar Transmisión" : "Gestión de Transmisión en Vivo"}</h2>
         {editingEnvivoId && (
           <button
             type="button"
@@ -87,6 +109,7 @@ export default function EnvivosTab({ envivosList = [], setStatusMsg }: EnvivosTa
               setEditingEnvivoId(null);
               setTituloEnvivo("");
               setUrlEnvivo("");
+              setStatusMsg(null);
             }}
             className="text-xs text-yellow-400 bg-yellow-500/10 px-3 py-1.5 rounded-xl border border-yellow-500/20 cursor-pointer"
           >
@@ -96,48 +119,33 @@ export default function EnvivosTab({ envivosList = [], setStatusMsg }: EnvivosTa
       </div>
 
       <form onSubmit={handleSaveEnvivo} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <label className="block text-xs mb-1">Título de la Transmisión</label>
-            <input type="text" required value={tituloEnvivo} onChange={(e) => setTituloEnvivo(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white" placeholder="Ej: Culto Dominical En Vivo" />
-          </div>
-          <div>
-            <label className="block text-xs mb-1">Estado</label>
-            <select value={estadoEnvivo} onChange={(e) => setEstadoEnvivo(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white">
-              <option value="Programado">Programado</option>
-              <option value="En Vivo">En Vivo</option>
-              <option value="Finalizado">Finalizado</option>
-            </select>
-          </div>
+        <div>
+          <label className="block text-xs mb-1">Título de la Transmisión</label>
+          <input type="text" required value={tituloEnvivo} onChange={(e) => setTituloEnvivo(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white" placeholder="Ej: Culto Dominical" />
         </div>
 
         <div>
-          <label className="block text-xs mb-1">URL de YouTube (Enlace o embebido)</label>
+          <label className="block text-xs mb-1">URL de YouTube del En Vivo</label>
           <input type="text" required value={urlEnvivo} onChange={(e) => setUrlEnvivo(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white" placeholder="https://www.youtube.com/watch?v=..." />
         </div>
 
         <button type="submit" disabled={savingEnvivo} className="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-sm transition cursor-pointer">
-          {savingEnvivo ? "Guardando..." : (editingEnvivoId ? "Actualizar Transmisión" : "Registrar Transmisión")}
+          {savingEnvivo ? "Guardando..." : (editingEnvivoId ? "Actualizar Transmisión" : "Poner en Vivo Ahora")}
         </button>
       </form>
 
       <div className="border-t border-slate-800 pt-6 space-y-4">
-        <h3 className="font-bold text-sm">Transmisiones Registradas ({envivosList.length})</h3>
+        <h3 className="font-bold text-sm">Historial de Transmisiones ({envivosList.length})</h3>
         <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
           {envivosList.map((item) => (
             <div key={item.id} className="flex items-center justify-between bg-slate-800 p-4 rounded-xl border border-slate-700">
               <div>
-                <h4 className="font-bold text-sm text-white flex items-center gap-2">
-                  {item.titulo}
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${item.estado === 'En Vivo' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-slate-700 text-slate-300'}`}>
-                    {item.estado}
-                  </span>
-                </h4>
+                <h4 className="font-bold text-sm text-white">{item.titulo}</h4>
                 <p className="text-xs text-slate-400 truncate max-w-md">{item.url}</p>
               </div>
               <div className="flex gap-2">
-                <button onClick={() => handleStartEditEnvivo(item)} className="bg-yellow-500/10 text-yellow-400 px-3 py-1 rounded-lg text-xs hover:bg-yellow-500/20 cursor-pointer">Editar</button>
-                <button onClick={() => handleDeleteEnvivo(item.id)} className="bg-red-500/10 text-red-400 px-3 py-1 rounded-lg text-xs hover:bg-red-500/20 cursor-pointer">Eliminar</button>
+                <button type="button" onClick={() => handleStartEditEnvivo(item)} className="bg-yellow-500/10 text-yellow-400 px-3 py-1 rounded-lg text-xs hover:bg-yellow-500/20 cursor-pointer">Editar</button>
+                <button type="button" onClick={() => handleDeleteEnvivo(item.id)} className="bg-red-500/10 text-red-400 px-3 py-1 rounded-lg text-xs hover:bg-red-500/20 cursor-pointer">Eliminar</button>
               </div>
             </div>
           ))}

@@ -35,7 +35,7 @@ export default function AdminPanelPage() {
       setAnunciosList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 
-    const unsubEnvivos = onSnapshot(query(collection(db, "envivos"), orderBy("createdAt", "desc")), (snapshot) => {
+    const unsubEnvivos = onSnapshot(collection(db, "envivos"), (snapshot) => {
       setEnvivosList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
 
