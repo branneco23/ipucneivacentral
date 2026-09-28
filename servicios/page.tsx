@@ -144,15 +144,10 @@ export default function MainLanding() {
 
                     // Filtramos los eventos de Firebase de manera ultra segura
                     const eventosDelDia = eventosFirebase.filter(e => {
-                      // Obtenemos el campo fecha asegurándonos de quitar espacios si los hubiera
                       const rawFecha = e.fecha ? String(e.fecha).trim() : "";
                       if (!rawFecha) return false;
 
-                      // Si guardas la fecha como "2026-09-30", extraemos solo los primeros 10 caracteres (YYYY-MM-DD)
                       const fechaEventoStr = rawFecha.split("T")[0];
-
-                      console.log(`Comparando -> Día columna: [${fechaStr}] vs Evento "${e.titulo}": [${fechaEventoStr}]`);
-
                       return fechaEventoStr === fechaStr;
                     });
 

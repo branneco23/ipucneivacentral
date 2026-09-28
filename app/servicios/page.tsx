@@ -22,7 +22,7 @@ export default function MainLanding() {
     setFechaReferencia(inicioSemana);
 
     // CONEXIÓN A FIREBASE FIRESTORE EN TIEMPO REAL
-    const unsubscribe = onSnapshot(collection(db, "eventos_calendario"), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "eventosalendario"), (snapshot) => {
       const eventosFirebase = snapshot.docs.map(doc => {
         const data = doc.data();
         
@@ -30,8 +30,17 @@ export default function MainLanding() {
         let colorHex = '#00338d';
         if (data.color?.includes('emerald')) colorHex = '#059669';
         else if (data.color?.includes('purple') || data.color?.includes('púrpura')) colorHex = '#7c3aed';
-        else if (data.color?.includes('blue')) colorHex = '#2563eb';
-        else if (data.color?.includes('red')) colorHex = '#dc2626';
+        else if (data.color?.includes('blue') || data.color?.includes('azul')) colorHex = '#2563eb';
+        else if (data.color?.includes('red') || data.color?.includes('rojo')) colorHex = '#dc2626';
+        else if (data.color?.includes('green') || data.color?.includes('verde')) colorHex = '#16a34a';
+        else if (data.color?.includes('yellow') || data.color?.includes('amarillo')) colorHex = '#ca8a04';
+        else if (data.color?.includes('orange') || data.color?.includes('naranja')) colorHex = '#ea580c';
+        else if (data.color?.includes('pink') || data.color?.includes('rosa')) colorHex = '#db2777';
+        else if (data.color?.includes('indigo') || data.color?.includes('índigo')) colorHex = '#4f46e5';
+        else if (data.color?.includes('teal') || data.color?.includes('turquesa')) colorHex = '#0d9488';
+        else if (data.color?.includes('cyan') || data.color?.includes('cian')) colorHex = '#0891b2';
+        else if (data.color?.includes('emerald') || data.color?.includes('esmeralda')) colorHex = '#059669';
+        else if (data.color?.includes('rose') || data.color?.includes('rosado')) colorHex = '#e11d48';
 
         return {
           id: doc.id,
