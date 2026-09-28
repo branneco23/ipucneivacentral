@@ -2,18 +2,38 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Accordion from "@/app/Components/Accordion/Accordion";
 import DevocionalBanner from "@/app/Components/DevocionalesBanner/DevocionalesBanner";
-import { CULTOS_ACORDEON, EVENTOS_ANUALES_2026 } from "@/app/JsonData/EventsData";
+import { CULTOS_ACORDEON } from "@/app/JsonData/EventsData";
+import { db } from "@/lib/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function MainLanding() {
   const [fechaReferencia, setFechaReferencia] = useState<Date | null>(null);
+  const [eventosFirebase, setEventosFirebase] = useState<any[]>([]);
 
   useEffect(() => {
-    // CORRECCIÓN DE FECHA: Crear hoy sin horas para evitar saltos de día en producción
+    // Sincronizar eventos desde Firebase en tiempo real
+    const unsubscribe = onSnapshot(
+      collection(db, "eventosCalendario"),
+      (snapshot) => {
+        const lista = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        console.log("EVENTOS RECIBIDOS DE FIREBASE:", lista);
+        setEventosFirebase(lista);
+      },
+      (error) => {
+        console.error("ERROR AL CONECTAR CON FIREBASE (¿Problema de reglas o permisos?):", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
     const ahora = new Date();
     const hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
-    
     const inicioSemana = new Date(hoy);
-    // Ajuste para que la semana empiece en Domingo
     inicioSemana.setDate(hoy.getDate() - hoy.getDay());
     setFechaReferencia(inicioSemana);
   }, []);
@@ -37,11 +57,10 @@ export default function MainLanding() {
   const esHoy = (date: Date) => {
     const hoy = new Date();
     return date.getDate() === hoy.getDate() &&
-           date.getMonth() === hoy.getMonth() &&
-           date.getFullYear() === hoy.getFullYear();
+      date.getMonth() === hoy.getMonth() &&
+      date.getFullYear() === hoy.getFullYear();
   };
 
-  // Función para formatear fecha local a string YYYY-MM-DD sin usar UTC
   const formatFechaLocal = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -53,12 +72,12 @@ export default function MainLanding() {
 
   return (
     <main className="relative bg-[#F8FAFC] pt-[calc(var(--navbar-height)+1rem)] md:pt-[calc(var(--navbar-height)+2rem)] overflow-x-hidden">
-      
+
       {/* Hero Section */}
       <section className="px-5 sm:px-10 md:px-[8%] py-10 md:py-16 grid lg:grid-cols-12 gap-10 md:gap-16 items-center max-w-screen-2xl mx-auto">
         <div className="lg:col-span-5 text-center lg:text-left">
           <h1 className="text-4xl md:text-6xl font-black text-[#00338d] mb-4 md:mb-6 uppercase tracking-tighter italic leading-tight">
-            IPUC <br className="hidden md:block"/> Neiva Central
+            IPUC <br className="hidden md:block" /> Neiva Central
           </h1>
           <div className="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg shadow-blue-200">
             <p className="text-xs font-bold tracking-widest uppercase">Agenda 2026</p>
@@ -71,25 +90,25 @@ export default function MainLanding() {
         </div>
       </section>
 
-      {/* SECCIÓN DE DEVOCIONALES (Conectada a Firebase a través del componente) */}
+      {/* SECCIÓN DE DEVOCIONALES */}
       <div className="px-4 sm:px-10 md:px-[8%] max-w-screen-2xl mx-auto">
         <DevocionalBanner />
       </div>
 
-      {/* CALENDARIO SEMANAL (Justo abajo de los devocionales) */}
+      {/* CALENDARIO SEMANAL */}
       <section className="px-4 sm:px-10 md:px-[8%] py-12 max-w-screen-2xl mx-auto">
         <div className="max-w-7xl mx-auto">
-          
+
           <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
             <h2 className="text-3xl md:text-4xl font-black text-slate-800 uppercase tracking-tight">
               {diasDeLaSemana[0].toLocaleDateString('es-ES', { month: 'long' })}
               <span className="text-blue-600 ml-2">2026</span>
             </h2>
             <div className="flex w-full md:w-auto p-1.5 bg-white rounded-2xl shadow-xl border border-slate-100">
-              <button onClick={() => cambiarSemana(-1)} className="flex-1 md:flex-none px-6 py-3 hover:bg-slate-50 rounded-xl font-bold text-slate-500 transition-all text-sm uppercase">
+              <button onClick={() => cambiarSemana(-1)} className="flex-1 md:flex-none px-6 py-3 hover:bg-slate-50 rounded-xl font-bold text-slate-500 transition-all text-sm uppercase cursor-pointer">
                 Anterior
               </button>
-              <button onClick={() => cambiarSemana(1)} className="flex-1 md:flex-none px-6 py-3 bg-[#00338d] text-white rounded-xl font-bold transition-all text-sm uppercase">
+              <button onClick={() => cambiarSemana(1)} className="flex-1 md:flex-none px-6 py-3 bg-[#00338d] text-white rounded-xl font-bold transition-all text-sm uppercase cursor-pointer">
                 Siguiente
               </button>
             </div>
@@ -98,7 +117,7 @@ export default function MainLanding() {
           <div className="bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto md:overflow-x-visible">
               <div className="min-w-full md:min-w-[900px]">
-                
+
                 {/* Cabecera Días */}
                 <div className="hidden md:grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                   {diasDeLaSemana.map((dia, idx) => {
@@ -108,9 +127,8 @@ export default function MainLanding() {
                         <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${checkHoy ? 'text-blue-600' : 'text-slate-400'}`}>
                           {dia.toLocaleDateString('es-ES', { weekday: 'short' })}
                         </p>
-                        <p className={`text-3xl font-black inline-flex items-center justify-center w-12 h-12 rounded-xl ${
-                          checkHoy ? 'bg-[#00338d] text-white shadow-lg' : 'text-slate-800'
-                        }`}>
+                        <p className={`text-3xl font-black inline-flex items-center justify-center w-12 h-12 rounded-xl ${checkHoy ? 'bg-[#00338d] text-white shadow-lg' : 'text-slate-800'
+                          }`}>
                           {dia.getDate()}
                         </p>
                       </div>
@@ -121,11 +139,21 @@ export default function MainLanding() {
                 {/* Cuerpo de Eventos */}
                 <div className="grid grid-cols-1 md:grid-cols-7">
                   {diasDeLaSemana.map((dia, idx) => {
-                    const fechaStr = formatFechaLocal(dia);
+                    const fechaStr = formatFechaLocal(dia); // Formato YYYY-MM-DD
                     const checkHoy = esHoy(dia);
-                    const eventosDelDia = EVENTOS_ANUALES_2026.filter(e => {
-                      if (e.fechaFin) return fechaStr >= e.fecha && fechaStr <= e.fechaFin;
-                      return e.fecha === fechaStr;
+
+                    // Filtramos los eventos de Firebase de manera ultra segura
+                    const eventosDelDia = eventosFirebase.filter(e => {
+                      // Obtenemos el campo fecha asegurándonos de quitar espacios si los hubiera
+                      const rawFecha = e.fecha ? String(e.fecha).trim() : "";
+                      if (!rawFecha) return false;
+
+                      // Si guardas la fecha como "2026-09-30", extraemos solo los primeros 10 caracteres (YYYY-MM-DD)
+                      const fechaEventoStr = rawFecha.split("T")[0];
+
+                      console.log(`Comparando -> Día columna: [${fechaStr}] vs Evento "${e.titulo}": [${fechaEventoStr}]`);
+
+                      return fechaEventoStr === fechaStr;
                     });
 
                     return (
@@ -139,15 +167,17 @@ export default function MainLanding() {
 
                         <div className="space-y-3">
                           {eventosDelDia.map((evento) => (
-                            <div key={evento.id} 
-                                 className="p-4 rounded-2xl text-white shadow-sm border border-black/5"
-                                 style={{ backgroundColor: evento.color || '#00338d' }}>
+                            <div key={evento.id}
+                              className="p-4 rounded-2xl text-white shadow-sm border border-black/5 bg-[#00338d]">
                               <p className="text-[9px] font-black opacity-80 uppercase mb-1">
-                                {evento.inicio} - {evento.fin}
+                                {evento.hora || "Todo el día"}
                               </p>
                               <p className="text-[12px] font-bold leading-tight uppercase italic">
                                 {evento.titulo}
                               </p>
+                              {evento.lugar && (
+                                <p className="text-[10px] opacity-90 mt-1">📍 {evento.lugar}</p>
+                              )}
                             </div>
                           ))}
                           {eventosDelDia.length === 0 && (

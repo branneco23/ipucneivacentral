@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { db } from "@/lib/firebase";
+import { db, auth } from "@/lib/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 // Importación de componentes por pestañas
 import AnunciosTab from "./components/AnunciosTab";
@@ -14,7 +15,14 @@ import BlogsTab from "./components/BlogsTab";
 import FaqsTab from "./components/FaqsTab";
 
 export default function AdminPanelPage() {
-  const [user, setUser] = useState(true); // Cambiar según tu lógica real de autenticación
+  const [user, setUser] = useState<any>(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  
+  // Estados para el formulario de login
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState<string | null>(null);
+
   const [activeTab, setActiveTab] = useState("anuncios");
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
@@ -27,7 +35,37 @@ export default function AdminPanelPage() {
   const [blogsList, setBlogsList] = useState<any[]>([]);
   const [faqsList, setFaqsList] = useState<any[]>([]);
 
-  // Efecto para escuchar colecciones de Firestore en tiempo real
+  // Escuchar el estado de autenticación de Firebase en tiempo real
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoadingAuth(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError(null);
+    try {
+      await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+      setEmailInput("");
+      setPasswordInput("");
+    } catch (error: any) {
+      console.error("Error al iniciar sesión:", error);
+      setLoginError("Correo o contraseña incorrectos.");
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  // Efecto para escuchar colecciones de Firestore en tiempo real (solo si está autenticado)
   useEffect(() => {
     if (!user) return;
 
@@ -70,10 +108,48 @@ export default function AdminPanelPage() {
     };
   }, [user]);
 
+  // Pantalla de carga mientras Firebase verifica la sesión activa
+  if (loadingAuth) {
+    return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Cargando...</div>;
+  }
+
+  // Pantalla de inicio de sesión con Correo y Contraseña
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
-        <p>Acceso restringido. Por favor inicia sesión.</p>
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white p-4">
+        <form onSubmit={handleLogin} className="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-sm w-full space-y-4 shadow-xl">
+          <h2 className="text-xl font-bold">Panel de Administración</h2>
+          <p className="text-sm text-slate-400">Inicia sesión con tus credenciales autorizadas.</p>
+          
+          {loginError && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-xl text-xs">
+              {loginError}
+            </div>
+          )}
+
+          <div className="space-y-3">
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-indigo-500"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-xl text-sm font-bold transition cursor-pointer">
+            Entrar
+          </button>
+        </form>
       </div>
     );
   }
@@ -86,10 +162,10 @@ export default function AdminPanelPage() {
         <header className="flex justify-between items-center bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-white">Panel de Administración</h1>
-            <p className="text-sm text-slate-400">Gestiona el contenido de la plataforma de forma centralizada.</p>
+            <p className="text-sm text-slate-400">Sesión iniciada como: <span className="text-slate-200">{user.email}</span></p>
           </div>
           <button
-            onClick={() => setUser(false)}
+            onClick={handleLogout}
             className="px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 rounded-xl transition-all text-sm font-medium cursor-pointer"
           >
             Cerrar Sesión
@@ -128,8 +204,7 @@ export default function AdminPanelPage() {
           ))}
         </nav>
 
-        {/* Contenido Dinámico con las props ajustadas correctamente a los tipos esperados */}
-        {/* Contenido Dinámico con las props corregidas */}
+        {/* Contenido Dinámico */}
         <main className="transition-all">
           {activeTab === "anuncios" && <AnunciosTab anuncios={anunciosList} setStatusMsg={setStatusMsg} />}
           {activeTab === "envivos" && <EnvivosTab envivosList={envivosList} setStatusMsg={setStatusMsg} />}

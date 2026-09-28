@@ -1,3 +1,5 @@
+// utils/imageUtils.ts
+
 export const convertirImagenABase64WebP = (file: File, calidad = 0.75): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -28,3 +30,30 @@ export const convertirImagenABase64WebP = (file: File, calidad = 0.75): Promise<
     reader.onerror = (error) => reject(error);
   });
 };
+
+export async function subirArchivoACloudinary(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+  
+  // REEMPLAZA CON TUS DATOS DE CLOUDINARY
+  formData.append("upload_preset", "TU_UPLOAD_PRESET"); 
+  const cloudName = "TU_CLOUD_NAME"; 
+
+  const resourceType = file.type.startsWith("video") ? "video" : "image";
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const data = await response.json();
+  
+  if (!response.ok) {
+    throw new Error(data.error?.message || "Error al subir el archivo a Cloudinary");
+  }
+
+  return data.secure_url;
+}

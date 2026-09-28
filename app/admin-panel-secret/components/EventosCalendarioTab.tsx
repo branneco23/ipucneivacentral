@@ -113,8 +113,14 @@ export default function EventosCalendarioTab({ eventosList = [], setStatusMsg }:
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs mb-1">Fecha</label>
-            <input type="text" required value={fechaEvento} onChange={(e) => setFechaEvento(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white" placeholder="Ej: 15 de Noviembre, 2026" />
+            <label className="block text-xs mb-1">Fecha del Evento</label>
+            <input
+              type="date"
+              required
+              value={fechaEvento}
+              onChange={(e) => setFechaEvento(e.target.value)}
+              className="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white"
+            />
           </div>
           <div>
             <label className="block text-xs mb-1">Hora</label>
