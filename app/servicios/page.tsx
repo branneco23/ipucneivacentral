@@ -8,7 +8,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 
 export default function MainLanding() {
   const [fechaReferencia, setFechaReferencia] = useState<Date | null>(null);
-  
+
   // Estado que combinará los eventos fijos del JSON + los de Firebase
   const [listaEventos, setListaEventos] = useState(EVENTOS_ANUALES_2026);
 
@@ -16,43 +16,44 @@ export default function MainLanding() {
     // CORRECCIÓN DE FECHA: Crear hoy sin horas para evitar saltos de día en producción
     const ahora = new Date();
     const hoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
-    
+
     const inicioSemana = new Date(hoy);
     inicioSemana.setDate(hoy.getDate() - hoy.getDay());
     setFechaReferencia(inicioSemana);
 
     // CONEXIÓN A FIREBASE FIRESTORE EN TIEMPO REAL
-    const unsubscribe = onSnapshot(collection(db, "eventosalendario"), (snapshot) => {
+    // CONEXIÓN A FIREBASE FIRESTORE EN TIEMPO REAL
+    const unsubscribe = onSnapshot(collection(db, "eventosCalendario"), (snapshot) => {
       const eventosFirebase = snapshot.docs.map(doc => {
         const data = doc.data();
-        
-        // Convertimos el color de Tailwind a un color Hexadecimal válido para el style, o usamos uno por defecto
-        let colorHex = '#00338d';
-        if (data.color?.includes('emerald')) colorHex = '#059669';
-        else if (data.color?.includes('purple') || data.color?.includes('púrpura')) colorHex = '#7c3aed';
-        else if (data.color?.includes('blue') || data.color?.includes('azul')) colorHex = '#2563eb';
-        else if (data.color?.includes('red') || data.color?.includes('rojo')) colorHex = '#dc2626';
-        else if (data.color?.includes('green') || data.color?.includes('verde')) colorHex = '#16a34a';
-        else if (data.color?.includes('yellow') || data.color?.includes('amarillo')) colorHex = '#ca8a04';
-        else if (data.color?.includes('orange') || data.color?.includes('naranja')) colorHex = '#ea580c';
-        else if (data.color?.includes('pink') || data.color?.includes('rosa')) colorHex = '#db2777';
-        else if (data.color?.includes('indigo') || data.color?.includes('índigo')) colorHex = '#4f46e5';
-        else if (data.color?.includes('teal') || data.color?.includes('turquesa')) colorHex = '#0d9488';
-        else if (data.color?.includes('cyan') || data.color?.includes('cian')) colorHex = '#0891b2';
-        else if (data.color?.includes('emerald') || data.color?.includes('esmeralda')) colorHex = '#059669';
-        else if (data.color?.includes('rose') || data.color?.includes('rosado')) colorHex = '#e11d48';
+
+        // Asignamos un color por defecto (ej. azul #2563eb) si el documento no tiene el campo color
+        let colorHex = '#2563eb';
+        const colorText = (data.color || '').toLowerCase();
+
+        if (colorText.includes('emerald')) colorHex = '#059669';
+        else if (colorText.includes('purple') || colorText.includes('púrpura')) colorHex = '#7c3aed';
+        else if (colorText.includes('blue') || colorText.includes('azul')) colorHex = '#2563eb';
+        else if (colorText.includes('red') || colorText.includes('rojo')) colorHex = '#dc2626';
+        else if (colorText.includes('green') || colorText.includes('verde')) colorHex = '#16a34a';
+        else if (colorText.includes('yellow') || colorText.includes('amarillo')) colorHex = '#ca8a04';
+        else if (colorText.includes('orange') || colorText.includes('naranja')) colorHex = '#ea580c';
+        else if (colorText.includes('pink') || colorText.includes('rosa')) colorHex = '#db2777';
+        else if (colorText.includes('indigo') || colorText.includes('índigo')) colorHex = '#4f46e5';
+        else if (colorText.includes('teal') || colorText.includes('turquesa')) colorHex = '#0d9488';
+        else if (colorText.includes('cyan') || colorText.includes('cian')) colorHex = '#0891b2';
+        else if (colorText.includes('rose') || colorText.includes('rosado')) colorHex = '#e11d48';
 
         return {
           id: doc.id,
           titulo: data.titulo,
           fecha: data.fecha,
-          inicio: data.hora || '00:00', // Mapeamos 'hora' de la DB a 'inicio'
-          fin: data.hora || '',         // Si no hay hora fin, usamos la misma
+          inicio: data.hora || '00:00',
+          fin: '',
           color: colorHex
         };
       });
 
-      // Unimos los eventos estáticos con los que vienen de Firebase
       setListaEventos([...EVENTOS_ANUALES_2026, ...eventosFirebase]);
     }, (error) => {
       console.error("Error al cargar eventos de Firebase:", error);
@@ -80,8 +81,8 @@ export default function MainLanding() {
   const esHoy = (date: Date) => {
     const hoy = new Date();
     return date.getDate() === hoy.getDate() &&
-           date.getMonth() === hoy.getMonth() &&
-           date.getFullYear() === hoy.getFullYear();
+      date.getMonth() === hoy.getMonth() &&
+      date.getFullYear() === hoy.getFullYear();
   };
 
   const formatFechaLocal = (date: Date) => {
@@ -95,12 +96,12 @@ export default function MainLanding() {
 
   return (
     <main className="relative bg-[#F8FAFC] pt-[calc(var(--navbar-height)+1rem)] md:pt-[calc(var(--navbar-height)+2rem)] overflow-x-hidden">
-      
+
       {/* Hero Section */}
       <section className="px-5 sm:px-10 md:px-[8%] py-10 md:py-16 grid lg:grid-cols-12 gap-10 md:gap-16 items-center max-w-screen-2xl mx-auto">
         <div className="lg:col-span-5 text-center lg:text-left">
           <h1 className="text-4xl md:text-6xl font-black text-[#00338d] mb-4 md:mb-6 uppercase tracking-tighter italic leading-tight">
-            IPUC <br className="hidden md:block"/> Neiva Central
+            IPUC <br className="hidden md:block" /> Neiva Central
           </h1>
           <div className="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg shadow-blue-200">
             <p className="text-xs font-bold tracking-widest uppercase">Agenda 2026</p>
@@ -121,7 +122,7 @@ export default function MainLanding() {
       {/* CALENDARIO SEMANAL */}
       <section className="px-4 sm:px-10 md:px-[8%] py-12 max-w-screen-2xl mx-auto">
         <div className="max-w-7xl mx-auto">
-          
+
           <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
             <h2 className="text-3xl md:text-4xl font-black text-slate-800 uppercase tracking-tight">
               {diasDeLaSemana[0].toLocaleDateString('es-ES', { month: 'long' })}
@@ -140,7 +141,7 @@ export default function MainLanding() {
           <div className="bg-white rounded-[2rem] md:rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
             <div className="overflow-x-auto md:overflow-x-visible">
               <div className="min-w-full md:min-w-[900px]">
-                
+
                 {/* Cabecera Días */}
                 <div className="hidden md:grid grid-cols-7 bg-slate-50/50 border-b border-slate-100">
                   {diasDeLaSemana.map((dia, idx) => {
@@ -150,9 +151,8 @@ export default function MainLanding() {
                         <p className={`text-[10px] font-black uppercase tracking-widest mb-2 ${checkHoy ? 'text-blue-600' : 'text-slate-400'}`}>
                           {dia.toLocaleDateString('es-ES', { weekday: 'short' })}
                         </p>
-                        <p className={`text-3xl font-black inline-flex items-center justify-center w-12 h-12 rounded-xl ${
-                          checkHoy ? 'bg-[#00338d] text-white shadow-lg' : 'text-slate-800'
-                        }`}>
+                        <p className={`text-3xl font-black inline-flex items-center justify-center w-12 h-12 rounded-xl ${checkHoy ? 'bg-[#00338d] text-white shadow-lg' : 'text-slate-800'
+                          }`}>
                           {dia.getDate()}
                         </p>
                       </div>
@@ -181,9 +181,9 @@ export default function MainLanding() {
 
                         <div className="space-y-3">
                           {eventosDelDia.map((evento) => (
-                            <div key={evento.id} 
-                                 className="p-4 rounded-2xl text-white shadow-sm border border-black/5"
-                                 style={{ backgroundColor: evento.color || '#00338d' }}>
+                            <div key={evento.id}
+                              className="p-4 rounded-2xl text-white shadow-sm border border-black/5"
+                              style={{ backgroundColor: evento.color || '#00338d' }}>
                               <p className="text-[9px] font-black opacity-80 uppercase mb-1">
                                 {evento.inicio} {evento.fin && evento.fin !== evento.inicio ? `- ${evento.fin}` : ''}
                               </p>
