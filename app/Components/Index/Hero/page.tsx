@@ -6,8 +6,6 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-import "swiper/css";
-
 const PARTNERS = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
   src: `/img/partner${i + 1}.svg`,

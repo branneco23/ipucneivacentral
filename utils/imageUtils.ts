@@ -35,9 +35,15 @@ export async function subirArchivoACloudinary(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
   
-  // REEMPLAZA CON TUS DATOS DE CLOUDINARY
-  formData.append("upload_preset", "TU_UPLOAD_PRESET"); 
-  const cloudName = "TU_CLOUD_NAME"; 
+  // Leemos las credenciales desde las variables de entorno
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+  if (!uploadPreset || !cloudName) {
+    throw new Error("Faltan las credenciales de Cloudinary en las variables de entorno (.env).");
+  }
+
+  formData.append("upload_preset", uploadPreset);
 
   const resourceType = file.type.startsWith("video") ? "video" : "image";
 
